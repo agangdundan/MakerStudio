@@ -61,9 +61,9 @@
         <table schema="ms" tableName="mission" />
         <table schema="ms" tableName="missionmanager" />
         <table schema="ms" tableName="systemmessage" />
-        <table schema="ms" tableName="upload" />-->
+        <table schema="ms" tableName="upload" />
         <table schema="ms" tableName="user" />
-        <!--<table schema="ms" tableName="usergroup" />-->
+        <table schema="ms" tableName="usergroup" />-->
 
     </context>
 </generatorConfiguration>
