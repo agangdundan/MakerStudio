@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.it.phw.ms.dao.mapper.BookMapper">
-  <resultMap id="BaseResultMap" type="cn.it.phw.ms.pojo.Book">
+<mapper namespace="cn.it.pwh.ms.dao.mapper.BookMapper">
+  <resultMap id="BaseResultMap" type="cn.it.pwh.ms.pojo.Book">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="book_name" jdbcType="VARCHAR" property="bookName" />
     <result column="image" jdbcType="VARCHAR" property="image" />
@@ -12,7 +12,7 @@
     <result column="admin_name" jdbcType="VARCHAR" property="adminName" />
     <result column="category" jdbcType="VARCHAR" property="category" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.Book">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.pwh.ms.pojo.Book">
     <result column="create_time" jdbcType="LONGVARCHAR" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -79,7 +79,7 @@
   <sql id="Blob_Column_List">
     create_time
   </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="cn.it.phw.ms.pojo.BookExample" resultMap="ResultMapWithBLOBs">
+  <select id="selectByExampleWithBLOBs" parameterType="cn.it.pwh.ms.pojo.BookExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
       distinct
@@ -95,7 +95,7 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.BookExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="cn.it.pwh.ms.pojo.BookExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -121,13 +121,13 @@
     delete from book
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <delete id="deleteByExample" parameterType="cn.it.phw.ms.pojo.BookExample">
+  <delete id="deleteByExample" parameterType="cn.it.pwh.ms.pojo.BookExample">
     delete from book
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.it.phw.ms.pojo.Book">
+  <insert id="insert" parameterType="cn.it.pwh.ms.pojo.Book">
     insert into book (id, book_name, image, 
       status, author, publish, 
       admin_id, admin_name, category, 
@@ -137,7 +137,7 @@
       #{adminId,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Book">
+  <insert id="insertSelective" parameterType="cn.it.pwh.ms.pojo.Book">
     insert into book
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -204,7 +204,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="cn.it.phw.ms.pojo.BookExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="cn.it.pwh.ms.pojo.BookExample" resultType="java.lang.Long">
     select count(*) from book
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -279,7 +279,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.it.phw.ms.pojo.Book">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.it.pwh.ms.pojo.Book">
     update book
     <set>
       <if test="bookName != null">
@@ -312,7 +312,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.phw.ms.pojo.Book">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.pwh.ms.pojo.Book">
     update book
     set book_name = #{bookName,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
@@ -325,7 +325,7 @@
       create_time = #{createTime,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.it.phw.ms.pojo.Book">
+  <update id="updateByPrimaryKey" parameterType="cn.it.pwh.ms.pojo.Book">
     update book
     set book_name = #{bookName,jdbcType=VARCHAR},
       image = #{image,jdbcType=VARCHAR},
