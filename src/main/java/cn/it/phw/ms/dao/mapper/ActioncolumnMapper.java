@@ -1,4 +1,4 @@
-package cn.it.phw.ms.dao;
+package cn.it.phw.ms.dao.mapper;
 
 import cn.it.phw.ms.pojo.Actioncolumn;
 import cn.it.phw.ms.pojo.ActioncolumnExample;

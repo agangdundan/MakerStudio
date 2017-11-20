@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.it.phw.ms.dao.MissionmanagerMapper">
+<mapper namespace="cn.it.phw.ms.dao.mapper.MissionmanagerMapper">
   <resultMap id="BaseResultMap" type="cn.it.phw.ms.pojo.Missionmanager">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="mission_id" jdbcType="INTEGER" property="missionId" />

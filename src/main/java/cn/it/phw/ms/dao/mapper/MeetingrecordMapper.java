@@ -1,4 +1,4 @@
-package cn.it.phw.ms.dao;
+package cn.it.phw.ms.dao.mapper;
 
 import cn.it.phw.ms.pojo.Meetingrecord;
 import cn.it.phw.ms.pojo.MeetingrecordExample;
