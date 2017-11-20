@@ -7,6 +7,9 @@ import java.util.Map;
  */
 public class JsonResult {
 
+    public static final String KEY_MESSAGE = "message";
+    public static final String KEY_STATUS = "status";
+
     /**
      * 状态码
      */
