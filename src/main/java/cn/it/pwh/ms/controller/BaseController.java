@@ -12,5 +12,4 @@ public class BaseController {
 
     Map<String, Object> dataMap = new HashMap<>();
 
-
 }

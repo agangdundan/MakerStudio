@@ -1,5 +1,6 @@
 package cn.it.pwh.ms.service;
 
+
 /**
  * @author phw
  *
@@ -9,7 +10,5 @@ package cn.it.pwh.ms.service;
  *
  */
 public interface BaseService {
-
-
 
 }
