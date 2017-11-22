@@ -3,7 +3,6 @@ package cn.it.phw.ms.dao.mapper;
 import cn.it.phw.ms.pojo.Learningplanform;
 import cn.it.phw.ms.pojo.LearningplanformExample;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface LearningplanformMapper {

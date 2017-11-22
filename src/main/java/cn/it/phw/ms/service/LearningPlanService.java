@@ -16,6 +16,14 @@ public interface LearningPlanService extends BaseService {
 
     JsonResult doApproveLearningPlanForm(Learningplanform form);
 
+    JsonResult doAddLearningPlanColumn(Learningplancolumn column);
+
     JsonResult doUpdateLearningPlanColumn(Learningplancolumn column);
+
+    JsonResult doDeleteLearningPlanColumn(Learningplancolumn column);
+
+    JsonResult doFindLearningPlanFormByUsername(String username);
+
+    JsonResult doFindLearningPlanFormByKeywords(String keyword);
 
 }

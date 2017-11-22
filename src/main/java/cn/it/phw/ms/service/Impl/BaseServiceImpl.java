@@ -1,10 +1,7 @@
 package cn.it.phw.ms.service.Impl;
 
 import cn.it.phw.ms.common.JsonResult;
-import cn.it.phw.ms.pojo.ActionExample;
-import cn.it.phw.ms.pojo.ActioncolumnExample;
-import cn.it.phw.ms.pojo.UserExample;
-import cn.it.phw.ms.pojo.UsergroupExample;
+import cn.it.phw.ms.pojo.*;
 import cn.it.phw.ms.service.BaseService;
 
 import java.util.HashMap;
@@ -19,6 +16,12 @@ public class BaseServiceImpl implements BaseService {
     public UserExample userExample = new UserExample();
 
     public UsergroupExample usergroupExample = new UsergroupExample();
+
+    public LearningplanformExample learningplanformExample = new LearningplanformExample();
+
+    public LearningplancolumnExample learningplancolumnExample = new LearningplancolumnExample();
+
+    public LearningplancolumnmanagerExample learningplancolumnmanagerExample = new LearningplancolumnmanagerExample();
 
     public ActionExample actionExample = new ActionExample();
 
