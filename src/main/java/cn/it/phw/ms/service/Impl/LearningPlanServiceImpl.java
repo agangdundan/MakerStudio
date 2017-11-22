@@ -3,7 +3,10 @@ package cn.it.phw.ms.service.Impl;
 import cn.it.phw.ms.common.AppContext;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.dao.mapper.LearningplancolumnMapper;
+import cn.it.phw.ms.dao.mapper.LearningplanformMapper;
 import cn.it.phw.ms.pojo.Learningplancolumn;
+import cn.it.phw.ms.pojo.Learningplanform;
+import cn.it.phw.ms.pojo.LearningplanformExample;
 import cn.it.phw.ms.service.LearningPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -99,6 +102,7 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
     @Override
     public JsonResult doFindLearningPlanFormByUsername(String username) {
         LearningplanformExample.Criteria criteria = learningplanformExample.or();
+
         return null;
     }
 

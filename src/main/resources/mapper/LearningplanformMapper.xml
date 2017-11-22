@@ -4,6 +4,7 @@
   <resultMap id="BaseResultMap" type="cn.it.phw.ms.pojo.Learningplanform">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="isshare" jdbcType="INTEGER" property="isshare" />
   </resultMap>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, status, isshare
+    id, user_id, username, status, isshare
   </sql>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.LearningplanformExample" resultMap="BaseResultMap">
     select
@@ -99,10 +100,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.it.phw.ms.pojo.Learningplanform">
-    insert into learningplanform (id, user_id, status, 
-      isshare)
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{isshare,jdbcType=INTEGER})
+    insert into learningplanform (id, user_id, username, 
+      status, isshare)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{isshare,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Learningplanform">
     insert into learningplanform
@@ -112,6 +113,9 @@
       </if>
       <if test="userId != null">
         user_id,
+      </if>
+      <if test="username != null">
+        username,
       </if>
       <if test="status != null">
         status,
@@ -126,6 +130,9 @@
       </if>
       <if test="userId != null">
         #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -150,6 +157,9 @@
       <if test="record.userId != null">
         user_id = #{record.userId,jdbcType=INTEGER},
       </if>
+      <if test="record.username != null">
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
@@ -165,6 +175,7 @@
     update learningplanform
     set id = #{record.id,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
       isshare = #{record.isshare,jdbcType=INTEGER}
     <if test="_parameter != null">
@@ -176,6 +187,9 @@
     <set>
       <if test="userId != null">
         user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -189,6 +203,7 @@
   <update id="updateByPrimaryKey" parameterType="cn.it.phw.ms.pojo.Learningplanform">
     update learningplanform
     set user_id = #{userId,jdbcType=INTEGER},
+      username = #{username,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
       isshare = #{isshare,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
