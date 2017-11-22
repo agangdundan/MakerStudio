@@ -11,42 +11,42 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/ms")
+@RequestMapping(value = "/ms")
 public class UserController extends BaseController {
 
     @Autowired
     private UserService userService;
 
     @ResponseBody
-    @PostMapping("/user/login")
-    public JsonResult doLogin(@RequestParam String userName,
+    @PostMapping(value = "/user/login")
+    public JsonResult doLogin(@RequestParam String username,
                               @RequestParam String password, HttpSession session) {
 
-        return userService.doLogin(userName, password, session);
+        return userService.doLogin(username, password, session);
     }
 
     @ResponseBody
-    @GetMapping("/user/logout")
+    @GetMapping(value = "/user/logout")
     public JsonResult doLogout(HttpSession session) {
         return userService.doLogout(session);
     }
 
     @ResponseBody
-    @PostMapping("/user")
+    @PostMapping(value = "/user")
     public JsonResult doUpdateUser(User user) {
         return userService.doUpdateUser(user);
     }
 
     @ResponseBody
-    @DeleteMapping("/user")
+    @DeleteMapping(value = "/user")
     public JsonResult doDeleteUser(User user) {
         return userService.doDeleteUser(user);
     }
 
     @ResponseBody
-    @PutMapping("/user")
-    public JsonResult doRegUser(UserWithBLOBs user){
-        return userService.doRegUser(user);
+    @PutMapping(value = "/user")
+    public JsonResult doRegUser(UserWithBLOBs user, HttpSession session){
+        return userService.doRegUser(user, session);
     }
 
 }

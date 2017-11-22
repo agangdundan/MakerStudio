@@ -25,22 +25,30 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public JsonResult doLogin(String userName, String password, HttpSession session) {
+    public JsonResult doLogin(String username, String password, HttpSession session) {
 
         UserExample.Criteria criteria = userExample.or();
-        criteria.andUsernameEqualTo(userName);
-        List<User> userList = userMapper.selectByExample(userExample);
+        criteria.andUsernameEqualTo(username);
+        List<UserWithBLOBs> userList = userMapper.selectByExampleWithBLOBs(userExample);
         if (userList.size() == 0) {
             jsonResult.setStatus(500);
             jsonResult.setMessage("错误：用户不存在！");
         } else {
-            User user = userList.get(0);
-            String newPasswords = password + user.getPassword();
+            UserWithBLOBs user = userList.get(0);
+            String newPasswords = password + user.getSalt();
             logger.debug(newPasswords);
+            System.out.println(newPasswords);
+            if (user.getPassword().equals(Md5Utils.MD5Encode(newPasswords, "UTF-8", false))) {
 
-            if (user.getPassword().equals(Md5Utils.MD5Encode(newPasswords, "UTF-8", true))) {
+                user.setLastTime(String.valueOf(System.currentTimeMillis()));
+                userMapper.updateByPrimaryKeyWithBLOBs(user);
+
                 data.put(AppContext.KEY_USER, user);
                 session.setAttribute(AppContext.KEY_USER, user);
+                jsonResult.setStatus(200);
+                jsonResult.setMessage("登陆成功！");
+                data.put(AppContext.KEY_USER, user);
+                jsonResult.setData(data);
             } else {
                 jsonResult.setStatus(500);
                 jsonResult.setMessage("错误：密码不正确！");
@@ -107,11 +115,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
     @Override
-    public JsonResult doRegUser(UserWithBLOBs user) {
+    public JsonResult doRegUser(UserWithBLOBs user, HttpSession session) {
+
+        User admin = (User) session.getAttribute(AppContext.KEY_USER);
+        user.setCreateTime(String.valueOf(System.currentTimeMillis()));
+        user.setCreaterId(admin.getId());
+        user.setCreaterName(admin.getUsername());
 
         userMapper.insert(user);
         jsonResult.setStatus(200);
-        jsonResult.setMessage("恭喜你，注册成功！");
+        jsonResult.setMessage("恭喜你，注册成功！请尽快完善信息。");
 
         return jsonResult;
     }

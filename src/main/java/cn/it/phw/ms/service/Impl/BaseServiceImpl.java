@@ -5,7 +5,6 @@ import cn.it.phw.ms.pojo.ActionExample;
 import cn.it.phw.ms.pojo.ActioncolumnExample;
 import cn.it.phw.ms.pojo.UserExample;
 import cn.it.phw.ms.pojo.UsergroupExample;
-import cn.it.pwh.ms.pojo.*;
 import cn.it.phw.ms.service.BaseService;
 
 import java.util.HashMap;

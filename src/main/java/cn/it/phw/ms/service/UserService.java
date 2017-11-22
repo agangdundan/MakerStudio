@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserService extends BaseService {
 
-    JsonResult doLogin(String userName, String password, HttpSession session);
+    JsonResult doLogin(String username, String password, HttpSession session);
 
     JsonResult doLogout(HttpSession session);
 
@@ -21,7 +21,7 @@ public interface UserService extends BaseService {
 
     JsonResult doDeleteUsers(List<User> users);
 
-    JsonResult doRegUser(UserWithBLOBs user);
+    JsonResult doRegUser(UserWithBLOBs user, HttpSession session);
 
     JsonResult doRegUsers(String path);
 
