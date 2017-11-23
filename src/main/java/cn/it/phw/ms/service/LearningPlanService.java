@@ -24,6 +24,4 @@ public interface LearningPlanService extends BaseService {
 
     JsonResult doFindLearningPlanFormByUsername(String username);
 
-    JsonResult doFindLearningPlanFormByKeywords(String keyword);
-
 }

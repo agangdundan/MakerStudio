@@ -102,13 +102,18 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
     @Override
     public JsonResult doFindLearningPlanFormByUsername(String username) {
         LearningplanformExample.Criteria criteria = learningplanformExample.or();
-
-        return null;
-    }
-
-    @Override
-    public JsonResult doFindLearningPlanFormByKeywords(String keyword) {
-        return null;
+        criteria.andUsernameEqualTo(username);
+        List<Learningplanform> learningplanforms = learningplanformMapper.selectByExample(learningplanformExample);
+        if (learningplanforms.size() == 0) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("未找到任何记录！");
+        } else {
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("查找到" + learningplanforms.size() + "条记录！");
+            data.put(AppContext.KEY_DATA, learningplanforms);
+            jsonResult.setData(data);
+        }
+        return jsonResult;
     }
 
 }
