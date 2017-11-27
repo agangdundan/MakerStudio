@@ -2,10 +2,7 @@ package cn.it.phw.ms.dao.mapper;
 
 import cn.it.phw.ms.pojo.Meetingrecord;
 import cn.it.phw.ms.pojo.MeetingrecordExample;
-import cn.it.phw.ms.pojo.MeetingrecordWithBLOBs;
-
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface MeetingrecordMapper {
@@ -15,25 +12,25 @@ public interface MeetingrecordMapper {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(MeetingrecordWithBLOBs record);
+    int insert(Meetingrecord record);
 
-    int insertSelective(MeetingrecordWithBLOBs record);
+    int insertSelective(Meetingrecord record);
 
-    List<MeetingrecordWithBLOBs> selectByExampleWithBLOBs(MeetingrecordExample example);
+    List<Meetingrecord> selectByExampleWithBLOBs(MeetingrecordExample example);
 
     List<Meetingrecord> selectByExample(MeetingrecordExample example);
 
-    MeetingrecordWithBLOBs selectByPrimaryKey(Integer id);
+    Meetingrecord selectByPrimaryKey(Integer id);
 
-    int updateByExampleSelective(@Param("record") MeetingrecordWithBLOBs record, @Param("example") MeetingrecordExample example);
+    int updateByExampleSelective(@Param("record") Meetingrecord record, @Param("example") MeetingrecordExample example);
 
-    int updateByExampleWithBLOBs(@Param("record") MeetingrecordWithBLOBs record, @Param("example") MeetingrecordExample example);
+    int updateByExampleWithBLOBs(@Param("record") Meetingrecord record, @Param("example") MeetingrecordExample example);
 
     int updateByExample(@Param("record") Meetingrecord record, @Param("example") MeetingrecordExample example);
 
-    int updateByPrimaryKeySelective(MeetingrecordWithBLOBs record);
+    int updateByPrimaryKeySelective(Meetingrecord record);
 
-    int updateByPrimaryKeyWithBLOBs(MeetingrecordWithBLOBs record);
+    int updateByPrimaryKeyWithBLOBs(Meetingrecord record);
 
     int updateByPrimaryKey(Meetingrecord record);
 }

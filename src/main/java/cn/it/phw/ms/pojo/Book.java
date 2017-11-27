@@ -1,5 +1,7 @@
 package cn.it.phw.ms.pojo;
 
+import java.util.Date;
+
 public class Book {
     private Integer id;
 
@@ -17,9 +19,9 @@ public class Book {
 
     private String adminName;
 
-    private String category;
+    private Date createTime;
 
-    private String createTime;
+    private String category;
 
     public Integer getId() {
         return id;
@@ -85,19 +87,19 @@ public class Book {
         this.adminName = adminName == null ? null : adminName.trim();
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     public String getCategory() {
         return category;
     }
 
     public void setCategory(String category) {
         this.category = category == null ? null : category.trim();
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime == null ? null : createTime.trim();
     }
 }

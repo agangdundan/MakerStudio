@@ -7,12 +7,10 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="book_id" jdbcType="INTEGER" property="bookId" />
     <result column="book_name" jdbcType="VARCHAR" property="bookName" />
+    <result column="borrow_time" jdbcType="TIMESTAMP" property="borrowTime" />
+    <result column="return_time" jdbcType="TIMESTAMP" property="returnTime" />
     <result column="admin_id" jdbcType="INTEGER" property="adminId" />
     <result column="admin_name" jdbcType="VARCHAR" property="adminName" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.BookusedinfoWithBLOBs">
-    <result column="borrow_time" jdbcType="LONGVARCHAR" property="borrowTime" />
-    <result column="return_time" jdbcType="LONGVARCHAR" property="returnTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,27 +71,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, username, book_id, book_name, admin_id, admin_name
+    id, user_id, username, book_id, book_name, borrow_time, return_time, admin_id, admin_name
   </sql>
-  <sql id="Blob_Column_List">
-    borrow_time, return_time
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="cn.it.phw.ms.pojo.BookusedinfoExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from bookusedinfo
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.BookusedinfoExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -108,11 +87,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from bookusedinfo
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -126,17 +103,17 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.it.phw.ms.pojo.BookusedinfoWithBLOBs">
+  <insert id="insert" parameterType="cn.it.phw.ms.pojo.Bookusedinfo">
     insert into bookusedinfo (id, user_id, username, 
-      book_id, book_name, admin_id, 
-      admin_name, borrow_time, return_time
+      book_id, book_name, borrow_time, 
+      return_time, admin_id, admin_name
       )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
-      #{bookId,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{adminId,jdbcType=INTEGER}, 
-      #{adminName,jdbcType=VARCHAR}, #{borrowTime,jdbcType=LONGVARCHAR}, #{returnTime,jdbcType=LONGVARCHAR}
+      #{bookId,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{borrowTime,jdbcType=TIMESTAMP}, 
+      #{returnTime,jdbcType=TIMESTAMP}, #{adminId,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.BookusedinfoWithBLOBs">
+  <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Bookusedinfo">
     insert into bookusedinfo
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -154,17 +131,17 @@
       <if test="bookName != null">
         book_name,
       </if>
-      <if test="adminId != null">
-        admin_id,
-      </if>
-      <if test="adminName != null">
-        admin_name,
-      </if>
       <if test="borrowTime != null">
         borrow_time,
       </if>
       <if test="returnTime != null">
         return_time,
+      </if>
+      <if test="adminId != null">
+        admin_id,
+      </if>
+      <if test="adminName != null">
+        admin_name,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -183,17 +160,17 @@
       <if test="bookName != null">
         #{bookName,jdbcType=VARCHAR},
       </if>
+      <if test="borrowTime != null">
+        #{borrowTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnTime != null">
+        #{returnTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="adminId != null">
         #{adminId,jdbcType=INTEGER},
       </if>
       <if test="adminName != null">
         #{adminName,jdbcType=VARCHAR},
-      </if>
-      <if test="borrowTime != null">
-        #{borrowTime,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="returnTime != null">
-        #{returnTime,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -221,34 +198,19 @@
       <if test="record.bookName != null">
         book_name = #{record.bookName,jdbcType=VARCHAR},
       </if>
+      <if test="record.borrowTime != null">
+        borrow_time = #{record.borrowTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.returnTime != null">
+        return_time = #{record.returnTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.adminId != null">
         admin_id = #{record.adminId,jdbcType=INTEGER},
       </if>
       <if test="record.adminName != null">
         admin_name = #{record.adminName,jdbcType=VARCHAR},
       </if>
-      <if test="record.borrowTime != null">
-        borrow_time = #{record.borrowTime,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.returnTime != null">
-        return_time = #{record.returnTime,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update bookusedinfo
-    set id = #{record.id,jdbcType=INTEGER},
-      user_id = #{record.userId,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      book_id = #{record.bookId,jdbcType=INTEGER},
-      book_name = #{record.bookName,jdbcType=VARCHAR},
-      admin_id = #{record.adminId,jdbcType=INTEGER},
-      admin_name = #{record.adminName,jdbcType=VARCHAR},
-      borrow_time = #{record.borrowTime,jdbcType=LONGVARCHAR},
-      return_time = #{record.returnTime,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -260,13 +222,15 @@
       username = #{record.username,jdbcType=VARCHAR},
       book_id = #{record.bookId,jdbcType=INTEGER},
       book_name = #{record.bookName,jdbcType=VARCHAR},
+      borrow_time = #{record.borrowTime,jdbcType=TIMESTAMP},
+      return_time = #{record.returnTime,jdbcType=TIMESTAMP},
       admin_id = #{record.adminId,jdbcType=INTEGER},
       admin_name = #{record.adminName,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.it.phw.ms.pojo.BookusedinfoWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.it.phw.ms.pojo.Bookusedinfo">
     update bookusedinfo
     <set>
       <if test="userId != null">
@@ -281,31 +245,19 @@
       <if test="bookName != null">
         book_name = #{bookName,jdbcType=VARCHAR},
       </if>
+      <if test="borrowTime != null">
+        borrow_time = #{borrowTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="returnTime != null">
+        return_time = #{returnTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="adminId != null">
         admin_id = #{adminId,jdbcType=INTEGER},
       </if>
       <if test="adminName != null">
         admin_name = #{adminName,jdbcType=VARCHAR},
       </if>
-      <if test="borrowTime != null">
-        borrow_time = #{borrowTime,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="returnTime != null">
-        return_time = #{returnTime,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.phw.ms.pojo.BookusedinfoWithBLOBs">
-    update bookusedinfo
-    set user_id = #{userId,jdbcType=INTEGER},
-      username = #{username,jdbcType=VARCHAR},
-      book_id = #{bookId,jdbcType=INTEGER},
-      book_name = #{bookName,jdbcType=VARCHAR},
-      admin_id = #{adminId,jdbcType=INTEGER},
-      admin_name = #{adminName,jdbcType=VARCHAR},
-      borrow_time = #{borrowTime,jdbcType=LONGVARCHAR},
-      return_time = #{returnTime,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.it.phw.ms.pojo.Bookusedinfo">
@@ -314,6 +266,8 @@
       username = #{username,jdbcType=VARCHAR},
       book_id = #{bookId,jdbcType=INTEGER},
       book_name = #{bookName,jdbcType=VARCHAR},
+      borrow_time = #{borrowTime,jdbcType=TIMESTAMP},
+      return_time = #{returnTime,jdbcType=TIMESTAMP},
       admin_id = #{adminId,jdbcType=INTEGER},
       admin_name = #{adminName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

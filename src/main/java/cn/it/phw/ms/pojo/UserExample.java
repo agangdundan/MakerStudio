@@ -1,6 +1,7 @@
 package cn.it.phw.ms.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserExample {
@@ -514,6 +515,66 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
         public Criteria andSexIsNull() {
             addCriterion("sex is null");
             return (Criteria) this;
@@ -644,6 +705,66 @@ public class UserExample {
             return (Criteria) this;
         }
 
+        public Criteria andLastTimeIsNull() {
+            addCriterion("last_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTimeIsNotNull() {
+            addCriterion("last_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTimeEqualTo(Date value) {
+            addCriterion("last_time =", value, "lastTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTimeNotEqualTo(Date value) {
+            addCriterion("last_time <>", value, "lastTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTimeGreaterThan(Date value) {
+            addCriterion("last_time >", value, "lastTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("last_time >=", value, "lastTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTimeLessThan(Date value) {
+            addCriterion("last_time <", value, "lastTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTimeLessThanOrEqualTo(Date value) {
+            addCriterion("last_time <=", value, "lastTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTimeIn(List<Date> values) {
+            addCriterion("last_time in", values, "lastTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTimeNotIn(List<Date> values) {
+            addCriterion("last_time not in", values, "lastTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTimeBetween(Date value1, Date value2) {
+            addCriterion("last_time between", value1, value2, "lastTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTimeNotBetween(Date value1, Date value2) {
+            addCriterion("last_time not between", value1, value2, "lastTime");
+            return (Criteria) this;
+        }
+
         public Criteria andCreaterIdIsNull() {
             addCriterion("creater_id is null");
             return (Criteria) this;
@@ -704,73 +825,73 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameIsNull() {
-            addCriterion("creater_name is null");
+        public Criteria andCreatorNameIsNull() {
+            addCriterion("creator_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameIsNotNull() {
-            addCriterion("creater_name is not null");
+        public Criteria andCreatorNameIsNotNull() {
+            addCriterion("creator_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameEqualTo(String value) {
-            addCriterion("creater_name =", value, "createrName");
+        public Criteria andCreatorNameEqualTo(String value) {
+            addCriterion("creator_name =", value, "creatorName");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameNotEqualTo(String value) {
-            addCriterion("creater_name <>", value, "createrName");
+        public Criteria andCreatorNameNotEqualTo(String value) {
+            addCriterion("creator_name <>", value, "creatorName");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameGreaterThan(String value) {
-            addCriterion("creater_name >", value, "createrName");
+        public Criteria andCreatorNameGreaterThan(String value) {
+            addCriterion("creator_name >", value, "creatorName");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameGreaterThanOrEqualTo(String value) {
-            addCriterion("creater_name >=", value, "createrName");
+        public Criteria andCreatorNameGreaterThanOrEqualTo(String value) {
+            addCriterion("creator_name >=", value, "creatorName");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameLessThan(String value) {
-            addCriterion("creater_name <", value, "createrName");
+        public Criteria andCreatorNameLessThan(String value) {
+            addCriterion("creator_name <", value, "creatorName");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameLessThanOrEqualTo(String value) {
-            addCriterion("creater_name <=", value, "createrName");
+        public Criteria andCreatorNameLessThanOrEqualTo(String value) {
+            addCriterion("creator_name <=", value, "creatorName");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameLike(String value) {
-            addCriterion("creater_name like", value, "createrName");
+        public Criteria andCreatorNameLike(String value) {
+            addCriterion("creator_name like", value, "creatorName");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameNotLike(String value) {
-            addCriterion("creater_name not like", value, "createrName");
+        public Criteria andCreatorNameNotLike(String value) {
+            addCriterion("creator_name not like", value, "creatorName");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameIn(List<String> values) {
-            addCriterion("creater_name in", values, "createrName");
+        public Criteria andCreatorNameIn(List<String> values) {
+            addCriterion("creator_name in", values, "creatorName");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameNotIn(List<String> values) {
-            addCriterion("creater_name not in", values, "createrName");
+        public Criteria andCreatorNameNotIn(List<String> values) {
+            addCriterion("creator_name not in", values, "creatorName");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameBetween(String value1, String value2) {
-            addCriterion("creater_name between", value1, value2, "createrName");
+        public Criteria andCreatorNameBetween(String value1, String value2) {
+            addCriterion("creator_name between", value1, value2, "creatorName");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterNameNotBetween(String value1, String value2) {
-            addCriterion("creater_name not between", value1, value2, "createrName");
+        public Criteria andCreatorNameNotBetween(String value1, String value2) {
+            addCriterion("creator_name not between", value1, value2, "creatorName");
             return (Criteria) this;
         }
 

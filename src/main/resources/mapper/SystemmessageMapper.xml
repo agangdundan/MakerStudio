@@ -5,11 +5,11 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="admin_id" jdbcType="INTEGER" property="adminId" />
     <result column="admin_name" jdbcType="VARCHAR" property="adminName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.SystemmessageWithBLOBs">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.Systemmessage">
     <result column="message" jdbcType="LONGVARCHAR" property="message" />
-    <result column="create_time" jdbcType="LONGVARCHAR" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,10 +70,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, admin_id, admin_name, status
+    id, admin_id, admin_name, create_time, status
   </sql>
   <sql id="Blob_Column_List">
-    message, create_time
+    message
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="cn.it.phw.ms.pojo.SystemmessageExample" resultMap="ResultMapWithBLOBs">
     select
@@ -123,15 +123,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.it.phw.ms.pojo.SystemmessageWithBLOBs">
+  <insert id="insert" parameterType="cn.it.phw.ms.pojo.Systemmessage">
     insert into systemmessage (id, admin_id, admin_name, 
-      status, message, create_time
+      create_time, status, message
       )
     values (#{id,jdbcType=INTEGER}, #{adminId,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{message,jdbcType=LONGVARCHAR}, #{createTime,jdbcType=LONGVARCHAR}
+      #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, #{message,jdbcType=LONGVARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.SystemmessageWithBLOBs">
+  <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Systemmessage">
     insert into systemmessage
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -143,14 +143,14 @@
       <if test="adminName != null">
         admin_name,
       </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
       <if test="status != null">
         status,
       </if>
       <if test="message != null">
         message,
-      </if>
-      <if test="createTime != null">
-        create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -163,14 +163,14 @@
       <if test="adminName != null">
         #{adminName,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
       </if>
       <if test="message != null">
         #{message,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -192,14 +192,14 @@
       <if test="record.adminName != null">
         admin_name = #{record.adminName,jdbcType=VARCHAR},
       </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
       <if test="record.message != null">
         message = #{record.message,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -211,9 +211,9 @@
     set id = #{record.id,jdbcType=INTEGER},
       admin_id = #{record.adminId,jdbcType=INTEGER},
       admin_name = #{record.adminName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=INTEGER},
-      message = #{record.message,jdbcType=LONGVARCHAR},
-      create_time = #{record.createTime,jdbcType=LONGVARCHAR}
+      message = #{record.message,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -223,12 +223,13 @@
     set id = #{record.id,jdbcType=INTEGER},
       admin_id = #{record.adminId,jdbcType=INTEGER},
       admin_name = #{record.adminName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.it.phw.ms.pojo.SystemmessageWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.it.phw.ms.pojo.Systemmessage">
     update systemmessage
     <set>
       <if test="adminId != null">
@@ -237,31 +238,32 @@
       <if test="adminName != null">
         admin_name = #{adminName,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
       <if test="message != null">
         message = #{message,jdbcType=LONGVARCHAR},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=LONGVARCHAR},
-      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.phw.ms.pojo.SystemmessageWithBLOBs">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.phw.ms.pojo.Systemmessage">
     update systemmessage
     set admin_id = #{adminId,jdbcType=INTEGER},
       admin_name = #{adminName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
-      message = #{message,jdbcType=LONGVARCHAR},
-      create_time = #{createTime,jdbcType=LONGVARCHAR}
+      message = #{message,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.it.phw.ms.pojo.Systemmessage">
     update systemmessage
     set admin_id = #{adminId,jdbcType=INTEGER},
       admin_name = #{adminName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

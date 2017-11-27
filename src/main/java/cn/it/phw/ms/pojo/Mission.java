@@ -1,5 +1,7 @@
 package cn.it.phw.ms.pojo;
 
+import java.util.Date;
+
 public class Mission {
     private Integer id;
 
@@ -9,7 +11,7 @@ public class Mission {
 
     private String title;
 
-    private String createTime;
+    private Date createTime;
 
     private Integer status;
 
@@ -47,12 +49,12 @@ public class Mission {
         this.title = title == null ? null : title.trim();
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime == null ? null : createTime.trim();
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     public Integer getStatus() {

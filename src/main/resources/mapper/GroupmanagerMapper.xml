@@ -8,7 +8,7 @@
     <result column="user_group_id" jdbcType="INTEGER" property="userGroupId" />
     <result column="modify_user_id" jdbcType="INTEGER" property="modifyUserId" />
     <result column="modify_username" jdbcType="VARCHAR" property="modifyUsername" />
-    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -107,7 +107,7 @@
       create_time)
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
       #{userGroupId,jdbcType=INTEGER}, #{modifyUserId,jdbcType=INTEGER}, #{modifyUsername,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=VARCHAR})
+      #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Groupmanager">
     insert into groupmanager
@@ -154,7 +154,7 @@
         #{modifyUsername,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -186,7 +186,7 @@
         modify_username = #{record.modifyUsername,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     <if test="_parameter != null">
@@ -201,7 +201,7 @@
       user_group_id = #{record.userGroupId,jdbcType=INTEGER},
       modify_user_id = #{record.modifyUserId,jdbcType=INTEGER},
       modify_username = #{record.modifyUsername,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=VARCHAR}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -225,7 +225,7 @@
         modify_username = #{modifyUsername,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -237,7 +237,7 @@
       user_group_id = #{userGroupId,jdbcType=INTEGER},
       modify_user_id = #{modifyUserId,jdbcType=INTEGER},
       modify_username = #{modifyUsername,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=VARCHAR}
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

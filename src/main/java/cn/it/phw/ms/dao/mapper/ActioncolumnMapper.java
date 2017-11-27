@@ -1,10 +1,8 @@
 package cn.it.phw.ms.dao.mapper;
 
-import cn.it.phw.ms.pojo.ActioncolumnExample;
 import cn.it.phw.ms.pojo.Actioncolumn;
-
+import cn.it.phw.ms.pojo.ActioncolumnExample;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface ActioncolumnMapper {

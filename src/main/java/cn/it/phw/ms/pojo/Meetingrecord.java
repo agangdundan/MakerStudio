@@ -1,5 +1,7 @@
 package cn.it.phw.ms.pojo;
 
+import java.util.Date;
+
 public class Meetingrecord {
     private Integer id;
 
@@ -10,6 +12,10 @@ public class Meetingrecord {
     private String meetingTitle;
 
     private String meetingMember;
+
+    private Date createTime;
+
+    private String meetingContent;
 
     public Integer getId() {
         return id;
@@ -49,5 +55,21 @@ public class Meetingrecord {
 
     public void setMeetingMember(String meetingMember) {
         this.meetingMember = meetingMember == null ? null : meetingMember.trim();
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getMeetingContent() {
+        return meetingContent;
+    }
+
+    public void setMeetingContent(String meetingContent) {
+        this.meetingContent = meetingContent == null ? null : meetingContent.trim();
     }
 }

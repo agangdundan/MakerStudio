@@ -1,5 +1,7 @@
 package cn.it.phw.ms.pojo;
 
+import java.util.Date;
+
 public class Upload {
     private Integer id;
 
@@ -19,9 +21,9 @@ public class Upload {
 
     private String uploadUsername;
 
-    private Integer visiable;
+    private Date createTime;
 
-    private String createTime;
+    private Integer visiable;
 
     public Integer getId() {
         return id;
@@ -95,19 +97,19 @@ public class Upload {
         this.uploadUsername = uploadUsername == null ? null : uploadUsername.trim();
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     public Integer getVisiable() {
         return visiable;
     }
 
     public void setVisiable(Integer visiable) {
         this.visiable = visiable;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime == null ? null : createTime.trim();
     }
 }

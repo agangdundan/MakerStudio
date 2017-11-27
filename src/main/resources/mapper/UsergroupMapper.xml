@@ -5,11 +5,9 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="group_name" jdbcType="VARCHAR" property="groupName" />
     <result column="group_info" jdbcType="VARCHAR" property="groupInfo" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="creater_id" jdbcType="INTEGER" property="createrId" />
     <result column="creater_name" jdbcType="VARCHAR" property="createrName" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.Usergroup">
-    <result column="create_time" jdbcType="LONGVARCHAR" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -70,27 +68,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, group_name, group_info, creater_id, creater_name
+    id, group_name, group_info, create_time, creater_id, creater_name
   </sql>
-  <sql id="Blob_Column_List">
-    create_time
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="cn.it.phw.ms.pojo.UsergroupExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from usergroup
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.UsergroupExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -105,11 +84,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from usergroup
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -125,10 +102,10 @@
   </delete>
   <insert id="insert" parameterType="cn.it.phw.ms.pojo.Usergroup">
     insert into usergroup (id, group_name, group_info, 
-      creater_id, creater_name, create_time
+      create_time, creater_id, creater_name
       )
     values (#{id,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, #{groupInfo,jdbcType=VARCHAR}, 
-      #{createrId,jdbcType=INTEGER}, #{createrName,jdbcType=VARCHAR}, #{createTime,jdbcType=LONGVARCHAR}
+      #{createTime,jdbcType=TIMESTAMP}, #{createrId,jdbcType=INTEGER}, #{createrName,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Usergroup">
@@ -143,14 +120,14 @@
       <if test="groupInfo != null">
         group_info,
       </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
       <if test="createrId != null">
         creater_id,
       </if>
       <if test="createrName != null">
         creater_name,
-      </if>
-      <if test="createTime != null">
-        create_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -163,14 +140,14 @@
       <if test="groupInfo != null">
         #{groupInfo,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="createrId != null">
         #{createrId,jdbcType=INTEGER},
       </if>
       <if test="createrName != null">
         #{createrName,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -192,28 +169,16 @@
       <if test="record.groupInfo != null">
         group_info = #{record.groupInfo,jdbcType=VARCHAR},
       </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.createrId != null">
         creater_id = #{record.createrId,jdbcType=INTEGER},
       </if>
       <if test="record.createrName != null">
         creater_name = #{record.createrName,jdbcType=VARCHAR},
       </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update usergroup
-    set id = #{record.id,jdbcType=INTEGER},
-      group_name = #{record.groupName,jdbcType=VARCHAR},
-      group_info = #{record.groupInfo,jdbcType=VARCHAR},
-      creater_id = #{record.createrId,jdbcType=INTEGER},
-      creater_name = #{record.createrName,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -223,6 +188,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       group_name = #{record.groupName,jdbcType=VARCHAR},
       group_info = #{record.groupInfo,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       creater_id = #{record.createrId,jdbcType=INTEGER},
       creater_name = #{record.createrName,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -238,31 +204,23 @@
       <if test="groupInfo != null">
         group_info = #{groupInfo,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="createrId != null">
         creater_id = #{createrId,jdbcType=INTEGER},
       </if>
       <if test="createrName != null">
         creater_name = #{createrName,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.phw.ms.pojo.Usergroup">
-    update usergroup
-    set group_name = #{groupName,jdbcType=VARCHAR},
-      group_info = #{groupInfo,jdbcType=VARCHAR},
-      creater_id = #{createrId,jdbcType=INTEGER},
-      creater_name = #{createrName,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.it.phw.ms.pojo.Usergroup">
     update usergroup
     set group_name = #{groupName,jdbcType=VARCHAR},
       group_info = #{groupInfo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       creater_id = #{createrId,jdbcType=INTEGER},
       creater_name = #{createrName,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

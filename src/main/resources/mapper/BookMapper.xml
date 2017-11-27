@@ -10,10 +10,8 @@
     <result column="publish" jdbcType="VARCHAR" property="publish" />
     <result column="admin_id" jdbcType="INTEGER" property="adminId" />
     <result column="admin_name" jdbcType="VARCHAR" property="adminName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="category" jdbcType="VARCHAR" property="category" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.Book">
-    <result column="create_time" jdbcType="LONGVARCHAR" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -74,27 +72,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, book_name, image, status, author, publish, admin_id, admin_name, category
+    id, book_name, image, status, author, publish, admin_id, admin_name, create_time, 
+    category
   </sql>
-  <sql id="Blob_Column_List">
-    create_time
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="cn.it.phw.ms.pojo.BookExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from book
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.BookExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -109,11 +89,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from book
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -130,12 +108,12 @@
   <insert id="insert" parameterType="cn.it.phw.ms.pojo.Book">
     insert into book (id, book_name, image, 
       status, author, publish, 
-      admin_id, admin_name, category, 
-      create_time)
+      admin_id, admin_name, create_time, 
+      category)
     values (#{id,jdbcType=INTEGER}, #{bookName,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
       #{status,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, #{publish,jdbcType=VARCHAR}, 
-      #{adminId,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{category,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=LONGVARCHAR})
+      #{adminId,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{category,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Book">
     insert into book
@@ -164,11 +142,11 @@
       <if test="adminName != null">
         admin_name,
       </if>
-      <if test="category != null">
-        category,
-      </if>
       <if test="createTime != null">
         create_time,
+      </if>
+      <if test="category != null">
+        category,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -196,11 +174,11 @@
       <if test="adminName != null">
         #{adminName,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="category != null">
         #{category,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -237,29 +215,13 @@
       <if test="record.adminName != null">
         admin_name = #{record.adminName,jdbcType=VARCHAR},
       </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.category != null">
         category = #{record.category,jdbcType=VARCHAR},
       </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update book
-    set id = #{record.id,jdbcType=INTEGER},
-      book_name = #{record.bookName,jdbcType=VARCHAR},
-      image = #{record.image,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=INTEGER},
-      author = #{record.author,jdbcType=VARCHAR},
-      publish = #{record.publish,jdbcType=VARCHAR},
-      admin_id = #{record.adminId,jdbcType=INTEGER},
-      admin_name = #{record.adminName,jdbcType=VARCHAR},
-      category = #{record.category,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -274,6 +236,7 @@
       publish = #{record.publish,jdbcType=VARCHAR},
       admin_id = #{record.adminId,jdbcType=INTEGER},
       admin_name = #{record.adminName,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       category = #{record.category,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -303,26 +266,13 @@
       <if test="adminName != null">
         admin_name = #{adminName,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="category != null">
         category = #{category,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.phw.ms.pojo.Book">
-    update book
-    set book_name = #{bookName,jdbcType=VARCHAR},
-      image = #{image,jdbcType=VARCHAR},
-      status = #{status,jdbcType=INTEGER},
-      author = #{author,jdbcType=VARCHAR},
-      publish = #{publish,jdbcType=VARCHAR},
-      admin_id = #{adminId,jdbcType=INTEGER},
-      admin_name = #{adminName,jdbcType=VARCHAR},
-      category = #{category,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.it.phw.ms.pojo.Book">
@@ -334,6 +284,7 @@
       publish = #{publish,jdbcType=VARCHAR},
       admin_id = #{adminId,jdbcType=INTEGER},
       admin_name = #{adminName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       category = #{category,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -1,5 +1,7 @@
 package cn.it.phw.ms.pojo;
 
+import java.util.Date;
+
 public class User {
     private Integer id;
 
@@ -13,13 +15,17 @@ public class User {
 
     private String signature;
 
+    private Date createTime;
+
     private Integer sex;
 
     private String salt;
 
+    private Date lastTime;
+
     private Integer createrId;
 
-    private String createrName;
+    private String creatorName;
 
     private String phone;
 
@@ -71,6 +77,14 @@ public class User {
         this.signature = signature == null ? null : signature.trim();
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     public Integer getSex() {
         return sex;
     }
@@ -87,6 +101,14 @@ public class User {
         this.salt = salt == null ? null : salt.trim();
     }
 
+    public Date getLastTime() {
+        return lastTime;
+    }
+
+    public void setLastTime(Date lastTime) {
+        this.lastTime = lastTime;
+    }
+
     public Integer getCreaterId() {
         return createrId;
     }
@@ -95,12 +117,12 @@ public class User {
         this.createrId = createrId;
     }
 
-    public String getCreaterName() {
-        return createrName;
+    public String getCreatorName() {
+        return creatorName;
     }
 
-    public void setCreaterName(String createrName) {
-        this.createrName = createrName == null ? null : createrName.trim();
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName == null ? null : creatorName.trim();
     }
 
     public String getPhone() {

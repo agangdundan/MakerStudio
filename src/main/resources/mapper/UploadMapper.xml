@@ -11,10 +11,8 @@
     <result column="downloadtime" jdbcType="INTEGER" property="downloadtime" />
     <result column="upload_user_id" jdbcType="INTEGER" property="uploadUserId" />
     <result column="upload_username" jdbcType="VARCHAR" property="uploadUsername" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="visiable" jdbcType="INTEGER" property="visiable" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.Upload">
-    <result column="create_time" jdbcType="LONGVARCHAR" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -76,27 +74,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, filename, image, contenttype, url, localpath, downloadtime, upload_user_id, upload_username, 
-    visiable
+    create_time, visiable
   </sql>
-  <sql id="Blob_Column_List">
-    create_time
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="cn.it.phw.ms.pojo.UploadExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from upload
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.UploadExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -111,11 +90,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from upload
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -133,11 +110,11 @@
     insert into upload (id, filename, image, 
       contenttype, url, localpath, 
       downloadtime, upload_user_id, upload_username, 
-      visiable, create_time)
+      create_time, visiable)
     values (#{id,jdbcType=INTEGER}, #{filename,jdbcType=VARCHAR}, #{image,jdbcType=VARCHAR}, 
       #{contenttype,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{localpath,jdbcType=VARCHAR}, 
       #{downloadtime,jdbcType=INTEGER}, #{uploadUserId,jdbcType=INTEGER}, #{uploadUsername,jdbcType=VARCHAR}, 
-      #{visiable,jdbcType=INTEGER}, #{createTime,jdbcType=LONGVARCHAR})
+      #{createTime,jdbcType=TIMESTAMP}, #{visiable,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Upload">
     insert into upload
@@ -169,11 +146,11 @@
       <if test="uploadUsername != null">
         upload_username,
       </if>
-      <if test="visiable != null">
-        visiable,
-      </if>
       <if test="createTime != null">
         create_time,
+      </if>
+      <if test="visiable != null">
+        visiable,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -204,11 +181,11 @@
       <if test="uploadUsername != null">
         #{uploadUsername,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="visiable != null">
         #{visiable,jdbcType=INTEGER},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -248,30 +225,13 @@
       <if test="record.uploadUsername != null">
         upload_username = #{record.uploadUsername,jdbcType=VARCHAR},
       </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.visiable != null">
         visiable = #{record.visiable,jdbcType=INTEGER},
       </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update upload
-    set id = #{record.id,jdbcType=INTEGER},
-      filename = #{record.filename,jdbcType=VARCHAR},
-      image = #{record.image,jdbcType=VARCHAR},
-      contenttype = #{record.contenttype,jdbcType=VARCHAR},
-      url = #{record.url,jdbcType=VARCHAR},
-      localpath = #{record.localpath,jdbcType=VARCHAR},
-      downloadtime = #{record.downloadtime,jdbcType=INTEGER},
-      upload_user_id = #{record.uploadUserId,jdbcType=INTEGER},
-      upload_username = #{record.uploadUsername,jdbcType=VARCHAR},
-      visiable = #{record.visiable,jdbcType=INTEGER},
-      create_time = #{record.createTime,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -287,6 +247,7 @@
       downloadtime = #{record.downloadtime,jdbcType=INTEGER},
       upload_user_id = #{record.uploadUserId,jdbcType=INTEGER},
       upload_username = #{record.uploadUsername,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       visiable = #{record.visiable,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -319,27 +280,13 @@
       <if test="uploadUsername != null">
         upload_username = #{uploadUsername,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="visiable != null">
         visiable = #{visiable,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.phw.ms.pojo.Upload">
-    update upload
-    set filename = #{filename,jdbcType=VARCHAR},
-      image = #{image,jdbcType=VARCHAR},
-      contenttype = #{contenttype,jdbcType=VARCHAR},
-      url = #{url,jdbcType=VARCHAR},
-      localpath = #{localpath,jdbcType=VARCHAR},
-      downloadtime = #{downloadtime,jdbcType=INTEGER},
-      upload_user_id = #{uploadUserId,jdbcType=INTEGER},
-      upload_username = #{uploadUsername,jdbcType=VARCHAR},
-      visiable = #{visiable,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.it.phw.ms.pojo.Upload">
@@ -352,6 +299,7 @@
       downloadtime = #{downloadtime,jdbcType=INTEGER},
       upload_user_id = #{uploadUserId,jdbcType=INTEGER},
       upload_username = #{uploadUsername,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       visiable = #{visiable,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

@@ -1,6 +1,7 @@
 package cn.it.phw.ms.service.Impl;
 
 import cn.it.phw.ms.common.JsonResult;
+import cn.it.phw.ms.common.JsonResultForLayui;
 import cn.it.phw.ms.pojo.*;
 import cn.it.phw.ms.service.BaseService;
 
@@ -10,6 +11,8 @@ import java.util.Map;
 public class BaseServiceImpl implements BaseService {
 
     public JsonResult jsonResult = new JsonResult();
+
+    public JsonResultForLayui jsonResultForLayui = new JsonResultForLayui();
 
     public Map<String, Object> data = new HashMap<>();
 

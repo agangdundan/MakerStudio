@@ -3,7 +3,6 @@ package cn.it.phw.ms.dao.mapper;
 import cn.it.phw.ms.pojo.Learningplancolumnmanager;
 import cn.it.phw.ms.pojo.LearningplancolumnmanagerExample;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface LearningplancolumnmanagerMapper {

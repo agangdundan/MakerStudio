@@ -1,5 +1,7 @@
 package cn.it.phw.ms.pojo;
 
+import java.util.Date;
+
 public class Groupmanager {
     private Integer id;
 
@@ -13,7 +15,7 @@ public class Groupmanager {
 
     private String modifyUsername;
 
-    private String createTime;
+    private Date createTime;
 
     public Integer getId() {
         return id;
@@ -63,11 +65,11 @@ public class Groupmanager {
         this.modifyUsername = modifyUsername == null ? null : modifyUsername.trim();
     }
 
-    public String getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime == null ? null : createTime.trim();
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

@@ -7,10 +7,10 @@
     <result column="recorder_username" jdbcType="VARCHAR" property="recorderUsername" />
     <result column="meeting_title" jdbcType="VARCHAR" property="meetingTitle" />
     <result column="meeting_member" jdbcType="VARCHAR" property="meetingMember" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.MeetingrecordWithBLOBs">
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.Meetingrecord">
     <result column="meeting_content" jdbcType="LONGVARCHAR" property="meetingContent" />
-    <result column="create_time" jdbcType="LONGVARCHAR" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -71,10 +71,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, recorder_id, recorder_username, meeting_title, meeting_member
+    id, recorder_id, recorder_username, meeting_title, meeting_member, create_time
   </sql>
   <sql id="Blob_Column_List">
-    meeting_content, create_time
+    meeting_content
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="cn.it.phw.ms.pojo.MeetingrecordExample" resultMap="ResultMapWithBLOBs">
     select
@@ -124,15 +124,15 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.it.phw.ms.pojo.MeetingrecordWithBLOBs">
+  <insert id="insert" parameterType="cn.it.phw.ms.pojo.Meetingrecord">
     insert into meetingrecord (id, recorder_id, recorder_username, 
-      meeting_title, meeting_member, meeting_content, 
-      create_time)
+      meeting_title, meeting_member, create_time, 
+      meeting_content)
     values (#{id,jdbcType=INTEGER}, #{recorderId,jdbcType=INTEGER}, #{recorderUsername,jdbcType=VARCHAR}, 
-      #{meetingTitle,jdbcType=VARCHAR}, #{meetingMember,jdbcType=VARCHAR}, #{meetingContent,jdbcType=LONGVARCHAR}, 
-      #{createTime,jdbcType=LONGVARCHAR})
+      #{meetingTitle,jdbcType=VARCHAR}, #{meetingMember,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{meetingContent,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.MeetingrecordWithBLOBs">
+  <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Meetingrecord">
     insert into meetingrecord
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -150,11 +150,11 @@
       <if test="meetingMember != null">
         meeting_member,
       </if>
-      <if test="meetingContent != null">
-        meeting_content,
-      </if>
       <if test="createTime != null">
         create_time,
+      </if>
+      <if test="meetingContent != null">
+        meeting_content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -173,11 +173,11 @@
       <if test="meetingMember != null">
         #{meetingMember,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="meetingContent != null">
         #{meetingContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -205,11 +205,11 @@
       <if test="record.meetingMember != null">
         meeting_member = #{record.meetingMember,jdbcType=VARCHAR},
       </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.meetingContent != null">
         meeting_content = #{record.meetingContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -223,8 +223,8 @@
       recorder_username = #{record.recorderUsername,jdbcType=VARCHAR},
       meeting_title = #{record.meetingTitle,jdbcType=VARCHAR},
       meeting_member = #{record.meetingMember,jdbcType=VARCHAR},
-      meeting_content = #{record.meetingContent,jdbcType=LONGVARCHAR},
-      create_time = #{record.createTime,jdbcType=LONGVARCHAR}
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      meeting_content = #{record.meetingContent,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -235,12 +235,13 @@
       recorder_id = #{record.recorderId,jdbcType=INTEGER},
       recorder_username = #{record.recorderUsername,jdbcType=VARCHAR},
       meeting_title = #{record.meetingTitle,jdbcType=VARCHAR},
-      meeting_member = #{record.meetingMember,jdbcType=VARCHAR}
+      meeting_member = #{record.meetingMember,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.it.phw.ms.pojo.MeetingrecordWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.it.phw.ms.pojo.Meetingrecord">
     update meetingrecord
     <set>
       <if test="recorderId != null">
@@ -255,23 +256,23 @@
       <if test="meetingMember != null">
         meeting_member = #{meetingMember,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="meetingContent != null">
         meeting_content = #{meetingContent,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.phw.ms.pojo.MeetingrecordWithBLOBs">
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.phw.ms.pojo.Meetingrecord">
     update meetingrecord
     set recorder_id = #{recorderId,jdbcType=INTEGER},
       recorder_username = #{recorderUsername,jdbcType=VARCHAR},
       meeting_title = #{meetingTitle,jdbcType=VARCHAR},
       meeting_member = #{meetingMember,jdbcType=VARCHAR},
-      meeting_content = #{meetingContent,jdbcType=LONGVARCHAR},
-      create_time = #{createTime,jdbcType=LONGVARCHAR}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      meeting_content = #{meetingContent,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.it.phw.ms.pojo.Meetingrecord">
@@ -279,7 +280,8 @@
     set recorder_id = #{recorderId,jdbcType=INTEGER},
       recorder_username = #{recorderUsername,jdbcType=VARCHAR},
       meeting_title = #{meetingTitle,jdbcType=VARCHAR},
-      meeting_member = #{meetingMember,jdbcType=VARCHAR}
+      meeting_member = #{meetingMember,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

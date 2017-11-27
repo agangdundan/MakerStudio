@@ -3,7 +3,6 @@ package cn.it.phw.ms.dao.mapper;
 import cn.it.phw.ms.pojo.Groupmanager;
 import cn.it.phw.ms.pojo.GroupmanagerExample;
 import java.util.List;
-
 import org.apache.ibatis.annotations.Param;
 
 public interface GroupmanagerMapper {

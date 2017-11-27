@@ -48,7 +48,7 @@
         </javaClientGenerator>
 
         <!-- 指定数据库表 -->
-        <!--<table schema="ms" tableName="action" />
+        <table schema="ms" tableName="action" />
         <table schema="ms" tableName="actioncolumn" />
         <table schema="ms" tableName="actiongroup" />
         <table schema="ms" tableName="book" />
@@ -63,8 +63,7 @@
         <table schema="ms" tableName="systemmessage" />
         <table schema="ms" tableName="upload" />
         <table schema="ms" tableName="user" />
-        <table schema="ms" tableName="usergroup" />-->
+        <table schema="ms" tableName="usergroup" />
 
-        <table schema="ms" tableName="learningplanform" />
     </context>
 </generatorConfiguration>

@@ -1,6 +1,7 @@
 package cn.it.phw.ms.pojo;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BookusedinfoExample {
@@ -421,6 +422,126 @@ public class BookusedinfoExample {
 
         public Criteria andBookNameNotBetween(String value1, String value2) {
             addCriterion("book_name not between", value1, value2, "bookName");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeIsNull() {
+            addCriterion("borrow_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeIsNotNull() {
+            addCriterion("borrow_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeEqualTo(Date value) {
+            addCriterion("borrow_time =", value, "borrowTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeNotEqualTo(Date value) {
+            addCriterion("borrow_time <>", value, "borrowTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeGreaterThan(Date value) {
+            addCriterion("borrow_time >", value, "borrowTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("borrow_time >=", value, "borrowTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeLessThan(Date value) {
+            addCriterion("borrow_time <", value, "borrowTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeLessThanOrEqualTo(Date value) {
+            addCriterion("borrow_time <=", value, "borrowTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeIn(List<Date> values) {
+            addCriterion("borrow_time in", values, "borrowTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeNotIn(List<Date> values) {
+            addCriterion("borrow_time not in", values, "borrowTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeBetween(Date value1, Date value2) {
+            addCriterion("borrow_time between", value1, value2, "borrowTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andBorrowTimeNotBetween(Date value1, Date value2) {
+            addCriterion("borrow_time not between", value1, value2, "borrowTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeIsNull() {
+            addCriterion("return_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeIsNotNull() {
+            addCriterion("return_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeEqualTo(Date value) {
+            addCriterion("return_time =", value, "returnTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeNotEqualTo(Date value) {
+            addCriterion("return_time <>", value, "returnTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeGreaterThan(Date value) {
+            addCriterion("return_time >", value, "returnTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("return_time >=", value, "returnTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeLessThan(Date value) {
+            addCriterion("return_time <", value, "returnTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeLessThanOrEqualTo(Date value) {
+            addCriterion("return_time <=", value, "returnTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeIn(List<Date> values) {
+            addCriterion("return_time in", values, "returnTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeNotIn(List<Date> values) {
+            addCriterion("return_time not in", values, "returnTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeBetween(Date value1, Date value2) {
+            addCriterion("return_time between", value1, value2, "returnTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andReturnTimeNotBetween(Date value1, Date value2) {
+            addCriterion("return_time not between", value1, value2, "returnTime");
             return (Criteria) this;
         }
 

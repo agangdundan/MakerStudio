@@ -8,15 +8,13 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="header" jdbcType="VARCHAR" property="header" />
     <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
     <result column="creater_id" jdbcType="INTEGER" property="createrId" />
-    <result column="creater_name" jdbcType="VARCHAR" property="createrName" />
+    <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
-  </resultMap>
-  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.UserWithBLOBs">
-    <result column="create_time" jdbcType="LONGVARCHAR" property="createTime" />
-    <result column="last_time" jdbcType="LONGVARCHAR" property="lastTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -77,28 +75,9 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, username, email, password, header, signature, sex, salt, creater_id, creater_name, 
-    phone
+    id, username, email, password, header, signature, create_time, sex, salt, last_time, 
+    creater_id, creator_name, phone
   </sql>
-  <sql id="Blob_Column_List">
-    create_time, last_time
-  </sql>
-  <select id="selectByExampleWithBLOBs" parameterType="cn.it.phw.ms.pojo.UserExample" resultMap="ResultMapWithBLOBs">
-    select
-    <if test="distinct">
-      distinct
-    </if>
-    <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
-    from user
-    <if test="_parameter != null">
-      <include refid="Example_Where_Clause" />
-    </if>
-    <if test="orderByClause != null">
-      order by ${orderByClause}
-    </if>
-  </select>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.UserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
@@ -113,11 +92,9 @@
       order by ${orderByClause}
     </if>
   </select>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    ,
-    <include refid="Blob_Column_List" />
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
@@ -131,19 +108,19 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="cn.it.phw.ms.pojo.UserWithBLOBs">
+  <insert id="insert" parameterType="cn.it.phw.ms.pojo.User">
     insert into user (id, username, email, 
       password, header, signature, 
-      sex, salt, creater_id, 
-      creater_name, phone, create_time, 
-      last_time)
+      create_time, sex, salt, 
+      last_time, creater_id, creator_name, 
+      phone)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{header,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, 
-      #{sex,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR}, #{createrId,jdbcType=INTEGER}, 
-      #{createrName,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{createTime,jdbcType=LONGVARCHAR}, 
-      #{lastTime,jdbcType=LONGVARCHAR})
+      #{createTime,jdbcType=TIMESTAMP}, #{sex,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR}, 
+      #{lastTime,jdbcType=TIMESTAMP}, #{createrId,jdbcType=INTEGER}, #{creatorName,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.UserWithBLOBs">
+  <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.User">
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -164,26 +141,26 @@
       <if test="signature != null">
         signature,
       </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
       <if test="sex != null">
         sex,
       </if>
       <if test="salt != null">
         salt,
       </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
       <if test="createrId != null">
         creater_id,
       </if>
-      <if test="createrName != null">
-        creater_name,
+      <if test="creatorName != null">
+        creator_name,
       </if>
       <if test="phone != null">
         phone,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="lastTime != null">
-        last_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -205,26 +182,26 @@
       <if test="signature != null">
         #{signature,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="sex != null">
         #{sex,jdbcType=INTEGER},
       </if>
       <if test="salt != null">
         #{salt,jdbcType=VARCHAR},
       </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="createrId != null">
         #{createrId,jdbcType=INTEGER},
       </if>
-      <if test="createrName != null">
-        #{createrName,jdbcType=VARCHAR},
+      <if test="creatorName != null">
+        #{creatorName,jdbcType=VARCHAR},
       </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="lastTime != null">
-        #{lastTime,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -255,47 +232,28 @@
       <if test="record.signature != null">
         signature = #{record.signature,jdbcType=VARCHAR},
       </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.sex != null">
         sex = #{record.sex,jdbcType=INTEGER},
       </if>
       <if test="record.salt != null">
         salt = #{record.salt,jdbcType=VARCHAR},
       </if>
+      <if test="record.lastTime != null">
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="record.createrId != null">
         creater_id = #{record.createrId,jdbcType=INTEGER},
       </if>
-      <if test="record.createrName != null">
-        creater_name = #{record.createrName,jdbcType=VARCHAR},
+      <if test="record.creatorName != null">
+        creator_name = #{record.creatorName,jdbcType=VARCHAR},
       </if>
       <if test="record.phone != null">
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="record.lastTime != null">
-        last_time = #{record.lastTime,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    <if test="_parameter != null">
-      <include refid="Update_By_Example_Where_Clause" />
-    </if>
-  </update>
-  <update id="updateByExampleWithBLOBs" parameterType="map">
-    update user
-    set id = #{record.id,jdbcType=INTEGER},
-      username = #{record.username,jdbcType=VARCHAR},
-      email = #{record.email,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR},
-      header = #{record.header,jdbcType=VARCHAR},
-      signature = #{record.signature,jdbcType=VARCHAR},
-      sex = #{record.sex,jdbcType=INTEGER},
-      salt = #{record.salt,jdbcType=VARCHAR},
-      creater_id = #{record.createrId,jdbcType=INTEGER},
-      creater_name = #{record.createrName,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=LONGVARCHAR},
-      last_time = #{record.lastTime,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -308,16 +266,18 @@
       password = #{record.password,jdbcType=VARCHAR},
       header = #{record.header,jdbcType=VARCHAR},
       signature = #{record.signature,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       sex = #{record.sex,jdbcType=INTEGER},
       salt = #{record.salt,jdbcType=VARCHAR},
+      last_time = #{record.lastTime,jdbcType=TIMESTAMP},
       creater_id = #{record.createrId,jdbcType=INTEGER},
-      creater_name = #{record.createrName,jdbcType=VARCHAR},
+      creator_name = #{record.creatorName,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.it.phw.ms.pojo.UserWithBLOBs">
+  <update id="updateByPrimaryKeySelective" parameterType="cn.it.phw.ms.pojo.User">
     update user
     <set>
       <if test="username != null">
@@ -335,44 +295,28 @@
       <if test="signature != null">
         signature = #{signature,jdbcType=VARCHAR},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="sex != null">
         sex = #{sex,jdbcType=INTEGER},
       </if>
       <if test="salt != null">
         salt = #{salt,jdbcType=VARCHAR},
       </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
       <if test="createrId != null">
         creater_id = #{createrId,jdbcType=INTEGER},
       </if>
-      <if test="createrName != null">
-        creater_name = #{createrName,jdbcType=VARCHAR},
+      <if test="creatorName != null">
+        creator_name = #{creatorName,jdbcType=VARCHAR},
       </if>
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="lastTime != null">
-        last_time = #{lastTime,jdbcType=LONGVARCHAR},
-      </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
-  </update>
-  <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.phw.ms.pojo.UserWithBLOBs">
-    update user
-    set username = #{username,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      header = #{header,jdbcType=VARCHAR},
-      signature = #{signature,jdbcType=VARCHAR},
-      sex = #{sex,jdbcType=INTEGER},
-      salt = #{salt,jdbcType=VARCHAR},
-      creater_id = #{createrId,jdbcType=INTEGER},
-      creater_name = #{createrName,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=LONGVARCHAR},
-      last_time = #{lastTime,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.it.phw.ms.pojo.User">
@@ -382,10 +326,12 @@
       password = #{password,jdbcType=VARCHAR},
       header = #{header,jdbcType=VARCHAR},
       signature = #{signature,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       sex = #{sex,jdbcType=INTEGER},
       salt = #{salt,jdbcType=VARCHAR},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
       creater_id = #{createrId,jdbcType=INTEGER},
-      creater_name = #{createrName,jdbcType=VARCHAR},
+      creator_name = #{creatorName,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>

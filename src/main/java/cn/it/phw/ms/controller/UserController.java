@@ -1,8 +1,8 @@
 package cn.it.phw.ms.controller;
 
-import cn.it.phw.ms.pojo.User;
 import cn.it.phw.ms.common.JsonResult;
-import cn.it.phw.ms.pojo.UserWithBLOBs;
+import cn.it.phw.ms.common.JsonResultForLayui;
+import cn.it.phw.ms.pojo.User;
 import cn.it.phw.ms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -38,15 +38,32 @@ public class UserController extends BaseController {
     }
 
     @ResponseBody
-    @DeleteMapping(value = "/user")
-    public JsonResult doDeleteUser(User user) {
-        return userService.doDeleteUser(user);
+    @DeleteMapping(value = "/user/{id}")
+    public JsonResult doDeleteUserByPK(@PathVariable("id") Integer id) {
+        return userService.doDeleteUserByPK(id);
     }
 
     @ResponseBody
-    @PutMapping(value = "/user")
-    public JsonResult doRegUser(UserWithBLOBs user, HttpSession session){
+    @PutMapping("/user")
+    public JsonResult doRegUser(User user, HttpSession session){
         return userService.doRegUser(user, session);
     }
 
+    @ResponseBody
+    @GetMapping("/users")
+    public JsonResult findAllUsers() {
+        return userService.findAllUsers();
+    }
+
+    @ResponseBody
+    @GetMapping("/users/layui")
+    public JsonResultForLayui findAllUsersWithLayui() {
+        return userService.findAllUsersWithLayui();
+    }
+
+    @ResponseBody
+    @GetMapping("/user/{id}")
+    public JsonResult findUserByPK(@PathVariable("id") Integer id) {
+        return userService.findUserByPK(id);
+    }
 }

@@ -1,5 +1,7 @@
 package cn.it.phw.ms.pojo;
 
+import java.util.Date;
+
 public class Usergroup {
     private Integer id;
 
@@ -7,11 +9,11 @@ public class Usergroup {
 
     private String groupInfo;
 
+    private Date createTime;
+
     private Integer createrId;
 
     private String createrName;
-
-    private String createTime;
 
     public Integer getId() {
         return id;
@@ -37,6 +39,14 @@ public class Usergroup {
         this.groupInfo = groupInfo == null ? null : groupInfo.trim();
     }
 
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
     public Integer getCreaterId() {
         return createrId;
     }
@@ -51,13 +61,5 @@ public class Usergroup {
 
     public void setCreaterName(String createrName) {
         this.createrName = createrName == null ? null : createrName.trim();
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime == null ? null : createTime.trim();
     }
 }

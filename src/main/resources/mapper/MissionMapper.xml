@@ -6,7 +6,7 @@
     <result column="creater_id" jdbcType="INTEGER" property="createrId" />
     <result column="admin_name" jdbcType="VARCHAR" property="adminName" />
     <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="status" jdbcType="INTEGER" property="status" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.Mission">
@@ -129,7 +129,7 @@
       title, create_time, status, 
       content)
     values (#{id,jdbcType=INTEGER}, #{createrId,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, 
-      #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{title,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=INTEGER}, 
       #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Mission">
@@ -171,7 +171,7 @@
         #{title,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        #{createTime,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
@@ -203,7 +203,7 @@
         title = #{record.title,jdbcType=VARCHAR},
       </if>
       <if test="record.createTime != null">
-        create_time = #{record.createTime,jdbcType=VARCHAR},
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
@@ -222,7 +222,7 @@
       creater_id = #{record.createrId,jdbcType=INTEGER},
       admin_name = #{record.adminName,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=INTEGER},
       content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
@@ -235,7 +235,7 @@
       creater_id = #{record.createrId,jdbcType=INTEGER},
       admin_name = #{record.adminName,jdbcType=VARCHAR},
       title = #{record.title,jdbcType=VARCHAR},
-      create_time = #{record.createTime,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
       status = #{record.status,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -254,7 +254,7 @@
         title = #{title,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=VARCHAR},
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
@@ -270,7 +270,7 @@
     set creater_id = #{createrId,jdbcType=INTEGER},
       admin_name = #{adminName,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER},
       content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
@@ -280,7 +280,7 @@
     set creater_id = #{createrId,jdbcType=INTEGER},
       admin_name = #{adminName,jdbcType=VARCHAR},
       title = #{title,jdbcType=VARCHAR},
-      create_time = #{createTime,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
       status = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

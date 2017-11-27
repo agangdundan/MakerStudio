@@ -2,6 +2,8 @@ package cn.it.phw.ms.dao.base;
 
 import cn.it.phw.ms.common.MyDaoException;
 
+import java.util.List;
+
 /**
  * 数据库基本接口
  * @param <T>
@@ -10,11 +12,11 @@ public interface BaseSqlMap<T> extends SqlMap {
 
     public static final String SQL_INSERT = ".insert";
 
-    public static final String SQL_UPDATE = ".updateByPrimaryKeyWithBLOBs";
+    public static final String SQL_UPDATE_BY_PK_WITH_BLOBS = ".updateByPrimaryKeyWithBLOBs";
 
-    public static final String SQL_FIND_BY_ID = ".selectByPrimaryKey";
+    public static final String SQL_SELECT_BY_PK = ".selectByPrimaryKey";
 
-    public static final String SQL_DELETE = ".deleteByPrimaryKey";
+    public static final String SQL_DELETE_BY_PK = ".deleteByPrimaryKey";
 
 
     /**
@@ -23,7 +25,7 @@ public interface BaseSqlMap<T> extends SqlMap {
      * @return 实体类
      * @throws MyDaoException
      */
-    T findItemById(Integer id) throws MyDaoException;
+    T selectByPrimaryKey(Integer id) throws MyDaoException;
 
     /**
      * 插入一条记录
@@ -48,5 +50,7 @@ public interface BaseSqlMap<T> extends SqlMap {
      * @throws MyDaoException
      */
     Integer deleteItem(Integer id) throws MyDaoException;
+
+    List<T> selectByExample(T item);
 
 }
