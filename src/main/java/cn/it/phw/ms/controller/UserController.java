@@ -7,14 +7,12 @@ import cn.it.phw.ms.pojo.User;
 import cn.it.phw.ms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/ms")
-@SessionAttributes(AppContext.KEY_USER)
 public class UserController extends BaseController {
 
     @Autowired
@@ -23,9 +21,11 @@ public class UserController extends BaseController {
     @ResponseBody
     @PostMapping(value = "/user/login")
     public JsonResult doLogin(@RequestParam String username,
-                              @RequestParam String password, ModelMap map) {
+                              @RequestParam String password, HttpSession session) {
         jsonResult = userService.doLogin(username, password);
-        map.addAttribute(AppContext.KEY_USER, jsonResult.getData().get(AppContext.KEY_USER));
+        //map.addAttribute(AppContext.KEY_USER, jsonResult.getData().get(AppContext.KEY_USER));
+        session.setAttribute(AppContext.KEY_USER, jsonResult.getData().get(AppContext.KEY_USER));
+        System.out.println(session.toString());
         return jsonResult;
     }
 
@@ -49,8 +49,9 @@ public class UserController extends BaseController {
 
     @ResponseBody
     @PutMapping("/user")
-    public JsonResult doRegUser(User user, ModelMap map){
-        User admin = (User) map.get(AppContext.KEY_USER);
+    public JsonResult doRegUser(User user, HttpSession session){
+        System.out.println(session.toString());
+        //User admin = (User) map.get(AppContext.KEY_USER);
         //user.setCreaterId(admin.getId());
         //user.setCreatorName(admin.getUsername());
         return userService.doRegUser(user);

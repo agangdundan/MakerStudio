@@ -9,7 +9,7 @@ public class Learningplancolumnmanager {
 
     private Integer learningplancolumnId;
 
-    private String content;
+    private String learningplancolumnContent;
 
     public Integer getId() {
         return id;
@@ -43,11 +43,11 @@ public class Learningplancolumnmanager {
         this.learningplancolumnId = learningplancolumnId;
     }
 
-    public String getContent() {
-        return content;
+    public String getLearningplancolumnContent() {
+        return learningplancolumnContent;
     }
 
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+    public void setLearningplancolumnContent(String learningplancolumnContent) {
+        this.learningplancolumnContent = learningplancolumnContent == null ? null : learningplancolumnContent.trim();
     }
 }
