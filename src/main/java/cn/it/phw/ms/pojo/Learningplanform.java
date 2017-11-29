@@ -15,6 +15,8 @@ public class Learningplanform {
 
     private Date createTime;
 
+    private String approveContent;
+
     public Integer getId() {
         return id;
     }
@@ -61,5 +63,13 @@ public class Learningplanform {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getApproveContent() {
+        return approveContent;
+    }
+
+    public void setApproveContent(String approveContent) {
+        this.approveContent = approveContent == null ? null : approveContent.trim();
     }
 }

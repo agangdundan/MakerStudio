@@ -474,6 +474,76 @@ public class LearningplanformExample {
             addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
+
+        public Criteria andApproveContentIsNull() {
+            addCriterion("approve_content is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentIsNotNull() {
+            addCriterion("approve_content is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentEqualTo(String value) {
+            addCriterion("approve_content =", value, "approveContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentNotEqualTo(String value) {
+            addCriterion("approve_content <>", value, "approveContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentGreaterThan(String value) {
+            addCriterion("approve_content >", value, "approveContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentGreaterThanOrEqualTo(String value) {
+            addCriterion("approve_content >=", value, "approveContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentLessThan(String value) {
+            addCriterion("approve_content <", value, "approveContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentLessThanOrEqualTo(String value) {
+            addCriterion("approve_content <=", value, "approveContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentLike(String value) {
+            addCriterion("approve_content like", value, "approveContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentNotLike(String value) {
+            addCriterion("approve_content not like", value, "approveContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentIn(List<String> values) {
+            addCriterion("approve_content in", values, "approveContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentNotIn(List<String> values) {
+            addCriterion("approve_content not in", values, "approveContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentBetween(String value1, String value2) {
+            addCriterion("approve_content between", value1, value2, "approveContent");
+            return (Criteria) this;
+        }
+
+        public Criteria andApproveContentNotBetween(String value1, String value2) {
+            addCriterion("approve_content not between", value1, value2, "approveContent");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

@@ -184,7 +184,7 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
         LearningplancolumnmanagerExample.Criteria criteria = learningplancolumnmanagerExample.or();
         criteria.andLearningplanformIdEqualTo(id);
         List<Learningplancolumnmanager> learningplancolumnmanagers =
-                learningplancolumnmanagerMapper.selectByExample(learningplancolumnmanagerExample);
+                learningplancolumnmanagerMapper.selectByExampleWithBLOBs(learningplancolumnmanagerExample);
 
         if (learningplancolumnmanagers.size() == 0) {
             jsonResult.setStatus(500);

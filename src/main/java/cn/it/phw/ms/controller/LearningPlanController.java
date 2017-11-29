@@ -76,4 +76,10 @@ public class LearningPlanController extends BaseController {
         return learningPlanService.doUpdateLearningPlanColumn(learningplancolumn);
     }
 
+    @ResponseBody
+    @PostMapping("/learningplan/approve")
+    public JsonResult updateLearningPlanFormApproveContent(@RequestParam String approve_content) {
+        return learningPlanService.doUpdateLearningPlanFormApproveContent(approve_content);
+    }
+
 }

@@ -35,4 +35,11 @@ public interface LearningPlanService extends BaseService {
      * @return 规划表
      */
     JsonResult findLearningPlanByPK(Integer id);
+
+    /**
+     * 增加批语
+     * @param approve_content 批语
+     * @return 结果
+     */
+    JsonResult doUpdateLearningPlanFormApproveContent(String approve_content);
 }
