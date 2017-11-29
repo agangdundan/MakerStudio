@@ -13,6 +13,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -28,7 +30,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
-    public JsonResult doLogin(String username, String password, HttpSession session) {
+    public JsonResult doLogin(String username, String password) {
 
         UserExample.Criteria criteria = userExample.or();
         criteria.andUsernameEqualTo(username);
@@ -47,7 +49,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 userMapper.updateByPrimaryKey(user);
 
                 data.put(AppContext.KEY_USER, user);
-                session.setAttribute(AppContext.KEY_USER, user);
                 jsonResult.setStatus(200);
                 jsonResult.setMessage("登陆成功！");
                 data.put(AppContext.KEY_USER, user);
@@ -118,12 +119,11 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
     @Override
-    public JsonResult doRegUser(User user, HttpSession session) {
+    public JsonResult doRegUser(User user) {
 
-        User admin = (User) session.getAttribute(AppContext.KEY_USER);
         user.setCreateTime(new Date());
-        user.setCreaterId(admin.getId());
-        user.setCreatorName(admin.getUsername());
+        user.setSalt(String.valueOf(System.currentTimeMillis()));
+        user.setPassword(Md5Utils.MD5Encode("123456" + user.getSalt(), "UTF-8", false));
 
         userMapper.insert(user);
         jsonResult.setStatus(200);
@@ -212,10 +212,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         List<User> users = userMapper.selectByExample(null);
         if (users.size() == 0) {
             jsonResultForLayui.setCode(500);
-            jsonResultForLayui.setMessage("未查询到任何记录！");
+            jsonResultForLayui.setMsg("未查询到任何记录！");
         } else {
             jsonResultForLayui.setCode(0);
-            jsonResultForLayui.setMessage("加载完成！");
+            jsonResultForLayui.setMsg("加载完成！");
             jsonResultForLayui.setCount(users.size());
             jsonResultForLayui.setData(users);
         }

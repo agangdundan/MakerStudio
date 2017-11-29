@@ -3,13 +3,15 @@ package cn.it.phw.ms.service;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.common.JsonResultForLayui;
 import cn.it.phw.ms.pojo.User;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface UserService extends BaseService {
 
-    JsonResult doLogin(String username, String password, HttpSession session);
+    JsonResult doLogin(String username, String password);
 
     JsonResult doLogout(HttpSession session);
 
@@ -21,7 +23,7 @@ public interface UserService extends BaseService {
 
     JsonResult doDeleteUsers(List<User> users);
 
-    JsonResult doRegUser(User user, HttpSession session);
+    JsonResult doRegUser(User user);
 
     JsonResult doRegUsers(String path);
 

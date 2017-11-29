@@ -2,11 +2,12 @@ package cn.it.phw.ms.service.Impl;
 
 import cn.it.phw.ms.common.AppContext;
 import cn.it.phw.ms.common.JsonResult;
+import cn.it.phw.ms.common.JsonResultForLayui;
 import cn.it.phw.ms.dao.mapper.LearningplancolumnMapper;
+import cn.it.phw.ms.dao.mapper.LearningplancolumnmanagerMapper;
 import cn.it.phw.ms.dao.mapper.LearningplanformMapper;
-import cn.it.phw.ms.pojo.Learningplancolumn;
-import cn.it.phw.ms.pojo.Learningplanform;
-import cn.it.phw.ms.pojo.LearningplanformExample;
+import cn.it.phw.ms.dao.mapper.UserMapper;
+import cn.it.phw.ms.pojo.*;
 import cn.it.phw.ms.service.LearningPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,21 +25,27 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
     @Autowired
     private LearningplancolumnMapper learningplancolumnMapper;
 
+    @Autowired
+    private LearningplancolumnmanagerMapper learningplancolumnmanagerMapper;
+
+    @Autowired
+    private UserMapper userMapper;
+
     @Override
-    public JsonResult getLearningPlanTemplate() {
+    public JsonResultForLayui getLearningPlanTemplate() {
 
         List<Learningplancolumn> learningplancolumns = learningplancolumnMapper.selectByExample(null);
         if (learningplancolumns.size() == 0) {
-            jsonResult.setStatus(500);
-            jsonResult.setMessage("模板还未设置，请先通知教师设置模板在填写！");
+            jsonResultForLayui.setCode(500);
+            jsonResultForLayui.setMsg("模板还未设置，请先通知教师设置模板在填写！");
         } else {
-            jsonResult.setStatus(200);
-            jsonResult.setMessage("获取模板成功！");
-            data.put(AppContext.KEY_DATA, learningplancolumns);
-            jsonResult.setData(data);
+            jsonResultForLayui.setCode(0);
+            jsonResultForLayui.setMsg("查询成功！");
+            jsonResultForLayui.setData(learningplancolumns);
+            jsonResultForLayui.setCount(learningplancolumns.size());
         }
 
-        return jsonResult;
+        return jsonResultForLayui;
     }
 
     @Override
@@ -92,8 +99,8 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
     }
 
     @Override
-    public JsonResult doDeleteLearningPlanColumn(Learningplancolumn column) {
-        learningplancolumnMapper.deleteByPrimaryKey(column.getId());
+    public JsonResult doDeleteLearningPlanColumn(Integer id) {
+        learningplancolumnMapper.deleteByPrimaryKey(id);
         jsonResult.setStatus(200);
         jsonResult.setMessage("删除成功！");
         return jsonResult;
@@ -113,6 +120,82 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
             data.put(AppContext.KEY_DATA, learningplanforms);
             jsonResult.setData(data);
         }
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResult doFindLearningPlanTemplateByPK(Integer id) {
+        Learningplancolumn learningplancolumn = learningplancolumnMapper.selectByPrimaryKey(id);
+        if (learningplancolumn != null) {
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("查询成功！");
+            data.put(AppContext.KEY_DATA, learningplancolumn);
+            jsonResult.setData(data);
+        } else {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("未查找到任何数据！");
+        }
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResultForLayui findAllLearningPlanForms() {
+        List<Learningplanform> learningplanforms = learningplanformMapper.selectByExample(null);
+        if (learningplanforms.size() == 0) {
+            jsonResultForLayui.setCode(500);
+            jsonResultForLayui.setMsg("未查找到任何记录！");
+        } else {
+            jsonResultForLayui.setCode(0);
+            jsonResultForLayui.setMsg("查询成功！");
+            jsonResultForLayui.setCount(learningplanforms.size());
+            jsonResultForLayui.setData(learningplanforms);
+        }
+        return jsonResultForLayui;
+    }
+
+    @Override
+    public JsonResult findLearningPlanByPK(Integer id) {
+
+        /**
+         * 先查找出规划表
+         */
+        Learningplanform form = learningplanformMapper.selectByPrimaryKey(id);
+        if (form == null) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("未找到任何规划表记录！");
+            return jsonResult;
+        }
+        data.put(AppContext.KEY_CODE, form);
+
+        /**
+         * 再查找填写人
+         */
+        User user = userMapper.selectByPrimaryKey(form.getUserId());
+        if (user == null) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("填写人不存在！");
+            return jsonResult;
+        }
+        data.put(AppContext.KEY_USER, user);
+
+        /**
+         * 最后查找规划表详细信息
+         */
+        LearningplancolumnmanagerExample.Criteria criteria = learningplancolumnmanagerExample.or();
+        criteria.andLearningplanformIdEqualTo(id);
+        List<Learningplancolumnmanager> learningplancolumnmanagers =
+                learningplancolumnmanagerMapper.selectByExample(learningplancolumnmanagerExample);
+
+        if (learningplancolumnmanagers.size() == 0) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("规划表还未填写完整！");
+        } else {
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("查询成功！");
+        }
+        data.put(AppContext.KEY_DATA, learningplancolumnmanagers);
+        jsonResult.setData(data);
+
         return jsonResult;
     }
 

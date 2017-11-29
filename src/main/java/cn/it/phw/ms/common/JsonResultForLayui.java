@@ -6,7 +6,7 @@ import java.util.List;
 public class JsonResultForLayui {
 
     private Integer code;
-    private String message;
+    private String msg;
     private Integer count;
     private List data = new ArrayList();
 
@@ -18,12 +18,12 @@ public class JsonResultForLayui {
         this.code = code;
     }
 
-    public String getMessage() {
-        return message;
+    public String getMsg() {
+        return msg;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public Integer getCount() {

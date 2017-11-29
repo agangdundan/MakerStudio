@@ -4,10 +4,11 @@
   <resultMap id="BaseResultMap" type="cn.it.phw.ms.pojo.Learningplancolumnmanager">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="learningplanform_id" jdbcType="INTEGER" property="learningplanformId" />
+    <result column="learningplancolumn_name" jdbcType="VARCHAR" property="learningplancolumnName" />
     <result column="learningplancolumn_id" jdbcType="INTEGER" property="learningplancolumnId" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="cn.it.phw.ms.pojo.Learningplancolumnmanager">
-    <result column="learningplancolumn_content" jdbcType="LONGVARCHAR" property="learningplancolumnContent" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,10 +69,10 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, learningplanform_id, learningplancolumn_id
+    id, learningplanform_id, learningplancolumn_name, learningplancolumn_id
   </sql>
   <sql id="Blob_Column_List">
-    learningplancolumn_content
+    content
   </sql>
   <select id="selectByExampleWithBLOBs" parameterType="cn.it.phw.ms.pojo.LearningplancolumnmanagerExample" resultMap="ResultMapWithBLOBs">
     select
@@ -122,10 +123,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.it.phw.ms.pojo.Learningplancolumnmanager">
-    insert into learningplancolumnmanager (id, learningplanform_id, learningplancolumn_id, 
-      learningplancolumn_content)
-    values (#{id,jdbcType=INTEGER}, #{learningplanformId,jdbcType=INTEGER}, #{learningplancolumnId,jdbcType=INTEGER}, 
-      #{learningplancolumnContent,jdbcType=LONGVARCHAR})
+    insert into learningplancolumnmanager (id, learningplanform_id, learningplancolumn_name, 
+      learningplancolumn_id, content)
+    values (#{id,jdbcType=INTEGER}, #{learningplanformId,jdbcType=INTEGER}, #{learningplancolumnName,jdbcType=VARCHAR}, 
+      #{learningplancolumnId,jdbcType=INTEGER}, #{content,jdbcType=LONGVARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Learningplancolumnmanager">
     insert into learningplancolumnmanager
@@ -136,11 +137,14 @@
       <if test="learningplanformId != null">
         learningplanform_id,
       </if>
+      <if test="learningplancolumnName != null">
+        learningplancolumn_name,
+      </if>
       <if test="learningplancolumnId != null">
         learningplancolumn_id,
       </if>
-      <if test="learningplancolumnContent != null">
-        learningplancolumn_content,
+      <if test="content != null">
+        content,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -150,11 +154,14 @@
       <if test="learningplanformId != null">
         #{learningplanformId,jdbcType=INTEGER},
       </if>
+      <if test="learningplancolumnName != null">
+        #{learningplancolumnName,jdbcType=VARCHAR},
+      </if>
       <if test="learningplancolumnId != null">
         #{learningplancolumnId,jdbcType=INTEGER},
       </if>
-      <if test="learningplancolumnContent != null">
-        #{learningplancolumnContent,jdbcType=LONGVARCHAR},
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
@@ -173,11 +180,14 @@
       <if test="record.learningplanformId != null">
         learningplanform_id = #{record.learningplanformId,jdbcType=INTEGER},
       </if>
+      <if test="record.learningplancolumnName != null">
+        learningplancolumn_name = #{record.learningplancolumnName,jdbcType=VARCHAR},
+      </if>
       <if test="record.learningplancolumnId != null">
         learningplancolumn_id = #{record.learningplancolumnId,jdbcType=INTEGER},
       </if>
-      <if test="record.learningplancolumnContent != null">
-        learningplancolumn_content = #{record.learningplancolumnContent,jdbcType=LONGVARCHAR},
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=LONGVARCHAR},
       </if>
     </set>
     <if test="_parameter != null">
@@ -188,8 +198,9 @@
     update learningplancolumnmanager
     set id = #{record.id,jdbcType=INTEGER},
       learningplanform_id = #{record.learningplanformId,jdbcType=INTEGER},
+      learningplancolumn_name = #{record.learningplancolumnName,jdbcType=VARCHAR},
       learningplancolumn_id = #{record.learningplancolumnId,jdbcType=INTEGER},
-      learningplancolumn_content = #{record.learningplancolumnContent,jdbcType=LONGVARCHAR}
+      content = #{record.content,jdbcType=LONGVARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -198,6 +209,7 @@
     update learningplancolumnmanager
     set id = #{record.id,jdbcType=INTEGER},
       learningplanform_id = #{record.learningplanformId,jdbcType=INTEGER},
+      learningplancolumn_name = #{record.learningplancolumnName,jdbcType=VARCHAR},
       learningplancolumn_id = #{record.learningplancolumnId,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -209,11 +221,14 @@
       <if test="learningplanformId != null">
         learningplanform_id = #{learningplanformId,jdbcType=INTEGER},
       </if>
+      <if test="learningplancolumnName != null">
+        learningplancolumn_name = #{learningplancolumnName,jdbcType=VARCHAR},
+      </if>
       <if test="learningplancolumnId != null">
         learningplancolumn_id = #{learningplancolumnId,jdbcType=INTEGER},
       </if>
-      <if test="learningplancolumnContent != null">
-        learningplancolumn_content = #{learningplancolumnContent,jdbcType=LONGVARCHAR},
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
@@ -221,13 +236,15 @@
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="cn.it.phw.ms.pojo.Learningplancolumnmanager">
     update learningplancolumnmanager
     set learningplanform_id = #{learningplanformId,jdbcType=INTEGER},
+      learningplancolumn_name = #{learningplancolumnName,jdbcType=VARCHAR},
       learningplancolumn_id = #{learningplancolumnId,jdbcType=INTEGER},
-      learningplancolumn_content = #{learningplancolumnContent,jdbcType=LONGVARCHAR}
+      content = #{content,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.it.phw.ms.pojo.Learningplancolumnmanager">
     update learningplancolumnmanager
     set learningplanform_id = #{learningplanformId,jdbcType=INTEGER},
+      learningplancolumn_name = #{learningplancolumnName,jdbcType=VARCHAR},
       learningplancolumn_id = #{learningplancolumnId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>

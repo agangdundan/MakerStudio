@@ -224,6 +224,76 @@ public class LearningplancolumnmanagerExample {
             return (Criteria) this;
         }
 
+        public Criteria andLearningplancolumnNameIsNull() {
+            addCriterion("learningplancolumn_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameIsNotNull() {
+            addCriterion("learningplancolumn_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameEqualTo(String value) {
+            addCriterion("learningplancolumn_name =", value, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameNotEqualTo(String value) {
+            addCriterion("learningplancolumn_name <>", value, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameGreaterThan(String value) {
+            addCriterion("learningplancolumn_name >", value, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameGreaterThanOrEqualTo(String value) {
+            addCriterion("learningplancolumn_name >=", value, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameLessThan(String value) {
+            addCriterion("learningplancolumn_name <", value, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameLessThanOrEqualTo(String value) {
+            addCriterion("learningplancolumn_name <=", value, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameLike(String value) {
+            addCriterion("learningplancolumn_name like", value, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameNotLike(String value) {
+            addCriterion("learningplancolumn_name not like", value, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameIn(List<String> values) {
+            addCriterion("learningplancolumn_name in", values, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameNotIn(List<String> values) {
+            addCriterion("learningplancolumn_name not in", values, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameBetween(String value1, String value2) {
+            addCriterion("learningplancolumn_name between", value1, value2, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLearningplancolumnNameNotBetween(String value1, String value2) {
+            addCriterion("learningplancolumn_name not between", value1, value2, "learningplancolumnName");
+            return (Criteria) this;
+        }
+
         public Criteria andLearningplancolumnIdIsNull() {
             addCriterion("learningplancolumn_id is null");
             return (Criteria) this;

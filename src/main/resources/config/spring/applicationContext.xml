@@ -35,6 +35,42 @@
         </property>
     </bean>
 
+    <!-- 跨域访问相关配置 -->
+    <bean id="corsFilter" class="org.springframework.web.filter.CorsFilter">
+        <constructor-arg index="0">
+            <bean class="org.springframework.web.cors.UrlBasedCorsConfigurationSource">
+                <property name="corsConfigurations">
+                    <map>
+                        <entry key="/**">
+                            <bean class="org.springframework.web.cors.CorsConfiguration">
+                                <property name="allowedOrigins">
+                                    <list>
+                                        <value>*</value>
+                                    </list>
+                                </property>
+                                <property name="allowedMethods" value="GET, POST, PUT, DELETE, OPTIONS, HEAD" />
+                                <property name="allowedHeaders" value="*" />
+                                <property name="exposedHeaders">
+                                    <list>
+                                        <value>Accept</value>
+                                        <value>Origin</value>
+                                        <value>X-Requested-With</value>
+                                        <value>Content-Type</value>
+                                        <value>Last-Modified</value>
+                                        <value>Set-Cookie</value>
+                                        <value>x-auth-token</value>
+                                    </list>
+                                </property>
+                                <property name="allowCredentials" value="true" />
+                                <property name="maxAge" value="3600" />
+                            </bean>
+                        </entry>
+                    </map>
+                </property>
+            </bean>
+        </constructor-arg>
+    </bean>
+
     <!--自动扫描dao接口，sqlSessionFactory-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="cn.it.phw.ms.dao.mapper"/>

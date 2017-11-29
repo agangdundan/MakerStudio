@@ -5,9 +5,11 @@ public class Learningplancolumnmanager {
 
     private Integer learningplanformId;
 
+    private String learningplancolumnName;
+
     private Integer learningplancolumnId;
 
-    private String learningplancolumnContent;
+    private String content;
 
     public Integer getId() {
         return id;
@@ -25,6 +27,14 @@ public class Learningplancolumnmanager {
         this.learningplanformId = learningplanformId;
     }
 
+    public String getLearningplancolumnName() {
+        return learningplancolumnName;
+    }
+
+    public void setLearningplancolumnName(String learningplancolumnName) {
+        this.learningplancolumnName = learningplancolumnName == null ? null : learningplancolumnName.trim();
+    }
+
     public Integer getLearningplancolumnId() {
         return learningplancolumnId;
     }
@@ -33,11 +43,11 @@ public class Learningplancolumnmanager {
         this.learningplancolumnId = learningplancolumnId;
     }
 
-    public String getLearningplancolumnContent() {
-        return learningplancolumnContent;
+    public String getContent() {
+        return content;
     }
 
-    public void setLearningplancolumnContent(String learningplancolumnContent) {
-        this.learningplancolumnContent = learningplancolumnContent == null ? null : learningplancolumnContent.trim();
+    public void setContent(String content) {
+        this.content = content == null ? null : content.trim();
     }
 }

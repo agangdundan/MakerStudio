@@ -1,5 +1,7 @@
 package cn.it.phw.ms.pojo;
 
+import java.util.Date;
+
 public class Learningplanform {
     private Integer id;
 
@@ -10,6 +12,8 @@ public class Learningplanform {
     private Integer status;
 
     private Integer isshare;
+
+    private Date createTime;
 
     public Integer getId() {
         return id;
@@ -49,5 +53,13 @@ public class Learningplanform {
 
     public void setIsshare(Integer isshare) {
         this.isshare = isshare;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

@@ -7,6 +7,7 @@
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="isshare" jdbcType="INTEGER" property="isshare" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, username, status, isshare
+    id, user_id, username, status, isshare, create_time
   </sql>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.LearningplanformExample" resultMap="BaseResultMap">
     select
@@ -101,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="cn.it.phw.ms.pojo.Learningplanform">
     insert into learningplanform (id, user_id, username, 
-      status, isshare)
+      status, isshare, create_time
+      )
     values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, 
-      #{status,jdbcType=INTEGER}, #{isshare,jdbcType=INTEGER})
+      #{status,jdbcType=INTEGER}, #{isshare,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Learningplanform">
     insert into learningplanform
@@ -123,6 +126,9 @@
       <if test="isshare != null">
         isshare,
       </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -139,6 +145,9 @@
       </if>
       <if test="isshare != null">
         #{isshare,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -166,6 +175,9 @@
       <if test="record.isshare != null">
         isshare = #{record.isshare,jdbcType=INTEGER},
       </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -177,7 +189,8 @@
       user_id = #{record.userId,jdbcType=INTEGER},
       username = #{record.username,jdbcType=VARCHAR},
       status = #{record.status,jdbcType=INTEGER},
-      isshare = #{record.isshare,jdbcType=INTEGER}
+      isshare = #{record.isshare,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -197,6 +210,9 @@
       <if test="isshare != null">
         isshare = #{isshare,jdbcType=INTEGER},
       </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -205,7 +221,8 @@
     set user_id = #{userId,jdbcType=INTEGER},
       username = #{username,jdbcType=VARCHAR},
       status = #{status,jdbcType=INTEGER},
-      isshare = #{isshare,jdbcType=INTEGER}
+      isshare = #{isshare,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

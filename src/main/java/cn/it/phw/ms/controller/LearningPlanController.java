@@ -1,6 +1,7 @@
 package cn.it.phw.ms.controller;
 
 import cn.it.phw.ms.common.JsonResult;
+import cn.it.phw.ms.common.JsonResultForLayui;
 import cn.it.phw.ms.pojo.Learningplancolumn;
 import cn.it.phw.ms.pojo.Learningplanform;
 import cn.it.phw.ms.service.LearningPlanService;
@@ -34,9 +35,45 @@ public class LearningPlanController extends BaseController {
     }
 
     @ResponseBody
+    @GetMapping("/learningplan/{id}")
+    public JsonResult doFindLearningPlanByPK(@PathVariable("id") Integer id) {
+        return learningPlanService.findLearningPlanByPK(id);
+    }
+
+    @ResponseBody
+    @GetMapping("/learningplans")
+    public JsonResultForLayui findAllLearningPlanForm() {
+        return learningPlanService.findAllLearningPlanForms();
+    }
+
+    @ResponseBody
+    @DeleteMapping("/learningplan/template/{id}")
+    public JsonResult doDeleteLearningPlanTemplateByPK(@PathVariable("id") Integer id) {
+        return learningPlanService.doDeleteLearningPlanColumn(id);
+    }
+
+    @ResponseBody
     @GetMapping("/learningplan/template")
-    public JsonResult findLearningPlanTemplate() {
+    public JsonResultForLayui findLearningPlanTemplate() {
         return learningPlanService.getLearningPlanTemplate();
+    }
+
+    @ResponseBody
+    @GetMapping("/learningplan/template/{id}")
+    public JsonResult findLearningPlanTemplateByPK(@PathVariable("id") Integer id) {
+        return learningPlanService.doFindLearningPlanTemplateByPK(id);
+    }
+
+    @ResponseBody
+    @PutMapping("/learningplan/template")
+    public JsonResult addLearningPlanColumn(Learningplancolumn learningplancolumn) {
+        return learningPlanService.doAddLearningPlanColumn(learningplancolumn);
+    }
+
+    @ResponseBody
+    @PostMapping("/learningplan/template")
+    public JsonResult updateLearningPlanTemplate(Learningplancolumn learningplancolumn) {
+        return learningPlanService.doUpdateLearningPlanColumn(learningplancolumn);
     }
 
 }
