@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface LearningplanformMapper {
+
     long countByExample(LearningplanformExample example);
 
     int deleteByExample(LearningplanformExample example);

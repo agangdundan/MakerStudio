@@ -15,6 +15,11 @@ public interface LearningPlanService extends BaseService {
 
     JsonResult doDeleteLearningPlanForm(Learningplanform form);
 
+    /**
+     * 审批一张规划表
+     * @param form 规划表
+     * @return 结果
+     */
     JsonResult doApproveLearningPlanForm(Learningplanform form);
 
     JsonResult doAddLearningPlanColumn(Learningplancolumn column);
@@ -35,11 +40,4 @@ public interface LearningPlanService extends BaseService {
      * @return 规划表
      */
     JsonResult findLearningPlanByPK(Integer id);
-
-    /**
-     * 增加批语
-     * @param approve_content 批语
-     * @return 结果
-     */
-    JsonResult doUpdateLearningPlanFormApproveContent(String approve_content);
 }

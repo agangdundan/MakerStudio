@@ -2,9 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:property-placeholder location="classpath:config/db.properties"/>
+    <context:property-placeholder location="classpath:config/redis.properties"/>
+
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="${db.driverClassName}"/>
         <property name="jdbcUrl" value="${db.url}"/>
@@ -35,45 +38,17 @@
         </property>
     </bean>
 
-    <!-- 跨域访问相关配置 -->
-    <bean id="corsFilter" class="org.springframework.web.filter.CorsFilter">
-        <constructor-arg index="0">
-            <bean class="org.springframework.web.cors.UrlBasedCorsConfigurationSource">
-                <property name="corsConfigurations">
-                    <map>
-                        <entry key="/**">
-                            <bean class="org.springframework.web.cors.CorsConfiguration">
-                                <property name="allowedOrigins">
-                                    <list>
-                                        <value>*</value>
-                                    </list>
-                                </property>
-                                <property name="allowedMethods" value="GET, POST, PUT, DELETE, OPTIONS, HEAD" />
-                                <property name="allowedHeaders" value="*" />
-                                <property name="exposedHeaders">
-                                    <list>
-                                        <value>Accept</value>
-                                        <value>Origin</value>
-                                        <value>X-Requested-With</value>
-                                        <value>Content-Type</value>
-                                        <value>Last-Modified</value>
-                                        <value>Set-Cookie</value>
-                                        <value>x-auth-token</value>
-                                    </list>
-                                </property>
-                                <property name="allowCredentials" value="true" />
-                                <property name="maxAge" value="3600" />
-                            </bean>
-                        </entry>
-                    </map>
-                </property>
-            </bean>
-        </constructor-arg>
+    <bean class="org.springframework.session.data.redis.config.annotation.web.http.RedisHttpSessionConfiguration"/>
+    <bean class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
+        <property name="hostName" value="localhost" />
+        <property name="password" value="199798" />
+        <property name="port" value="6379" />
+        <property name="database" value="10" />
     </bean>
 
     <!--自动扫描dao接口，sqlSessionFactory-->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="cn.it.phw.ms.dao.mapper"/>
+        <property name="basePackage" value="cn.it.phw.ms.dao.*"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 

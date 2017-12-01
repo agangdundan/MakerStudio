@@ -60,9 +60,26 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
 
     @Override
     public JsonResult doUpdateLearningPlanForm(Learningplanform form) {
-        int result = learningplanformMapper.updateByPrimaryKey(form);
-        jsonResult.setMessage("成功更新" + result + "条记录！");
-        jsonResult.setStatus(200);
+
+        Learningplanform oldForm = learningplanformMapper.selectByPrimaryKey(form.getId());
+        if (form.getIsshare() != null) {
+            oldForm.setIsshare(form.getIsshare());
+        }
+        if (form.getStatus() != null) {
+            oldForm.setStatus(form.getStatus());
+        }
+        if (form.getApproveContent() != null) {
+            oldForm.setApproveContent(form.getApproveContent());
+        }
+        int result = learningplanformMapper.updateByPrimaryKey(oldForm);
+        if (result == 0) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("未更新任何记录！");
+        } else {
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("成功更新了" + result + "条记录！");
+        }
+
         return jsonResult;
     }
 
@@ -76,9 +93,21 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
 
     @Override
     public JsonResult doApproveLearningPlanForm(Learningplanform form) {
-        int result = learningplanformMapper.updateByPrimaryKey(form);
-        jsonResult.setStatus(200);
-        jsonResult.setMessage("成功审批" + result + "条记录！");
+
+        Learningplanform oldForm = learningplanformMapper.selectByPrimaryKey(form.getId());
+        if (form.getApproveContent() != null) {
+            oldForm.setApproveContent(form.getApproveContent());
+        }
+        oldForm.setApproveContent(form.getApproveContent());
+        oldForm.setStatus(1);
+        int result = learningplanformMapper.updateByPrimaryKey(oldForm);
+        if (result == 0) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("未更新任何记录！");
+        } else {
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("成功审批" + result + "条记录！");
+        }
         return jsonResult;
     }
 

@@ -1,6 +1,8 @@
 package cn.it.phw.ms.pojo;
 
-public class Missionmanager {
+import cn.it.phw.ms.common.BaseEntity;
+
+public class Missionmanager extends BaseEntity {
     private Integer id;
 
     private Integer missionId;
