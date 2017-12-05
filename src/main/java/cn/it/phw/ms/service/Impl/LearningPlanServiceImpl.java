@@ -250,7 +250,7 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
     }
 
     @Override
-    public JsonResult doSaveLearningPlanColumnContent(String content) {
+    public JsonResult doSaveLearningPlanColumnContent(Learningplancolumnmanager learningplancolumnmanager) {
 
 
 
