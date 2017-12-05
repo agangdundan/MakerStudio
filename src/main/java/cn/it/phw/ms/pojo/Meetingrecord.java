@@ -1,10 +1,8 @@
 package cn.it.phw.ms.pojo;
 
-import cn.it.phw.ms.common.BaseEntity;
-
 import java.util.Date;
 
-public class Meetingrecord extends BaseEntity {
+public class Meetingrecord {
     private Integer id;
 
     private Integer recorderId;

@@ -25,6 +25,16 @@ public class JsonResult {
      */
     private Map<String, Object> data;
 
+    private Integer count;
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
     public Integer getStatus() {
         return status;
     }

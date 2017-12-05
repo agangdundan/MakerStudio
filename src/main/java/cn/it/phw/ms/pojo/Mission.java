@@ -1,10 +1,8 @@
 package cn.it.phw.ms.pojo;
 
-import cn.it.phw.ms.common.BaseEntity;
-
 import java.util.Date;
 
-public class Mission extends BaseEntity {
+public class Mission {
     private Integer id;
 
     private Integer createrId;

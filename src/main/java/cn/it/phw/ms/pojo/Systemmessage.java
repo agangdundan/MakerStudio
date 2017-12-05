@@ -1,10 +1,8 @@
 package cn.it.phw.ms.pojo;
 
-import cn.it.phw.ms.common.BaseEntity;
-
 import java.util.Date;
 
-public class Systemmessage extends BaseEntity {
+public class Systemmessage {
     private Integer id;
 
     private Integer adminId;

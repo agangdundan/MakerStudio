@@ -3,6 +3,7 @@ package cn.it.phw.ms.service.Impl;
 import cn.it.phw.ms.common.AppContext;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.common.JsonResultForLayui;
+import cn.it.phw.ms.common.JwtUtils;
 import cn.it.phw.ms.dao.mapper.LearningplancolumnMapper;
 import cn.it.phw.ms.dao.mapper.LearningplancolumnmanagerMapper;
 import cn.it.phw.ms.dao.mapper.LearningplanformMapper;
@@ -32,20 +33,21 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
     private UserMapper userMapper;
 
     @Override
-    public JsonResultForLayui getLearningPlanTemplate() {
+    public JsonResult getLearningPlanTemplate() {
 
         List<Learningplancolumn> learningplancolumns = learningplancolumnMapper.selectByExample(null);
         if (learningplancolumns.size() == 0) {
-            jsonResultForLayui.setCode(500);
-            jsonResultForLayui.setMsg("模板还未设置，请先通知教师设置模板在填写！");
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("模板还未设置，请先通知教师设置模板在填写！");
         } else {
-            jsonResultForLayui.setCode(0);
-            jsonResultForLayui.setMsg("查询成功！");
-            jsonResultForLayui.setData(learningplancolumns);
-            jsonResultForLayui.setCount(learningplancolumns.size());
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("加载完成");
+            data.put(AppContext.KEY_DATA, learningplancolumns);
+            jsonResult.setData(data);
+            jsonResult.setCount(learningplancolumns.size());
         }
 
-        return jsonResultForLayui;
+        return jsonResult;
     }
 
     @Override
@@ -157,7 +159,7 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
         Learningplancolumn learningplancolumn = learningplancolumnMapper.selectByPrimaryKey(id);
         if (learningplancolumn != null) {
             jsonResult.setStatus(200);
-            jsonResult.setMessage("查询成功！");
+            jsonResult.setMessage("加载完成");
             data.put(AppContext.KEY_DATA, learningplancolumn);
             jsonResult.setData(data);
         } else {
@@ -168,18 +170,19 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
     }
 
     @Override
-    public JsonResultForLayui findAllLearningPlanForms() {
+    public JsonResult findAllLearningPlanForms() {
         List<Learningplanform> learningplanforms = learningplanformMapper.selectByExample(null);
         if (learningplanforms.size() == 0) {
-            jsonResultForLayui.setCode(500);
-            jsonResultForLayui.setMsg("未查找到任何记录！");
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("未查找到任何记录！");
         } else {
-            jsonResultForLayui.setCode(0);
-            jsonResultForLayui.setMsg("查询成功！");
-            jsonResultForLayui.setCount(learningplanforms.size());
-            jsonResultForLayui.setData(learningplanforms);
+            jsonResult.setStatus(0);
+            jsonResult.setMessage("加载完成");
+            jsonResult.setCount(learningplanforms.size());
+            data.put(AppContext.KEY_DATA, learningplanforms);
+            jsonResult.setData(data);
         }
-        return jsonResultForLayui;
+        return jsonResult;
     }
 
     @Override
@@ -220,10 +223,36 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
             jsonResult.setMessage("规划表还未填写完整！");
         } else {
             jsonResult.setStatus(200);
-            jsonResult.setMessage("查询成功！");
+            jsonResult.setMessage("加载完成");
         }
         data.put(AppContext.KEY_DATA, learningplancolumnmanagers);
         jsonResult.setData(data);
+
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResult findLearningPlanByUid(String token) {
+
+        Integer uid = JwtUtils.parseJWT2Uid(token);
+        LearningplanformExample.Criteria criteria = learningplanformExample.or();
+        criteria.andUserIdEqualTo(uid);
+        List<Learningplanform> learningplanforms = learningplanformMapper.selectByExample(learningplanformExample);
+        if (learningplanforms.size() == 0) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("您还没有填写任何规划表！");
+        } else {
+            Learningplanform learningplanform = learningplanforms.get(0);
+            jsonResult = findLearningPlanByPK(learningplanform.getId());
+        }
+
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResult doSaveLearningPlanColumnContent(String content) {
+
+
 
         return jsonResult;
     }

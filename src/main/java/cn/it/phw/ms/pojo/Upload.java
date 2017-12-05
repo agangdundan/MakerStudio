@@ -1,10 +1,8 @@
 package cn.it.phw.ms.pojo;
 
-import cn.it.phw.ms.common.BaseEntity;
-
 import java.util.Date;
 
-public class Upload extends BaseEntity {
+public class Upload {
     private Integer id;
 
     private String filename;

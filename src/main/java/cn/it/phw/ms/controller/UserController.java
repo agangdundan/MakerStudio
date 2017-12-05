@@ -1,6 +1,5 @@
 package cn.it.phw.ms.controller;
 
-import cn.it.phw.ms.common.AppContext;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.common.JsonResultForLayui;
 import cn.it.phw.ms.pojo.User;
@@ -9,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -21,11 +21,9 @@ public class UserController extends BaseController {
     @ResponseBody
     @PostMapping(value = "/user/login")
     public JsonResult doLogin(@RequestParam String username,
-                              @RequestParam String password, HttpSession session) {
-        jsonResult = userService.doLogin(username, password);
-        session.setAttribute(AppContext.KEY_USER, jsonResult.getData().get(AppContext.KEY_USER));
-        System.out.println(session.toString());
-        return jsonResult;
+                              @RequestParam String password) {
+
+        return userService.doLogin(username, password);
     }
 
     @ResponseBody
@@ -35,7 +33,7 @@ public class UserController extends BaseController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/user")
+    @PostMapping("/user")
     public JsonResult doUpdateUser(User user) {
         return userService.doUpdateUser(user);
     }
@@ -47,13 +45,17 @@ public class UserController extends BaseController {
     }
 
     @ResponseBody
-    @PutMapping("/user")
-    public JsonResult doRegUser(User user, HttpSession session){
-        System.out.println(session.toString());
-        User admin = (User) session.getAttribute(AppContext.KEY_USER);
-        user.setCreaterId(admin.getId());
-        user.setCreatorName(admin.getUsername());
+    @PutMapping("/user/reg")
+    public JsonResult doRegUser(User user){
+
         return userService.doRegUser(user);
+    }
+
+    @ResponseBody
+    @PutMapping("/user")
+    public JsonResult doAddUser(User user, HttpServletRequest request, @RequestParam String token) {
+
+        return userService.doAddUser(user, token);
     }
 
     @ResponseBody
@@ -72,5 +74,11 @@ public class UserController extends BaseController {
     @GetMapping("/user/{id}")
     public JsonResult findUserByPK(@PathVariable("id") Integer id) {
         return userService.findUserByPK(id);
+    }
+
+    @ResponseBody
+    @GetMapping("/user")
+    public JsonResult findUserByToken(@RequestParam String token) {
+        return userService.findUserByToken(token);
     }
 }

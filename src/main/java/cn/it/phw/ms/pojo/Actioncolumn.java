@@ -1,8 +1,6 @@
 package cn.it.phw.ms.pojo;
 
-import cn.it.phw.ms.common.BaseEntity;
-
-public class Actioncolumn extends BaseEntity {
+public class Actioncolumn {
     private Integer id;
 
     private String actionColumnName;

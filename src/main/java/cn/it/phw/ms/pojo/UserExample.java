@@ -765,63 +765,63 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdIsNull() {
-            addCriterion("creater_id is null");
+        public Criteria andCreatorIdIsNull() {
+            addCriterion("creator_id is null");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdIsNotNull() {
-            addCriterion("creater_id is not null");
+        public Criteria andCreatorIdIsNotNull() {
+            addCriterion("creator_id is not null");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdEqualTo(Integer value) {
-            addCriterion("creater_id =", value, "createrId");
+        public Criteria andCreatorIdEqualTo(Integer value) {
+            addCriterion("creator_id =", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdNotEqualTo(Integer value) {
-            addCriterion("creater_id <>", value, "createrId");
+        public Criteria andCreatorIdNotEqualTo(Integer value) {
+            addCriterion("creator_id <>", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdGreaterThan(Integer value) {
-            addCriterion("creater_id >", value, "createrId");
+        public Criteria andCreatorIdGreaterThan(Integer value) {
+            addCriterion("creator_id >", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdGreaterThanOrEqualTo(Integer value) {
-            addCriterion("creater_id >=", value, "createrId");
+        public Criteria andCreatorIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("creator_id >=", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdLessThan(Integer value) {
-            addCriterion("creater_id <", value, "createrId");
+        public Criteria andCreatorIdLessThan(Integer value) {
+            addCriterion("creator_id <", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdLessThanOrEqualTo(Integer value) {
-            addCriterion("creater_id <=", value, "createrId");
+        public Criteria andCreatorIdLessThanOrEqualTo(Integer value) {
+            addCriterion("creator_id <=", value, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdIn(List<Integer> values) {
-            addCriterion("creater_id in", values, "createrId");
+        public Criteria andCreatorIdIn(List<Integer> values) {
+            addCriterion("creator_id in", values, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdNotIn(List<Integer> values) {
-            addCriterion("creater_id not in", values, "createrId");
+        public Criteria andCreatorIdNotIn(List<Integer> values) {
+            addCriterion("creator_id not in", values, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdBetween(Integer value1, Integer value2) {
-            addCriterion("creater_id between", value1, value2, "createrId");
+        public Criteria andCreatorIdBetween(Integer value1, Integer value2) {
+            addCriterion("creator_id between", value1, value2, "creatorId");
             return (Criteria) this;
         }
 
-        public Criteria andCreaterIdNotBetween(Integer value1, Integer value2) {
-            addCriterion("creater_id not between", value1, value2, "createrId");
+        public Criteria andCreatorIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("creator_id not between", value1, value2, "creatorId");
             return (Criteria) this;
         }
 

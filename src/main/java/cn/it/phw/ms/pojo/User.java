@@ -1,10 +1,8 @@
 package cn.it.phw.ms.pojo;
 
-import cn.it.phw.ms.common.BaseEntity;
-
 import java.util.Date;
 
-public class User extends BaseEntity {
+public class User {
     private Integer id;
 
     private String username;
@@ -25,7 +23,7 @@ public class User extends BaseEntity {
 
     private Date lastTime;
 
-    private Integer createrId;
+    private Integer creatorId;
 
     private String creatorName;
 
@@ -111,12 +109,12 @@ public class User extends BaseEntity {
         this.lastTime = lastTime;
     }
 
-    public Integer getCreaterId() {
-        return createrId;
+    public Integer getCreatorId() {
+        return creatorId;
     }
 
-    public void setCreaterId(Integer createrId) {
-        this.createrId = createrId;
+    public void setCreatorId(Integer creatorId) {
+        this.creatorId = creatorId;
     }
 
     public String getCreatorName() {

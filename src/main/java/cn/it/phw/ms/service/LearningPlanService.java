@@ -3,11 +3,12 @@ package cn.it.phw.ms.service;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.common.JsonResultForLayui;
 import cn.it.phw.ms.pojo.Learningplancolumn;
+import cn.it.phw.ms.pojo.Learningplancolumnmanager;
 import cn.it.phw.ms.pojo.Learningplanform;
 
 public interface LearningPlanService extends BaseService {
 
-    JsonResultForLayui getLearningPlanTemplate();
+    JsonResult getLearningPlanTemplate();
 
     JsonResult doAddLearningPlanForm(Learningplanform form);
 
@@ -32,12 +33,23 @@ public interface LearningPlanService extends BaseService {
 
     JsonResult doFindLearningPlanTemplateByPK(Integer id);
 
-    JsonResultForLayui findAllLearningPlanForms();
+    JsonResult findAllLearningPlanForms();
 
     /**
      * 根据主键查找规划表
+     *
+     * 首先查询规划表记录
+     *
+     * 再根据规划表查询用户
+     *
+     * 最后根据用户ID和规划表ID查找规划表内容
+     *
      * @param id 主键id
      * @return 规划表
      */
     JsonResult findLearningPlanByPK(Integer id);
+
+    JsonResult findLearningPlanByUid(String token);
+
+    JsonResult doSaveLearningPlanColumnContent(Learningplancolumnmanager learningplancolumnmanager);
 }

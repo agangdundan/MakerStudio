@@ -114,21 +114,6 @@ public class ReflectionHelper {
     public static void main(String[] args) {
 
         BaseEntity entity = new BaseEntity();
-        entity.setCreate_time(System.currentTimeMillis());
-
-        try {
-            Field field = getFieldByFieldName(entity, "create_time");
-            System.out.println(field.getName());
-
-            Long obj = (Long) getValueByFieldName(entity, "create_time");
-            System.out.println(obj);
-
-            Class<?> clazz = getSuperClassGenericType(BaseEntity.class, 1);
-            System.out.println(clazz.getSimpleName());
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
     }
 

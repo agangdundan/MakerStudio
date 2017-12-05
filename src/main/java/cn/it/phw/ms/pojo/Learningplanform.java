@@ -1,10 +1,8 @@
 package cn.it.phw.ms.pojo;
 
-import cn.it.phw.ms.common.BaseEntity;
-
 import java.util.Date;
 
-public class Learningplanform extends BaseEntity {
+public class Learningplanform {
     private Integer id;
 
     private Integer userId;

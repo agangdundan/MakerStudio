@@ -1,7 +1,5 @@
 package cn.it.phw.ms.pojo;
 
-import cn.it.phw.ms.common.BaseEntity;
-
 import java.util.ArrayList;
 import java.util.List;
 

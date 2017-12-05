@@ -12,7 +12,7 @@
     <result column="sex" jdbcType="INTEGER" property="sex" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
-    <result column="creater_id" jdbcType="INTEGER" property="createrId" />
+    <result column="creator_id" jdbcType="INTEGER" property="creatorId" />
     <result column="creator_name" jdbcType="VARCHAR" property="creatorName" />
     <result column="phone" jdbcType="VARCHAR" property="phone" />
   </resultMap>
@@ -76,7 +76,7 @@
   </sql>
   <sql id="Base_Column_List">
     id, username, email, password, header, signature, create_time, sex, salt, last_time, 
-    creater_id, creator_name, phone
+    creator_id, creator_name, phone
   </sql>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.UserExample" resultMap="BaseResultMap">
     select
@@ -112,12 +112,12 @@
     insert into user (id, username, email, 
       password, header, signature, 
       create_time, sex, salt, 
-      last_time, creater_id, creator_name, 
+      last_time, creator_id, creator_name, 
       phone)
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{header,jdbcType=VARCHAR}, #{signature,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{sex,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR}, 
-      #{lastTime,jdbcType=TIMESTAMP}, #{createrId,jdbcType=INTEGER}, #{creatorName,jdbcType=VARCHAR}, 
+      #{lastTime,jdbcType=TIMESTAMP}, #{creatorId,jdbcType=INTEGER}, #{creatorName,jdbcType=VARCHAR}, 
       #{phone,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.User">
@@ -153,8 +153,8 @@
       <if test="lastTime != null">
         last_time,
       </if>
-      <if test="createrId != null">
-        creater_id,
+      <if test="creatorId != null">
+        creator_id,
       </if>
       <if test="creatorName != null">
         creator_name,
@@ -194,8 +194,8 @@
       <if test="lastTime != null">
         #{lastTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createrId != null">
-        #{createrId,jdbcType=INTEGER},
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=INTEGER},
       </if>
       <if test="creatorName != null">
         #{creatorName,jdbcType=VARCHAR},
@@ -244,8 +244,8 @@
       <if test="record.lastTime != null">
         last_time = #{record.lastTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.createrId != null">
-        creater_id = #{record.createrId,jdbcType=INTEGER},
+      <if test="record.creatorId != null">
+        creator_id = #{record.creatorId,jdbcType=INTEGER},
       </if>
       <if test="record.creatorName != null">
         creator_name = #{record.creatorName,jdbcType=VARCHAR},
@@ -270,7 +270,7 @@
       sex = #{record.sex,jdbcType=INTEGER},
       salt = #{record.salt,jdbcType=VARCHAR},
       last_time = #{record.lastTime,jdbcType=TIMESTAMP},
-      creater_id = #{record.createrId,jdbcType=INTEGER},
+      creator_id = #{record.creatorId,jdbcType=INTEGER},
       creator_name = #{record.creatorName,jdbcType=VARCHAR},
       phone = #{record.phone,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -307,8 +307,8 @@
       <if test="lastTime != null">
         last_time = #{lastTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="createrId != null">
-        creater_id = #{createrId,jdbcType=INTEGER},
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=INTEGER},
       </if>
       <if test="creatorName != null">
         creator_name = #{creatorName,jdbcType=VARCHAR},
@@ -330,7 +330,7 @@
       sex = #{sex,jdbcType=INTEGER},
       salt = #{salt,jdbcType=VARCHAR},
       last_time = #{lastTime,jdbcType=TIMESTAMP},
-      creater_id = #{createrId,jdbcType=INTEGER},
+      creator_id = #{creatorId,jdbcType=INTEGER},
       creator_name = #{creatorName,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

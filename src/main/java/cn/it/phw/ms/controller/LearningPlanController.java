@@ -3,6 +3,7 @@ package cn.it.phw.ms.controller;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.common.JsonResultForLayui;
 import cn.it.phw.ms.pojo.Learningplancolumn;
+import cn.it.phw.ms.pojo.Learningplancolumnmanager;
 import cn.it.phw.ms.pojo.Learningplanform;
 import cn.it.phw.ms.service.LearningPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,12 @@ public class LearningPlanController extends BaseController {
     }
 
     @ResponseBody
+    @GetMapping("/learningplan")
+    public JsonResult doFindLearningPlanByUid(@RequestParam String token) {
+        return learningPlanService.findLearningPlanByUid(token);
+    }
+
+    @ResponseBody
     @GetMapping("/learningplan/{id}")
     public JsonResult doFindLearningPlanByPK(@PathVariable("id") Integer id) {
         return learningPlanService.findLearningPlanByPK(id);
@@ -42,7 +49,7 @@ public class LearningPlanController extends BaseController {
 
     @ResponseBody
     @GetMapping("/learningplans")
-    public JsonResultForLayui findAllLearningPlanForm() {
+    public JsonResult findAllLearningPlanForm() {
         return learningPlanService.findAllLearningPlanForms();
     }
 
@@ -54,7 +61,7 @@ public class LearningPlanController extends BaseController {
 
     @ResponseBody
     @GetMapping("/learningplan/template")
-    public JsonResultForLayui findLearningPlanTemplate() {
+    public JsonResult findLearningPlanTemplate() {
         return learningPlanService.getLearningPlanTemplate();
     }
 
@@ -80,6 +87,12 @@ public class LearningPlanController extends BaseController {
     @PostMapping("/learningplan/approve")
     public JsonResult doApproveLearningPlanForm(Learningplanform learningplanform) {
         return learningPlanService.doApproveLearningPlanForm(learningplanform);
+    }
+
+    @ResponseBody
+    @PostMapping("/learningplancolumn/content")
+    public JsonResult saveLearningPlanColumnContent(Learningplancolumnmanager learningplancolumnmanager) {
+        return learningPlanService.doSaveLearningPlanColumnContent(learningplancolumnmanager);
     }
 
 }

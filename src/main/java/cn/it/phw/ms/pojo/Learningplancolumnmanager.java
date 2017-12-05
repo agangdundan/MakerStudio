@@ -1,8 +1,6 @@
 package cn.it.phw.ms.pojo;
 
-import cn.it.phw.ms.common.BaseEntity;
-
-public class Learningplancolumnmanager extends BaseEntity {
+public class Learningplancolumnmanager {
     private Integer id;
 
     private Integer learningplanformId;

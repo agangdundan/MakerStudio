@@ -41,4 +41,8 @@ public interface UserService extends BaseService {
     JsonResultForLayui findAllUsersWithLayui();
 
     JsonResult findUserByPK(Integer id);
+
+    JsonResult doAddUser(User user, String token);
+
+    JsonResult findUserByToken(String token);
 }

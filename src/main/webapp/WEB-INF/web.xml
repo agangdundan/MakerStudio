@@ -10,23 +10,16 @@
         <param-value>classpath*:config/spring/*.xml</param-value>
     </context-param>
 
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>classpath*:log4j.properties</param-value>
+    </context-param>
+
     <!-- 配置spring listener -->
-    <!-- 用于实现跨域session共享 -->
-    <!-- 一般位于第一位filter -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <filter>
-        <filter-name>springSessionRepositoryFilter</filter-name>
-        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>springSessionRepositoryFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-        <dispatcher>REQUEST</dispatcher>
-        <dispatcher>ERROR</dispatcher>
-    </filter-mapping>
 
     <!-- 使用基于Filter的方式来实现跨域访问 -->
     <!-- 一般位于第一个Filter配置 -->
@@ -81,17 +74,9 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-
     <servlet-mapping>
         <servlet-name>dispatcherServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
-
-
-    <context-param>
-        <param-name>log4jConfigLocation</param-name>
-        <param-value>classpath*:log4j.properties</param-value>
-    </context-param>
-
 
 </web-app>

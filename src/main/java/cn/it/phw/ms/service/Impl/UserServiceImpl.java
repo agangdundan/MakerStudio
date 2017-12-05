@@ -1,13 +1,11 @@
 package cn.it.phw.ms.service.Impl;
 
-import cn.it.phw.ms.common.AppContext;
-import cn.it.phw.ms.common.JsonResult;
-import cn.it.phw.ms.common.JsonResultForLayui;
-import cn.it.phw.ms.common.Md5Utils;
+import cn.it.phw.ms.common.*;
 import cn.it.phw.ms.pojo.User;
 import cn.it.phw.ms.pojo.UserExample;
 import cn.it.phw.ms.dao.mapper.UserMapper;
 import cn.it.phw.ms.service.UserService;
+import com.mysql.cj.jdbc.util.TimeUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -48,9 +47,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
                 user.setLastTime(new Date());
                 userMapper.updateByPrimaryKey(user);
 
-                data.put(AppContext.KEY_USER, user);
                 jsonResult.setStatus(200);
                 jsonResult.setMessage("登陆成功！");
+                String token = JwtUtils.createJWT(user.getId(), AppContext.KEY_ISSUSE, 1000*60*60);
+                data.put(AppContext.KEY_TOKEN, token);
                 data.put(AppContext.KEY_USER, user);
                 jsonResult.setData(data);
             } else {
@@ -73,9 +73,26 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     @Override
     public JsonResult doUpdateUser(User user) {
 
-        userMapper.updateByPrimaryKey(user);
-        jsonResult.setStatus(200);
-        jsonResult.setMessage("更新用户信息成功！");
+        User oldUser = userMapper.selectByPrimaryKey(user.getId());
+        if (oldUser == null) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("用户不存在！");
+        } else {
+            if (!StringUtils.isEmpty(user.getUsername())) {
+                oldUser.setUsername(user.getUsername());
+            } else if (!StringUtils.isEmpty(user.getSignature())) {
+                oldUser.setSignature(user.getSignature());
+            } else if (!StringUtils.isEmpty(user.getSex())) {
+                oldUser.setSex(user.getSex());
+            } else if (!StringUtils.isEmpty(user.getEmail())) {
+                oldUser.setEmail(user.getEmail());
+            } else if (!StringUtils.isEmpty(user.getPhone())) {
+                oldUser.setPhone(user.getPhone());
+            }
+            userMapper.updateByPrimaryKey(oldUser);
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("更新成功");
+        }
 
         return jsonResult;
     }
@@ -182,7 +199,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             jsonResult.setMessage("没有查找到任何记录！");
         } else {
             jsonResult.setStatus(0);
-            jsonResult.setMessage("");
+            jsonResult.setMessage("加载完成");
             data.put(AppContext.KEY_DATA, users);
             jsonResult.setData(data);
         }
@@ -200,11 +217,43 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             jsonResult.setMessage("没有查找到任何记录！");
         } else {
             jsonResult.setStatus(200);
-            jsonResult.setMessage("查询成功！");
+            jsonResult.setMessage("加载完成");
             data.put(AppContext.KEY_DATA, userList.get(0));
             jsonResult.setData(data);
         }
         return jsonResult;
+    }
+
+    @Override
+    public JsonResult doAddUser(User user, String token) {
+
+        Integer id = (Integer) JwtUtils.parseJWT(token);
+        User admin = userMapper.selectByPrimaryKey(id);
+        if (admin == null) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("无效的用户！");
+        } else {
+            user.setCreatorId(id);
+            user.setCreatorName(admin.getUsername());
+            doRegUser(user);
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("添加成功！");
+        }
+
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResult findUserByToken(String token) {
+        try {
+            Integer id = (Integer) JwtUtils.parseJWT(token);
+            User user = userMapper.selectByPrimaryKey(id);
+        } catch (Exception e) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage(e.getMessage());
+            return jsonResult;
+        }
+        return null;
     }
 
     @Override
