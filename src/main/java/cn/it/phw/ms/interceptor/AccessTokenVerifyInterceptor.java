@@ -1,5 +1,6 @@
 package cn.it.phw.ms.interceptor;
 
+import cn.it.phw.ms.common.AppContext;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.common.JwtUtils;
 import com.google.gson.Gson;
@@ -33,6 +34,7 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
         } else {
             try {
                 JwtUtils.parseJWT(authorization);
+                httpServletRequest.setAttribute(AppContext.KEY_USER, JwtUtils.parseJWT2Uid(authorization));
             } catch (Exception ex) {
                 httpServletResponse.setContentType("application/json;charset=utf-8");
                 PrintWriter out = httpServletResponse.getWriter();

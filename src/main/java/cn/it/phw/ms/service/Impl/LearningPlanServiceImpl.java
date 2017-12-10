@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -252,7 +253,25 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
     @Override
     public JsonResult doSaveLearningPlanColumnContent(Learningplancolumnmanager learningplancolumnmanager) {
 
-
+        if (learningplancolumnmanager.getId() == null) {
+            String learningplancolumnName = learningplancolumnmanager.getLearningplancolumnName();
+            LearningplancolumnExample.Criteria criteria = learningplancolumnExample.or();
+            criteria.andLearningplancolumnNameEqualTo(learningplancolumnName);
+            List<Learningplancolumn> learningplancolumns = learningplancolumnMapper.selectByExample(learningplancolumnExample);
+            if (learningplancolumns.size() == 0) {
+                jsonResult.setStatus(500);
+                jsonResult.setMessage("错误：列名不存在！");
+                return jsonResult;
+            } else {
+                Learningplancolumn learningplancolumn = learningplancolumns.get(0);
+                learningplancolumnmanager.setLearningplancolumnId(learningplancolumn.getId());
+                learningplancolumnmanagerMapper.insert(learningplancolumnmanager);
+            }
+        } else {
+            learningplancolumnmanagerMapper.updateByPrimaryKeyWithBLOBs(learningplancolumnmanager);
+        }
+        jsonResult.setStatus(200);
+        jsonResult.setMessage("最近保存时间" + new Date(System.currentTimeMillis()));
 
         return jsonResult;
     }

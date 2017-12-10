@@ -30,4 +30,6 @@ public class BaseServiceImpl implements BaseService {
 
     public ActioncolumnExample actioncolumnExample = new ActioncolumnExample();
 
+    public SystemmessageExample systemmessageExample = new SystemmessageExample();
+
 }
