@@ -1,7 +1,6 @@
 package cn.it.phw.ms.controller;
 
 import cn.it.phw.ms.common.JsonResult;
-import cn.it.phw.ms.common.JsonResultForLayui;
 import cn.it.phw.ms.pojo.Learningplancolumn;
 import cn.it.phw.ms.pojo.Learningplancolumnmanager;
 import cn.it.phw.ms.pojo.Learningplanform;

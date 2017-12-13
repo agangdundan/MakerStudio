@@ -12,7 +12,7 @@ public interface BookService extends BaseService {
 
     JsonResult doUpdateBook(Book book);
 
-    JsonResult doDeleteBook(Book book);
+    JsonResult doDeleteBook(Integer id);
 
     JsonResult doDeleteBooks(List<Book> books);
 
@@ -26,4 +26,5 @@ public interface BookService extends BaseService {
 
     JsonResult doReturnBook();
 
+    JsonResult findAllBooks();
 }

@@ -12,11 +12,11 @@
     <!--扫描所有控制器-->
     <context:component-scan base-package="cn.it.phw.ms.controller"/>
     <!--设置跨域-->
-    <mvc:cors>
+    <!--<mvc:cors>
         <mvc:mapping path="/**"/>
-    </mvc:cors>
+    </mvc:cors>-->
     
-    <mvc:interceptors>
+    <!--<mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
             <mvc:exclude-mapping path="/**/user/login"/>
@@ -24,7 +24,7 @@
             <mvc:exclude-mapping path="/**/msg/newest"/>
             <bean class="cn.it.phw.ms.interceptor.AccessTokenVerifyInterceptor"/>
         </mvc:interceptor>
-    </mvc:interceptors>
+    </mvc:interceptors>-->
 
 
     <!-- 上传文件 -->
