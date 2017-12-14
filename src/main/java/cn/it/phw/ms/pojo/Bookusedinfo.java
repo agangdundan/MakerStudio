@@ -1,8 +1,10 @@
 package cn.it.phw.ms.pojo;
 
+import cn.it.phw.ms.common.BaseEntity;
+
 import java.util.Date;
 
-public class Bookusedinfo {
+public class Bookusedinfo extends BaseEntity {
     private Integer id;
 
     private Integer userId;

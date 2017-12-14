@@ -1,9 +1,10 @@
 package cn.it.phw.ms.common;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsonResultForLayui {
+public class JsonResultForLayui implements Serializable {
 
     private Integer code;
     private String msg;

@@ -9,6 +9,7 @@ import com.mysql.cj.jdbc.util.TimeUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -29,6 +30,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
+    @Cacheable("user")
     public JsonResult doLogin(String username, String password) {
 
         UserExample.Criteria criteria = userExample.or();

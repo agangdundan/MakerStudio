@@ -11,6 +11,7 @@
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
     <!--扫描所有控制器-->
     <context:component-scan base-package="cn.it.phw.ms.controller"/>
+
     <!--设置跨域-->
     <!--<mvc:cors>
         <mvc:mapping path="/**"/>

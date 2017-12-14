@@ -1,11 +1,12 @@
 package cn.it.phw.ms.common;
 
+import java.io.Serializable;
 import java.util.Map;
 
 /**
  * @author phw create on 17-11-9
  */
-public class JsonResult {
+public class JsonResult implements Serializable {
 
     public static final String KEY_MESSAGE = "message";
     public static final String KEY_STATUS = "status";
@@ -25,7 +26,20 @@ public class JsonResult {
      */
     private Map<String, Object> data;
 
+    /**
+     * Layui Json 数据格式
+     */
     private Integer count;
+
+    /**
+     * Layui Json 数据格式
+     */
+    private Integer code;
+
+    /**
+     * Layui Json 数据格式
+     */
+    private Integer msg;
 
     public Integer getCount() {
         return count;
@@ -57,5 +71,21 @@ public class JsonResult {
 
     public void setData(Map<String, Object> data) {
         this.data = data;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
+
+    public Integer getMsg() {
+        return msg;
+    }
+
+    public void setMsg(Integer msg) {
+        this.msg = msg;
     }
 }

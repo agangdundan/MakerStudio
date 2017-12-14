@@ -1,6 +1,9 @@
 package cn.it.phw.ms.pojo;
 
-public class Action {
+import cn.it.phw.ms.common.BaseEntity;
+
+public class Action extends BaseEntity {
+    
     private Integer id;
 
     private Integer actionColumnId;
