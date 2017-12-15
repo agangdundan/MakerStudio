@@ -1,22 +1,17 @@
 package cn.it.phw.ms.service.Impl;
 
 import cn.it.phw.ms.common.*;
+import cn.it.phw.ms.dao.mapper.UserMapper;
 import cn.it.phw.ms.pojo.User;
 import cn.it.phw.ms.pojo.UserExample;
-import cn.it.phw.ms.dao.mapper.UserMapper;
 import cn.it.phw.ms.service.UserService;
-import com.mysql.cj.jdbc.util.TimeUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
-import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -31,9 +26,7 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
+    @Cacheable("doLogin")
     @Override
     public JsonResult doLogin(String username, String password) {
 
