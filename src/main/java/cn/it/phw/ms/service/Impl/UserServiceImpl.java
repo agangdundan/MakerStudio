@@ -10,11 +10,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
+import redis.clients.jedis.Jedis;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -29,8 +31,10 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     @Override
-    @Cacheable("user")
     public JsonResult doLogin(String username, String password) {
 
         UserExample.Criteria criteria = userExample.or();
@@ -48,7 +52,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
                 user.setLastTime(new Date());
                 userMapper.updateByPrimaryKey(user);
-
                 jsonResult.setStatus(200);
                 jsonResult.setMessage("登陆成功！");
                 String token = JwtUtils.createJWT(user.getId(), AppContext.KEY_ISSUSE, 1000*60*60);
