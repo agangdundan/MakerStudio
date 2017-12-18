@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+
 @Controller
 @RequestMapping("/ms")
 public class UploadController extends BaseController {
@@ -18,9 +20,15 @@ public class UploadController extends BaseController {
     private UploadService uploadService;
 
     @ResponseBody
-    @PostMapping("/file")
-    public JsonResult uploadFile(@RequestParam("file")MultipartFile file) {
+    @PostMapping("/image")
+    public JsonResult uploadImage(@RequestParam("file") MultipartFile file) {
 
+        return uploadService.doUploadImage(file);
+    }
+
+    @ResponseBody
+    @PostMapping("/file")
+    public JsonResult uploadFile(@RequestParam("file") MultipartFile file) {
         return uploadService.doUploadFile(file);
     }
 

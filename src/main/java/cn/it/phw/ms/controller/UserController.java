@@ -1,10 +1,12 @@
 package cn.it.phw.ms.controller;
 
+import cn.it.phw.ms.common.AppContext;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.common.JsonResultForLayui;
 import cn.it.phw.ms.pojo.User;
 import cn.it.phw.ms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +30,8 @@ public class UserController extends BaseController {
 
     @ResponseBody
     @GetMapping(value = "/user/logout")
-    public JsonResult doLogout(HttpSession session) {
-        return userService.doLogout(session);
+    public JsonResult doLogout(HttpServletRequest request) {
+        return userService.doLogout((String) request.getAttribute(AppContext.KEY_ID));
     }
 
     @ResponseBody
@@ -53,9 +55,9 @@ public class UserController extends BaseController {
 
     @ResponseBody
     @PutMapping("/user")
-    public JsonResult doAddUser(User user, HttpServletRequest request, @RequestParam String token) {
-
-        return userService.doAddUser(user, token);
+    public JsonResult doAddUser(User user, HttpServletRequest request) {
+        String adminId = (String) request.getAttribute(AppContext.KEY_ID);
+        return userService.doAddUser(user, adminId);
     }
 
     @ResponseBody
@@ -76,9 +78,4 @@ public class UserController extends BaseController {
         return userService.findUserByPK(id);
     }
 
-    @ResponseBody
-    @GetMapping("/user")
-    public JsonResult findUserByToken(@RequestParam String token) {
-        return userService.findUserByToken(token);
-    }
 }

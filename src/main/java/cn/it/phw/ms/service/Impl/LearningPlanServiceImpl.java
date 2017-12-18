@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -233,11 +234,10 @@ public class LearningPlanServiceImpl extends BaseServiceImpl implements Learning
     }
 
     @Override
-    public JsonResult findLearningPlanByUid(String token) {
+    public JsonResult findLearningPlanByUid(String uid) {
 
-        Integer uid = JwtUtils.parseJWT2Uid(token);
         LearningplanformExample.Criteria criteria = learningplanformExample.or();
-        criteria.andUserIdEqualTo(uid);
+        criteria.andUserIdEqualTo(Integer.valueOf(uid));
         List<Learningplanform> learningplanforms = learningplanformMapper.selectByExample(learningplanformExample);
         if (learningplanforms.size() == 0) {
             jsonResult.setStatus(500);

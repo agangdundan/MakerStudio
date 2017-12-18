@@ -5,10 +5,12 @@ import cn.it.phw.ms.dao.mapper.UserMapper;
 import cn.it.phw.ms.pojo.User;
 import cn.it.phw.ms.pojo.UserExample;
 import cn.it.phw.ms.service.UserService;
+import com.google.gson.Gson;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -25,6 +27,12 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private Gson gson;
 
     @Cacheable("doLogin")
     @Override
@@ -44,12 +52,16 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
             if (user.getPassword().equals(Md5Utils.MD5Encode(newPasswords, "UTF-8", false))) {
 
                 user.setLastTime(new Date());
+
                 userMapper.updateByPrimaryKey(user);
                 jsonResult.setStatus(200);
                 jsonResult.setMessage("登陆成功！");
-                String token = JwtUtils.createJWT(user.getId(), AppContext.KEY_ISSUSE, 1000*60*60);
+                String token = JwtUtils.createJWT(user.getId(), AppContext.KEY_ISSUSE, 1000*60*60*24);
                 data.put(AppContext.KEY_TOKEN, token);
                 data.put(AppContext.KEY_USER, user);
+
+                redisTemplate.opsForHash().put(AppContext.USER_CACHE, String.valueOf(user.getId()), gson.toJson(user));
+
                 jsonResult.setData(data);
             } else {
                 jsonResult.setStatus(500);
@@ -62,8 +74,9 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
     @Override
-    public JsonResult doLogout(HttpSession session) {
-        session.removeAttribute(AppContext.KEY_USER);
+    public JsonResult doLogout(String userId) {
+        redisTemplate.opsForHash().delete(AppContext.USER_CACHE, userId);
+        jsonResult.setStatus(200);
         jsonResult.setMessage("注销成功！");
         return jsonResult;
     }
@@ -223,15 +236,15 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
     }
 
     @Override
-    public JsonResult doAddUser(User user, String token) {
+    public JsonResult doAddUser(User user, String adminId) {
 
-        Integer id = (Integer) JwtUtils.parseJWT(token);
-        User admin = userMapper.selectByPrimaryKey(id);
+        String adminJson = (String) redisTemplate.opsForHash().get(AppContext.USER_CACHE, adminId);
+        User admin = gson.fromJson(adminJson, User.class);
         if (admin == null) {
             jsonResult.setStatus(500);
             jsonResult.setMessage("无效的用户！");
         } else {
-            user.setCreatorId(id);
+            user.setCreatorId(admin.getId());
             user.setCreatorName(admin.getUsername());
             doRegUser(user);
             jsonResult.setStatus(200);
@@ -241,18 +254,6 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         return jsonResult;
     }
 
-    @Override
-    public JsonResult findUserByToken(String token) {
-        try {
-            Integer id = (Integer) JwtUtils.parseJWT(token);
-            User user = userMapper.selectByPrimaryKey(id);
-        } catch (Exception e) {
-            jsonResult.setStatus(500);
-            jsonResult.setMessage(e.getMessage());
-            return jsonResult;
-        }
-        return null;
-    }
 
     @Override
     public JsonResultForLayui findAllUsersWithLayui() {

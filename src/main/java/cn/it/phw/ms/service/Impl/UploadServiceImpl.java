@@ -23,9 +23,6 @@ public class UploadServiceImpl extends BaseServiceImpl implements UploadService 
     @Autowired
     private HttpServletRequest request;
 
-    @Autowired
-    private UploadMapper uploadMapper;
-
     @Override
     public JsonResult getUploadFileDetails() {
         return null;
@@ -52,10 +49,10 @@ public class UploadServiceImpl extends BaseServiceImpl implements UploadService 
     }
 
     @Override
-    public JsonResult doUploadFile(MultipartFile file) {
+    public JsonResult doUploadImage(MultipartFile file) {
 
         if (file.isEmpty()) {
-            jsonResult.setStatus(200);
+            jsonResult.setStatus(500);
             jsonResult.setMessage("文件不能为空！");
         } else {
 
@@ -69,7 +66,7 @@ public class UploadServiceImpl extends BaseServiceImpl implements UploadService 
                         + originName.substring(originName.lastIndexOf(".")));
                 upload.setVisiable(0);
 
-                String localPath = request.getServletContext().getRealPath("/" + upload.getFilename());
+                String localPath = request.getServletContext().getRealPath("/upload" + upload.getFilename());
                 System.out.println(localPath);
                 file.transferTo(new File(localPath));
                 upload.setLocalpath(localPath);
@@ -86,6 +83,25 @@ public class UploadServiceImpl extends BaseServiceImpl implements UploadService 
         }
 
         return jsonResult;
+    }
+
+    @Override
+    public JsonResult doUploadFile(MultipartFile file) {
+
+        if (file == null) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("文件不能为空！");
+        } else {
+            Upload upload = new Upload();
+            switch (file.getContentType()) {
+
+
+
+            }
+        }
+
+
+        return null;
     }
 
 }

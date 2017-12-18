@@ -29,6 +29,7 @@
         <pager.helper.version>5.0.0</pager.helper.version>
         <spring.data.version>1.8.9.RELEASE</spring.data.version>
         <jedis.version>2.9.0</jedis.version>
+        <org.slf4j.version>1.7.25</org.slf4j.version>
     </properties>
 
     <dependencies>
@@ -268,6 +269,19 @@
         </dependency>
 
         <!-- redis cache related.....end -->
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${org.slf4j.version}</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${org.slf4j.version}</version>
+        </dependency>
+
 
     </dependencies>
 

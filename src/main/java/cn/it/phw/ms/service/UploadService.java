@@ -18,5 +18,7 @@ public interface UploadService extends BaseService {
 
     JsonResult doUpdateFile(MultipartFile file);
 
+    JsonResult doUploadImage(MultipartFile file);
+
     JsonResult doUploadFile(MultipartFile file);
 }

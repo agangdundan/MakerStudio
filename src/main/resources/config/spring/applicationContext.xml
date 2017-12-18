@@ -7,6 +7,8 @@
 
     <context:property-placeholder location="classpath:config/*.properties"/>
 
+    <bean id="gson" class="com.google.gson.Gson"/>
+
     <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
         <property name="driverClass" value="${db.driverClassName}"/>
         <property name="jdbcUrl" value="${db.url}"/>

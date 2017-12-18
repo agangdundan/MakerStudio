@@ -13,7 +13,7 @@ public interface UserService extends BaseService {
 
     JsonResult doLogin(String username, String password);
 
-    JsonResult doLogout(HttpSession session);
+    JsonResult doLogout(String userId);
 
     JsonResult doUpdateUser(User user);
 
@@ -42,7 +42,5 @@ public interface UserService extends BaseService {
 
     JsonResult findUserByPK(Integer id);
 
-    JsonResult doAddUser(User user, String token);
-
-    JsonResult findUserByToken(String token);
+    JsonResult doAddUser(User user, String adminId);
 }

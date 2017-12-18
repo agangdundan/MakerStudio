@@ -49,7 +49,7 @@ public interface LearningPlanService extends BaseService {
      */
     JsonResult findLearningPlanByPK(Integer id);
 
-    JsonResult findLearningPlanByUid(String token);
+    JsonResult findLearningPlanByUid(String uid);
 
     JsonResult doSaveLearningPlanColumnContent(Learningplancolumnmanager learningplancolumnmanager);
 }

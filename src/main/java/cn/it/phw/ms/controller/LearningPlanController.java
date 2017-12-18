@@ -1,5 +1,6 @@
 package cn.it.phw.ms.controller;
 
+import cn.it.phw.ms.common.AppContext;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.pojo.Learningplancolumn;
 import cn.it.phw.ms.pojo.Learningplancolumnmanager;
@@ -8,6 +9,8 @@ import cn.it.phw.ms.service.LearningPlanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/ms")
@@ -36,8 +39,8 @@ public class LearningPlanController extends BaseController {
 
     @ResponseBody
     @GetMapping("/learningplan")
-    public JsonResult doFindLearningPlanByUid(@RequestParam String token) {
-        return learningPlanService.findLearningPlanByUid(token);
+    public JsonResult doFindLearningPlanByUid(HttpServletRequest request) {
+        return learningPlanService.findLearningPlanByUid((String) request.getAttribute(AppContext.KEY_ID));
     }
 
     @ResponseBody

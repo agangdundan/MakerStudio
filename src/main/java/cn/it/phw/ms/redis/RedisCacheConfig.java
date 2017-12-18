@@ -15,7 +15,6 @@ import org.springframework.data.redis.core.RedisTemplate;
 
 import java.io.Serializable;
 
-@Configuration
 @EnableCaching
 public class RedisCacheConfig extends CachingConfigurerSupport {
 

@@ -14,6 +14,10 @@ public class AppContext {
 
     public static final String KEY_TOKEN = "token";
 
-    public static final String AUTHORIZATION = "authorization";
+    public static final String AUTHORIZATION = "Authorization";
 
+    public static final long TTL = 60 * 60 * 1000 * 24;
+
+    public static final String USER_CACHE = "user_cache";
+    public static final String KEY_ID = "id";
 }
