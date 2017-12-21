@@ -35,7 +35,7 @@ public class JwtUtils {
 
         //builder.signWith(SignatureAlgorithm.HS512, apiKey);
 
-        //Builds the JWT and serializes it to a compact, URL-safe string  
+        //Builds the JWT and serializes it to a compact, URL-safe string
         return builder.compact();
     }
 
