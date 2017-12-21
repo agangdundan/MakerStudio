@@ -42,8 +42,10 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
 
                 if (redisTemplate.opsForHash().hasKey(AppContext.USER_CACHE, claims.getId())) {
 
+                    String uid = claims.getId();
+
                     //验证通过
-                    httpServletRequest.setAttribute(AppContext.KEY_ID, claims.getId());
+                    httpServletRequest.setAttribute(AppContext.KEY_ID, uid);
 
                     return true;
                 } else {

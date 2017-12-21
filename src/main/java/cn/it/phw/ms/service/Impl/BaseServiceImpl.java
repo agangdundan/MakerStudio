@@ -32,4 +32,6 @@ public class BaseServiceImpl implements BaseService {
 
     public SystemmessageExample systemmessageExample = new SystemmessageExample();
 
+    public GroupmanagerExample groupmanagerExample = new GroupmanagerExample();
+
 }
