@@ -45,7 +45,7 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
             List<Action> actions = new ArrayList<>();
             for (Actiongroup actiongroup : actiongroups) {
                 Integer actionId = actiongroup.getActionId();
-                Action action = actionMapper.selectByPrimaryKey(1);
+                Action action = actionMapper.selectByPrimaryKey(actionId);
                 actions.add(action);
             }
             jsonResult.setStatus(200);
@@ -76,12 +76,12 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
             Integer temp = (int) Math.pow(2, action.getId());
             userPurviewValue += temp;
         }
-        logger.error("用户总的权和为：" + String.valueOf(userPurviewValue));
+        logger.info("用户总的权和为：" + String.valueOf(userPurviewValue));
         for (Action action : actions) {
             Integer temp = (int) Math.pow(2, action.getId());
             currPirviewValue += temp;
         }
-        logger.error("当前需要的权和为：" + String.valueOf(currPirviewValue));
+        logger.info("当前需要的权和为：" + String.valueOf(currPirviewValue));
 
         isAccess = (userPurviewValue & currPirviewValue) == currPirviewValue;
 
