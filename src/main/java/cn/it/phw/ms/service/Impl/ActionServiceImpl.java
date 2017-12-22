@@ -32,7 +32,7 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
         } else {
             List<Action> actions = new ArrayList<>();
             for (Actiongroup actiongroup : actiongroups) {
-
+                actions.add(actionMapper.selectByPrimaryKey(actiongroup.getActionId()));
             }
         }
 

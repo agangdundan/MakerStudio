@@ -235,6 +235,66 @@ public class ActiongroupExample {
             return (Criteria) this;
         }
 
+        public Criteria andActionIdIsNull() {
+            addCriterion("action_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIdIsNotNull() {
+            addCriterion("action_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIdEqualTo(Integer value) {
+            addCriterion("action_id =", value, "actionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIdNotEqualTo(Integer value) {
+            addCriterion("action_id <>", value, "actionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIdGreaterThan(Integer value) {
+            addCriterion("action_id >", value, "actionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("action_id >=", value, "actionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIdLessThan(Integer value) {
+            addCriterion("action_id <", value, "actionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIdLessThanOrEqualTo(Integer value) {
+            addCriterion("action_id <=", value, "actionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIdIn(List<Integer> values) {
+            addCriterion("action_id in", values, "actionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIdNotIn(List<Integer> values) {
+            addCriterion("action_id not in", values, "actionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIdBetween(Integer value1, Integer value2) {
+            addCriterion("action_id between", value1, value2, "actionId");
+            return (Criteria) this;
+        }
+
+        public Criteria andActionIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("action_id not between", value1, value2, "actionId");
+            return (Criteria) this;
+        }
+
         public Criteria andUserGroupIdIsNull() {
             addCriterion("user_group_id is null");
             return (Criteria) this;

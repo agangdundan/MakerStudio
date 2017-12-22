@@ -1,13 +1,13 @@
 package cn.it.phw.ms.pojo;
 
-import cn.it.phw.ms.common.BaseEntity;
-
 import java.util.Date;
 
-public class Actiongroup extends BaseEntity {
+public class Actiongroup {
     private Integer id;
 
     private String action;
+
+    private Integer actionId;
 
     private Integer userGroupId;
 
@@ -31,6 +31,14 @@ public class Actiongroup extends BaseEntity {
 
     public void setAction(String action) {
         this.action = action == null ? null : action.trim();
+    }
+
+    public Integer getActionId() {
+        return actionId;
+    }
+
+    public void setActionId(Integer actionId) {
+        this.actionId = actionId;
     }
 
     public Integer getUserGroupId() {
