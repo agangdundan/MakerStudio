@@ -45,7 +45,7 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
             List<Action> actions = new ArrayList<>();
             for (Actiongroup actiongroup : actiongroups) {
                 Integer actionId = actiongroup.getActionId();
-                Action action = actionMapper.selectByPrimaryKey(actionId);
+                Action action = actionMapper.selectByPrimaryKey(1);
                 actions.add(action);
             }
             jsonResult.setStatus(200);
