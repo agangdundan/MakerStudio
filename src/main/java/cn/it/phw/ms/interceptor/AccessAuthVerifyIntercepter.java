@@ -48,7 +48,7 @@ public class AccessAuthVerifyIntercepter implements HandlerInterceptor {
             //查询用户所在用户组
             JsonResult jsonResult = userGroupService.selectTheMaxUserGroupByUserId(uid);
             Usergroup usergroup = (Usergroup) jsonResult.getData().get(AppContext.KEY_DATA);
-            
+ 
         }
 
         return false;
