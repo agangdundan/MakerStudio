@@ -46,24 +46,9 @@ public class AccessAuthVerifyIntercepter implements HandlerInterceptor {
         if (!StringUtils.isEmpty(uid)) {
 
             //查询用户所在用户组
-            JsonResult jsonResult = userGroupService.selectUserGroupByUserId(uid);
-            if (jsonResult.getStatus() == 200) {
-                Map<String, Object> data = jsonResult.getData();
-                List<Groupmanager> groupmanagers = (List<Groupmanager>) data.get(AppContext.KEY_DATA);
-                List<String> userGroupIds = new ArrayList<>();
-                for (Groupmanager groupmanager : groupmanagers) {
-                    userGroupIds.add(String.valueOf(groupmanager.getUserGroupId()));
-                    userGroupService.selectUserGroupByPK(groupmanager.getUserGroupId());
-                }
-                //根据sort，利用冒泡排序法筛选出sort最大的权限
-
-
-
-            } else {
-                httpServletResponse.setContentType("application/json;charset=utf-8");
-                httpServletResponse.getWriter().println(gson.toJson(jsonResult));
-            }
-
+            JsonResult jsonResult = userGroupService.selectTheMaxUserGroupByUserId(uid);
+            Usergroup usergroup = (Usergroup) jsonResult.getData().get(AppContext.KEY_DATA);
+            
         }
 
         return false;

@@ -9,6 +9,8 @@ public class Action {
 
     private Integer visiable;
 
+    private String desc;
+
     public Integer getId() {
         return id;
     }
@@ -39,5 +41,13 @@ public class Action {
 
     public void setVisiable(Integer visiable) {
         this.visiable = visiable;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc == null ? null : desc.trim();
     }
 }

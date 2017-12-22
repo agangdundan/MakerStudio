@@ -36,10 +36,32 @@ public class UserGroupServiceImpl extends BaseServiceImpl implements UserGroupSe
             jsonResult.setMessage("您还没有任何用户组");
         } else {
             Integer sort = 0;
+            List<Usergroup> usergroups = new ArrayList<>();
             for (Groupmanager groupmanager : groupmanagers) {
                 Usergroup temp = usergroupMapper.selectByPrimaryKey(groupmanager.getUserGroupId());
+                usergroups.add(temp);
+            }
+
+            for (int n = 0; n < usergroups.size(); n++) {
+
+                for (int m = 0; m < usergroups.size() - 1; m++) {
+                    Usergroup temp;
+                    Usergroup temp1 = usergroups.get(m);
+                    Usergroup temp2 = usergroups.get(m + 1);
+                    if (temp1.getSort() < temp2.getSort()) {
+                        temp = temp2;
+                        temp2 = temp1;
+                        temp1 = temp;
+                    }
+                }
 
             }
+            //取最大的
+            Usergroup usergroup = usergroups.get(usergroups.size() - 1);
+            jsonResult.setMessage("OK");
+            jsonResult.setStatus(200);
+            data.put(AppContext.KEY_DATA, usergroup);
+            jsonResult.setData(data);
         }
 
         return jsonResult;
@@ -48,8 +70,12 @@ public class UserGroupServiceImpl extends BaseServiceImpl implements UserGroupSe
     @Override
     public JsonResult selectUserGroupByPK(Integer userGroupId) {
 
-        Usergroup usergroup =
+        Usergroup usergroup = usergroupMapper.selectByPrimaryKey(userGroupId);
+        jsonResult.setStatus(200);
+        jsonResult.setMessage("OK");
+        data.put(AppContext.KEY_DATA, usergroup);
+        jsonResult.setData(data);
 
-        return null;
+        return jsonResult;
     }
 }

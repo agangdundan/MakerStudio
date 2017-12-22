@@ -6,6 +6,7 @@
     <result column="action_column_id" jdbcType="INTEGER" property="actionColumnId" />
     <result column="action" jdbcType="VARCHAR" property="action" />
     <result column="visiable" jdbcType="INTEGER" property="visiable" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -66,7 +67,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, action_column_id, action, visiable
+    id, action_column_id, action, visiable, desc
   </sql>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.ActionExample" resultMap="BaseResultMap">
     select
@@ -100,9 +101,9 @@
   </delete>
   <insert id="insert" parameterType="cn.it.phw.ms.pojo.Action">
     insert into action (id, action_column_id, action, 
-      visiable)
+      visiable, desc)
     values (#{id,jdbcType=INTEGER}, #{actionColumnId,jdbcType=INTEGER}, #{action,jdbcType=VARCHAR}, 
-      #{visiable,jdbcType=INTEGER})
+      #{visiable,jdbcType=INTEGER}, #{desc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Action">
     insert into action
@@ -119,6 +120,9 @@
       <if test="visiable != null">
         visiable,
       </if>
+      <if test="desc != null">
+        desc,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -132,6 +136,9 @@
       </if>
       <if test="visiable != null">
         #{visiable,jdbcType=INTEGER},
+      </if>
+      <if test="desc != null">
+        #{desc,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -156,6 +163,9 @@
       <if test="record.visiable != null">
         visiable = #{record.visiable,jdbcType=INTEGER},
       </if>
+      <if test="record.desc != null">
+        desc = #{record.desc,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -166,7 +176,8 @@
     set id = #{record.id,jdbcType=INTEGER},
       action_column_id = #{record.actionColumnId,jdbcType=INTEGER},
       action = #{record.action,jdbcType=VARCHAR},
-      visiable = #{record.visiable,jdbcType=INTEGER}
+      visiable = #{record.visiable,jdbcType=INTEGER},
+      desc = #{record.desc,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -183,6 +194,9 @@
       <if test="visiable != null">
         visiable = #{visiable,jdbcType=INTEGER},
       </if>
+      <if test="desc != null">
+        desc = #{desc,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -190,7 +204,8 @@
     update action
     set action_column_id = #{actionColumnId,jdbcType=INTEGER},
       action = #{action,jdbcType=VARCHAR},
-      visiable = #{visiable,jdbcType=INTEGER}
+      visiable = #{visiable,jdbcType=INTEGER},
+      desc = #{desc,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
