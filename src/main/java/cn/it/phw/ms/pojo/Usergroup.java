@@ -1,10 +1,8 @@
 package cn.it.phw.ms.pojo;
 
-import cn.it.phw.ms.common.BaseEntity;
-
 import java.util.Date;
 
-public class Usergroup extends BaseEntity {
+public class Usergroup {
     private Integer id;
 
     private String groupName;
@@ -16,6 +14,8 @@ public class Usergroup extends BaseEntity {
     private Integer createrId;
 
     private String createrName;
+
+    private Integer sort;
 
     public Integer getId() {
         return id;
@@ -63,5 +63,13 @@ public class Usergroup extends BaseEntity {
 
     public void setCreaterName(String createrName) {
         this.createrName = createrName == null ? null : createrName.trim();
+    }
+
+    public Integer getSort() {
+        return sort;
+    }
+
+    public void setSort(Integer sort) {
+        this.sort = sort;
     }
 }

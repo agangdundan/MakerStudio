@@ -4,6 +4,7 @@ import cn.it.phw.ms.common.JsonResult;
 
 public interface UserGroupService extends BaseService {
 
-    public JsonResult selectUserGroupByUserId(String uid);
+    public JsonResult selectTheMaxUserGroupByUserId(String uid);
 
+    public JsonResult selectUserGroupByPK(Integer userGroupId);
 }

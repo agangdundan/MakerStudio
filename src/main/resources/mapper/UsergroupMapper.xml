@@ -8,6 +8,7 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="creater_id" jdbcType="INTEGER" property="createrId" />
     <result column="creater_name" jdbcType="VARCHAR" property="createrName" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, group_name, group_info, create_time, creater_id, creater_name
+    id, group_name, group_info, create_time, creater_id, creater_name, sort
   </sql>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.UsergroupExample" resultMap="BaseResultMap">
     select
@@ -102,11 +103,11 @@
   </delete>
   <insert id="insert" parameterType="cn.it.phw.ms.pojo.Usergroup">
     insert into usergroup (id, group_name, group_info, 
-      create_time, creater_id, creater_name
-      )
+      create_time, creater_id, creater_name, 
+      sort)
     values (#{id,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, #{groupInfo,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{createrId,jdbcType=INTEGER}, #{createrName,jdbcType=VARCHAR}
-      )
+      #{createTime,jdbcType=TIMESTAMP}, #{createrId,jdbcType=INTEGER}, #{createrName,jdbcType=VARCHAR}, 
+      #{sort,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Usergroup">
     insert into usergroup
@@ -129,6 +130,9 @@
       <if test="createrName != null">
         creater_name,
       </if>
+      <if test="sort != null">
+        sort,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -148,6 +152,9 @@
       </if>
       <if test="createrName != null">
         #{createrName,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -178,6 +185,9 @@
       <if test="record.createrName != null">
         creater_name = #{record.createrName,jdbcType=VARCHAR},
       </if>
+      <if test="record.sort != null">
+        sort = #{record.sort,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -190,7 +200,8 @@
       group_info = #{record.groupInfo,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
       creater_id = #{record.createrId,jdbcType=INTEGER},
-      creater_name = #{record.createrName,jdbcType=VARCHAR}
+      creater_name = #{record.createrName,jdbcType=VARCHAR},
+      sort = #{record.sort,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -213,6 +224,9 @@
       <if test="createrName != null">
         creater_name = #{createrName,jdbcType=VARCHAR},
       </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -222,7 +236,8 @@
       group_info = #{groupInfo,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       creater_id = #{createrId,jdbcType=INTEGER},
-      creater_name = #{createrName,jdbcType=VARCHAR}
+      creater_name = #{createrName,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

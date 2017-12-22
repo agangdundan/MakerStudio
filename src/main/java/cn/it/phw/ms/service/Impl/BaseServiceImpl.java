@@ -34,4 +34,6 @@ public class BaseServiceImpl implements BaseService {
 
     public GroupmanagerExample groupmanagerExample = new GroupmanagerExample();
 
+    public ActiongroupExample actiongroupExample = new ActiongroupExample();
+
 }

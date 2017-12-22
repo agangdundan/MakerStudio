@@ -4,9 +4,8 @@ import cn.it.phw.ms.common.AppContext;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.dao.mapper.GroupmanagerMapper;
 import cn.it.phw.ms.dao.mapper.UsergroupMapper;
-import cn.it.phw.ms.pojo.Groupmanager;
-import cn.it.phw.ms.pojo.User;
-import cn.it.phw.ms.pojo.Usergroup;
+import cn.it.phw.ms.pojo.*;
+import cn.it.phw.ms.service.ActiongroupService;
 import cn.it.phw.ms.service.UserGroupService;
 import com.google.gson.Gson;
 import org.slf4j.Logger;
@@ -35,6 +34,8 @@ public class AccessAuthVerifyIntercepter implements HandlerInterceptor {
     @Autowired
     private UserGroupService userGroupService;
 
+    private ActiongroupService actiongroupService;
+
     @Autowired
     private Gson gson;
 
@@ -49,14 +50,14 @@ public class AccessAuthVerifyIntercepter implements HandlerInterceptor {
             if (jsonResult.getStatus() == 200) {
                 Map<String, Object> data = jsonResult.getData();
                 List<Groupmanager> groupmanagers = (List<Groupmanager>) data.get(AppContext.KEY_DATA);
-                List<Integer> userGroupIds = new ArrayList<>();
+                List<String> userGroupIds = new ArrayList<>();
                 for (Groupmanager groupmanager : groupmanagers) {
-                    userGroupIds.add(groupmanager.getUserGroupId());
+                    userGroupIds.add(String.valueOf(groupmanager.getUserGroupId()));
+                    userGroupService.selectUserGroupByPK(groupmanager.getUserGroupId());
                 }
-                //获取用户组拥有的权限
-                for (Integer id : userGroupIds) {
-                    logger.error(String.valueOf(id));
-                }
+                //根据sort，利用冒泡排序法筛选出sort最大的权限
+
+
 
             } else {
                 httpServletResponse.setContentType("application/json;charset=utf-8");
