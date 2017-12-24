@@ -1,8 +1,6 @@
 package cn.it.phw.ms.controller;
 
-import cn.it.phw.ms.common.AppContext;
-import cn.it.phw.ms.common.JsonResult;
-import cn.it.phw.ms.common.JsonResultForLayui;
+import cn.it.phw.ms.common.*;
 import cn.it.phw.ms.pojo.User;
 import cn.it.phw.ms.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
