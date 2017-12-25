@@ -78,4 +78,63 @@ public class UserGroupServiceImpl extends BaseServiceImpl implements UserGroupSe
 
         return jsonResult;
     }
+
+    @Override
+    public JsonResult selectAllUserGroups() {
+        List<Usergroup> usergroups = usergroupMapper.selectByExample(null);
+        if (usergroups.size() == 0) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("还没有任何用户组");
+        } else {
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("加载完成");
+            data.put(AppContext.KEY_DATA, usergroups);
+            jsonResult.setData(data);
+        }
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResult insertUserGroup(Usergroup usergroup) {
+        usergroupMapper.insert(usergroup);
+        jsonResult.setStatus(200);
+        jsonResult.setMessage("操作完成");
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResult updateUserGroupByPK(Usergroup usergroup) {
+        Usergroup oldUserGroup = usergroupMapper.selectByPrimaryKey(usergroup.getId());
+        if (oldUserGroup == null) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("参数错误");
+        } else {
+            if (usergroup.getSort() != null) {
+                oldUserGroup.setSort(usergroup.getSort());
+            } else if (usergroup.getGroupInfo() != null) {
+                oldUserGroup.setGroupInfo(usergroup.getGroupInfo());
+            } else if (usergroup.getGroupName() != null) {
+                oldUserGroup.setGroupName(usergroup.getGroupName());
+            }
+
+            usergroupMapper.updateByPrimaryKey(oldUserGroup);
+
+            jsonResult.setMessage("操作完成");
+            jsonResult.setStatus(200);
+        }
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResult deleteUserGroupByPK(Integer ugid) {
+        if (ugid == null) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("参数错误");
+        } else {
+            usergroupMapper.deleteByPrimaryKey(ugid);
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("Options Complete");
+        }
+        return jsonResult;
+    }
 }

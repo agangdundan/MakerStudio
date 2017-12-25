@@ -91,17 +91,17 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
         } else {
             if (!StringUtils.isEmpty(user.getUsername())) {
                 oldUser.setUsername(user.getUsername());
-            } else if (!StringUtils.isEmpty(user.getSignature())) {
+            } if (!StringUtils.isEmpty(user.getSignature())) {
                 oldUser.setSignature(user.getSignature());
-            } else if (!StringUtils.isEmpty(user.getSex())) {
+            } if (!StringUtils.isEmpty(user.getSex())) {
                 oldUser.setSex(user.getSex());
-            } else if (!StringUtils.isEmpty(user.getEmail())) {
+            } if (!StringUtils.isEmpty(user.getEmail())) {
                 oldUser.setEmail(user.getEmail());
-            } else if (!StringUtils.isEmpty(user.getPhone())) {
+            } if (!StringUtils.isEmpty(user.getPhone())) {
                 oldUser.setPhone(user.getPhone());
             }
             userMapper.updateByPrimaryKey(oldUser);
-            jsonResult.setStatus(500);
+            jsonResult.setStatus(200);
             jsonResult.setMessage("更新成功");
         }
 

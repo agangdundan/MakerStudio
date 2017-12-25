@@ -1,6 +1,7 @@
 package cn.it.phw.ms.service;
 
 import cn.it.phw.ms.common.JsonResult;
+import cn.it.phw.ms.pojo.Usergroup;
 
 public interface UserGroupService extends BaseService {
 
@@ -13,4 +14,12 @@ public interface UserGroupService extends BaseService {
     public JsonResult selectTheMaxUserGroupByUserId(String uid);
 
     public JsonResult selectUserGroupByPK(Integer userGroupId);
+
+    public JsonResult selectAllUserGroups();
+
+    public JsonResult insertUserGroup(Usergroup usergroup);
+
+    public JsonResult updateUserGroupByPK(Usergroup usergroup);
+
+    public JsonResult deleteUserGroupByPK(Integer ugid);
 }

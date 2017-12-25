@@ -19,4 +19,12 @@ public interface ActionService extends BaseService {
 
     public JsonResult selectActionByActionStr(String action);
 
+    public JsonResult selectAllActions();
+
+    public JsonResult insertAction(Action action);
+
+    public JsonResult updateActionByPK(Action action);
+
+    public JsonResult deleteActonByPK(Integer id);
+
 }

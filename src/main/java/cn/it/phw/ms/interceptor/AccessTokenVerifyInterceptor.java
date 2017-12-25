@@ -8,6 +8,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,8 @@ import java.io.PrintWriter;
 
 @Component
 public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
+
+    private static final Logger logger = LoggerFactory.getLogger(AccessTokenVerifyInterceptor.class);
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -47,7 +51,7 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
 
                     //验证通过
                     httpServletRequest.setAttribute(AppContext.KEY_ID, uid);
-
+                    logger.info(httpServletRequest.getMethod() + ":" + httpServletRequest.getRequestURL().toString());
                     return true;
                 } else {
                     exportMsg(httpServletResponse, httpServletRequest, "您还未登陆，请先登录。");

@@ -108,4 +108,67 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
         return jsonResult;
     }
 
+    @Override
+    public JsonResult selectAllActions() {
+        List<Action> actions = actionMapper.selectByExample(null);
+        if (actions.size() == 0) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("还没有添加任何权限");
+        } else {
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("加载完成");
+            data.put(AppContext.KEY_DATA, actions);
+            jsonResult.setData(data);
+        }
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResult insertAction(Action action) {
+        actionMapper.insert(action);
+        jsonResult.setStatus(200);
+        jsonResult.setMessage("操作完成");
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResult updateActionByPK(Action action) {
+        Action oldAction = actionMapper.selectByPrimaryKey(action.getId());
+        if (oldAction == null) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("参数错误");
+        } else {
+            if (action.getAction() != null) {
+                oldAction.setAction(action.getAction());
+            } if (action.getActionColumnId() != null) {
+                oldAction.setActionColumnId(action.getActionColumnId());
+            } if (action.getDescription() != null) {
+                oldAction.setDescription(action.getDescription());
+            } if (action.getType() != null) {
+                oldAction.setType(action.getType());
+            } if (action.getVisiable() != null) {
+                oldAction.setVisiable(action.getVisiable());
+            }
+
+            actionMapper.updateByPrimaryKey(oldAction);
+
+            jsonResult.setMessage("操作完成");
+            jsonResult.setStatus(200);
+        }
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResult deleteActonByPK(Integer id) {
+        if (id == null) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("Params Error");
+        } else {
+            actionMapper.deleteByPrimaryKey(id);
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("OK");
+        }
+        return jsonResult;
+    }
+
 }
