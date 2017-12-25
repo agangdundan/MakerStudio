@@ -7,6 +7,8 @@ public class Action {
 
     private String action;
 
+    private String type;
+
     private Integer visiable;
 
     private String description;
@@ -33,6 +35,14 @@ public class Action {
 
     public void setAction(String action) {
         this.action = action == null ? null : action.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public Integer getVisiable() {

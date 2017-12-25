@@ -42,6 +42,8 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
             jsonResult.setStatus(500);
             jsonResult.setMessage("这个权限组还没有分配任何权限");
         } else {
+
+            //用户所具有的总权限
             List<Action> actions = new ArrayList<>();
             for (Actiongroup actiongroup : actiongroups) {
                 Integer actionId = actiongroup.getActionId();
@@ -57,40 +59,50 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
         return jsonResult;
     }
 
+
+
     @Override
-    public JsonResult verifyActions(Integer uid, List<Action> actions) {
+    public JsonResult verifyActions(Integer uid, List<String> reqActionsStr) {
 
         JsonResult jsonResultOfUseGroup = userGroupService.selectTheMaxUserGroupByUserId(String.valueOf(uid));
         Usergroup usergroup = (Usergroup) jsonResultOfUseGroup.getData().get(AppContext.KEY_DATA);
         JsonResult jsonResultOfAction = selectActionByUserGroupId(usergroup.getId());
-        List<Action> currActions = (List<Action>) jsonResultOfAction.getData().get(AppContext.KEY_DATA);
 
-        //用户的权和
-        int userPurviewValue = 0;
-        //验证的权和
-        int currPirviewValue = 0;
+        List<Action> userActions = (List<Action>) jsonResultOfAction.getData().get(AppContext.KEY_DATA);
 
-        boolean isAccess = false;
-
-        for (Action action : currActions) {
-            Integer temp = (int) Math.pow(2, action.getId());
-            userPurviewValue += temp;
+        StringBuilder userActionsStr = new StringBuilder();
+        for (Action action : userActions) {
+            userActionsStr.append(action.getAction())
+                        .append(",");
         }
-        logger.info("用户总的权和为：" + String.valueOf(userPurviewValue));
-        for (Action action : actions) {
-            Integer temp = (int) Math.pow(2, action.getId());
-            currPirviewValue += temp;
+        logger.info(userActionsStr.toString());
+        for (String action : reqActionsStr) {
+            if ((userActions.toString()).contains(action)) {
+                data.put(action, true);
+            } else {
+                data.put(action, false);
+            }
         }
-        logger.info("当前需要的权和为：" + String.valueOf(currPirviewValue));
+        jsonResult.setStatus(200);
+        jsonResult.setMessage("OK");
+        jsonResult.setData(data);
 
-        isAccess = (userPurviewValue & currPirviewValue) == currPirviewValue;
+        return jsonResult;
+    }
 
-        if (isAccess) {
+    @Override
+    public JsonResult selectActionByActionStr(String action) {
+
+        ActionExample.Criteria criteria = actionExample.or();
+        criteria.andActionEqualTo(action);
+        List<Action> actions = actionMapper.selectByExample(actionExample);
+        if (actions.size() == 0) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("No Such Action");
+        } else {
             jsonResult.setStatus(200);
             jsonResult.setMessage("OK");
-        } else {
-            jsonResult.setStatus(500);
-            jsonResult.setMessage("您没有足够的权限");
+            data.put(AppContext.KEY_DATA, actions.get(0));
         }
 
         return jsonResult;

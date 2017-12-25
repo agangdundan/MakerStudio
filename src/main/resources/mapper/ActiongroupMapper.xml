@@ -3,7 +3,6 @@
 <mapper namespace="cn.it.phw.ms.dao.mapper.ActiongroupMapper">
   <resultMap id="BaseResultMap" type="cn.it.phw.ms.pojo.Actiongroup">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="action" jdbcType="VARCHAR" property="action" />
     <result column="action_id" jdbcType="INTEGER" property="actionId" />
     <result column="user_group_id" jdbcType="INTEGER" property="userGroupId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
@@ -69,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, action, action_id, user_group_id, user_id, create_time, creater_name
+    id, action_id, user_group_id, user_id, create_time, creater_name
   </sql>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.ActiongroupExample" resultMap="BaseResultMap">
     select
@@ -102,21 +101,18 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.it.phw.ms.pojo.Actiongroup">
-    insert into actiongroup (id, action, action_id, 
-      user_group_id, user_id, create_time, 
-      creater_name)
-    values (#{id,jdbcType=INTEGER}, #{action,jdbcType=VARCHAR}, #{actionId,jdbcType=INTEGER}, 
-      #{userGroupId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{createrName,jdbcType=VARCHAR})
+    insert into actiongroup (id, action_id, user_group_id, 
+      user_id, create_time, creater_name
+      )
+    values (#{id,jdbcType=INTEGER}, #{actionId,jdbcType=INTEGER}, #{userGroupId,jdbcType=INTEGER}, 
+      #{userId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createrName,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Actiongroup">
     insert into actiongroup
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
-      </if>
-      <if test="action != null">
-        action,
       </if>
       <if test="actionId != null">
         action_id,
@@ -137,9 +133,6 @@
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=INTEGER},
-      </if>
-      <if test="action != null">
-        #{action,jdbcType=VARCHAR},
       </if>
       <if test="actionId != null">
         #{actionId,jdbcType=INTEGER},
@@ -170,9 +163,6 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.action != null">
-        action = #{record.action,jdbcType=VARCHAR},
-      </if>
       <if test="record.actionId != null">
         action_id = #{record.actionId,jdbcType=INTEGER},
       </if>
@@ -196,7 +186,6 @@
   <update id="updateByExample" parameterType="map">
     update actiongroup
     set id = #{record.id,jdbcType=INTEGER},
-      action = #{record.action,jdbcType=VARCHAR},
       action_id = #{record.actionId,jdbcType=INTEGER},
       user_group_id = #{record.userGroupId,jdbcType=INTEGER},
       user_id = #{record.userId,jdbcType=INTEGER},
@@ -209,9 +198,6 @@
   <update id="updateByPrimaryKeySelective" parameterType="cn.it.phw.ms.pojo.Actiongroup">
     update actiongroup
     <set>
-      <if test="action != null">
-        action = #{action,jdbcType=VARCHAR},
-      </if>
       <if test="actionId != null">
         action_id = #{actionId,jdbcType=INTEGER},
       </if>
@@ -232,8 +218,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.it.phw.ms.pojo.Actiongroup">
     update actiongroup
-    set action = #{action,jdbcType=VARCHAR},
-      action_id = #{actionId,jdbcType=INTEGER},
+    set action_id = #{actionId,jdbcType=INTEGER},
       user_group_id = #{userGroupId,jdbcType=INTEGER},
       user_id = #{userId,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},

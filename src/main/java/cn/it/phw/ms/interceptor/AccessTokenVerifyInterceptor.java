@@ -29,10 +29,11 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
 
-        String authorization = httpServletRequest.getHeader("Authorization");
+        String authorization = httpServletRequest.getHeader(AppContext.AUTHORIZATION);
         if (StringUtils.isEmpty(authorization)) {
             authorization = httpServletRequest.getParameter("token");
         }
+
         if (StringUtils.isEmpty(authorization)) {
             exportMsg(httpServletResponse, httpServletRequest, "您还未登陆，请先登录。");
             return false;

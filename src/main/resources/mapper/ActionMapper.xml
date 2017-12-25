@@ -5,6 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="action_column_id" jdbcType="INTEGER" property="actionColumnId" />
     <result column="action" jdbcType="VARCHAR" property="action" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="visiable" jdbcType="INTEGER" property="visiable" />
     <result column="description" jdbcType="VARCHAR" property="description" />
   </resultMap>
@@ -67,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, action_column_id, action, visiable, description
+    id, action_column_id, action, type, visiable, description
   </sql>
   <select id="selectByExample" parameterType="cn.it.phw.ms.pojo.ActionExample" resultMap="BaseResultMap">
     select
@@ -101,9 +102,11 @@
   </delete>
   <insert id="insert" parameterType="cn.it.phw.ms.pojo.Action">
     insert into action (id, action_column_id, action, 
-      visiable, description)
+      type, visiable, description
+      )
     values (#{id,jdbcType=INTEGER}, #{actionColumnId,jdbcType=INTEGER}, #{action,jdbcType=VARCHAR}, 
-      #{visiable,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR})
+      #{type,jdbcType=VARCHAR}, #{visiable,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="cn.it.phw.ms.pojo.Action">
     insert into action
@@ -116,6 +119,9 @@
       </if>
       <if test="action != null">
         action,
+      </if>
+      <if test="type != null">
+        type,
       </if>
       <if test="visiable != null">
         visiable,
@@ -133,6 +139,9 @@
       </if>
       <if test="action != null">
         #{action,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
       </if>
       <if test="visiable != null">
         #{visiable,jdbcType=INTEGER},
@@ -160,6 +169,9 @@
       <if test="record.action != null">
         action = #{record.action,jdbcType=VARCHAR},
       </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
       <if test="record.visiable != null">
         visiable = #{record.visiable,jdbcType=INTEGER},
       </if>
@@ -176,6 +188,7 @@
     set id = #{record.id,jdbcType=INTEGER},
       action_column_id = #{record.actionColumnId,jdbcType=INTEGER},
       action = #{record.action,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
       visiable = #{record.visiable,jdbcType=INTEGER},
       description = #{record.description,jdbcType=VARCHAR}
     <if test="_parameter != null">
@@ -191,6 +204,9 @@
       <if test="action != null">
         action = #{action,jdbcType=VARCHAR},
       </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
       <if test="visiable != null">
         visiable = #{visiable,jdbcType=INTEGER},
       </if>
@@ -204,6 +220,7 @@
     update action
     set action_column_id = #{actionColumnId,jdbcType=INTEGER},
       action = #{action,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
       visiable = #{visiable,jdbcType=INTEGER},
       description = #{description,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

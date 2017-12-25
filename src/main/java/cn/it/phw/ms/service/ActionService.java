@@ -15,6 +15,8 @@ public interface ActionService extends BaseService {
      * @param uid 当前用户
      * @return jsonResult
      */
-    public JsonResult verifyActions(Integer uid, List<Action> actions);
+    public JsonResult verifyActions(Integer uid, List<String> actions);
+
+    public JsonResult selectActionByActionStr(String action);
 
 }

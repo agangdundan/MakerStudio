@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class AccessAuthVerifyInterceptor implements HandlerInterceptor {
@@ -44,15 +45,25 @@ public class AccessAuthVerifyInterceptor implements HandlerInterceptor {
         if (!StringUtils.isEmpty(uid)) {
 
             //查询用户所在用户组
-            JsonResult jsonResult = userGroupService.selectTheMaxUserGroupByUserId(uid);
+            JsonResult jsonResultOfUserGroup = userGroupService.selectTheMaxUserGroupByUserId(uid);
             //获取最大权限的用户组
-            Usergroup usergroup = (Usergroup) jsonResult.getData().get(AppContext.KEY_DATA);
+            Usergroup usergroup = (Usergroup) jsonResultOfUserGroup.getData().get(AppContext.KEY_DATA);
             //根据用户组id查询用户组所有的权限
             JsonResult jsonResultOfActions = actionService.selectActionByUserGroupId(usergroup.getId());
             if (jsonResultOfActions.getStatus() == 200) {
-                List<Action> actions = (List<Action>) jsonResultOfActions.getData().get(AppContext.KEY_DATA);
-                JsonResult jsonResultOfAuth = actionService.verifyActions(Integer.valueOf(uid), actions);
+                JsonResult jsonResultOfAuth = actionService.verifyActions(Integer.valueOf(uid),
+                            (List<String>) httpServletRequest.getAttribute(AppContext.KEY_ACTION));
                 if (jsonResultOfAuth.getStatus() == 200) {
+                    Map<String, Boolean> data = (Map<String, Boolean>) jsonResultOfAuth.getData().get(AppContext.KEY_DATA);
+                    for(String key : data.keySet()) {
+                        if (!data.get(key)) {
+                            JsonResult jsonResult = new JsonResult();
+                            jsonResult.setStatus(500);
+                            jsonResult.setMessage("没有足够的权限：" + key);
+                            return false;
+                        }
+                    }
+
                     return true;
                 } else {
                     httpServletResponse.setContentType("application/json;charset=utf-8");

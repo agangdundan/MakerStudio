@@ -65,5 +65,6 @@
         <table schema="ms" tableName="user" />
         <table schema="ms" tableName="usergroup" />-->
         <table schema="ms" tableName="action" />
+        <table schema="ms" tableName="actiongroup" />
     </context>
 </generatorConfiguration>

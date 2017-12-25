@@ -5,8 +5,6 @@ import java.util.Date;
 public class Actiongroup {
     private Integer id;
 
-    private String action;
-
     private Integer actionId;
 
     private Integer userGroupId;
@@ -23,14 +21,6 @@ public class Actiongroup {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getAction() {
-        return action;
-    }
-
-    public void setAction(String action) {
-        this.action = action == null ? null : action.trim();
     }
 
     public Integer getActionId() {

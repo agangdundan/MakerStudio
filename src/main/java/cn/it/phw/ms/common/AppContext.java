@@ -20,4 +20,5 @@ public class AppContext {
 
     public static final String USER_CACHE = "user_cache";
     public static final String KEY_ID = "id";
+    public static final String KEY_ACTION = "action";
 }
