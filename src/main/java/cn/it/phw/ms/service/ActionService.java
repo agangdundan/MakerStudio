@@ -9,7 +9,7 @@ public interface ActionService extends BaseService {
 
     public JsonResult selectActionByUserGroupId(Integer ugid);
 
-    public JsonResult verifyActions(Integer userId, String url);
+    public JsonResult verifyActions(Integer userId, String url, String type);
 
     public JsonResult selectActionByActionStr(String action);
 

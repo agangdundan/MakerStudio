@@ -68,25 +68,29 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
     }
 
     @Override
-    public JsonResult verifyActions(Integer userId, String url) {
+    public JsonResult verifyActions(Integer userId, String url, String type) {
         jsonResult = actionManagerService.selectActionGroupsByUid(userId);
         if (jsonResult.getStatus() == 500) {
             return jsonResult;
         }
+        JsonResult jsonResultOfResult = new JsonResult();
+        jsonResultOfResult.setStatus(500);
         List<Actiongroup> actiongroups = (List<Actiongroup>) jsonResult.getData().get(AppContext.KEY_DATA);
         for (Actiongroup actiongroup: actiongroups) {
             Action action = actionMapper.selectByPrimaryKey(actiongroup.getActionId());
-            if (url.contains(action.getAction())) {
-                jsonResult.setStatus(200);
-                jsonResult.setMessage("OK");
+            String actionStr = action.getAction();
+            String actionType = action.getType();
+            if (url.contains(actionStr) && actionType.equals(actionType)) {
+                jsonResultOfResult.setStatus(200);
+                jsonResultOfResult.setMessage("OK");
                 break;
             }
         }
-        if (jsonResult.getStatus() == 500) {
-            jsonResult.setMessage("Error: Permission Denied");
+        if (jsonResultOfResult.getStatus() == 500) {
+            jsonResultOfResult.setMessage("Error: Permission Denied");
         }
 
-        return jsonResult;
+        return jsonResultOfResult;
     }
 
     @Override

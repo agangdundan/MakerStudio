@@ -45,7 +45,10 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws Exception {
 
-        //Verify Actions
+        //Verify Actions 检查是否是HandlerMethod类型，若不是则直接放行
+        if (!(handler instanceof HandlerMethod)) {
+            return true;
+        }
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Class<?> clazz = handlerMethod.getBeanType();
         Class<?> superClazz = handlerMethod.getBeanType().getSuperclass();
@@ -73,7 +76,7 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
                             exportJsonResult(httpServletResponse, jsonResultOfLogin);
                             return false;
                         }
-                        JsonResult jsonResultOfAction = verifyAction(httpServletRequest.getRequestURL().toString(), uid);
+                        JsonResult jsonResultOfAction = verifyAction(httpServletRequest.getRequestURL().toString(), uid, httpServletRequest.getMethod());
                         if (jsonResultOfAction.getStatus() == 500) {
                             exportJsonResult(httpServletResponse, jsonResultOfAction);
                             return false;
@@ -181,7 +184,7 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
      * @param uid
      * @return
      */
-    private JsonResult verifyAction(String url, String uid) {
-        return actionService.verifyActions(Integer.valueOf(uid), url);
+    private JsonResult verifyAction(String url, String uid, String type) {
+        return actionService.verifyActions(Integer.valueOf(uid), url, type);
     }
 }
