@@ -125,6 +125,8 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
 
     @Override
     public JsonResult insertAction(Action action) {
+        action.setActionColumnId(1);
+        action.setVisiable(0);
         actionMapper.insert(action);
         jsonResult.setStatus(200);
         jsonResult.setMessage("操作完成");

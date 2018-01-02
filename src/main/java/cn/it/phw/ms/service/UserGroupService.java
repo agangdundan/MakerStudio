@@ -17,9 +17,10 @@ public interface UserGroupService extends BaseService {
 
     public JsonResult selectAllUserGroups();
 
-    public JsonResult insertUserGroup(Usergroup usergroup);
+    public JsonResult insertUserGroup(Usergroup usergroup, String adminId);
 
     public JsonResult updateUserGroupByPK(Usergroup usergroup);
 
     public JsonResult deleteUserGroupByPK(Integer ugid);
+
 }

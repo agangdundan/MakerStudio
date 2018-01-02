@@ -1,11 +1,14 @@
 package cn.it.phw.ms.controller;
 
+import cn.it.phw.ms.common.AppContext;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.pojo.Usergroup;
 import cn.it.phw.ms.service.UserGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("/ms")
@@ -34,8 +37,8 @@ public class UserGroupController extends BaseController {
 
     @ResponseBody
     @PutMapping("/usergroup")
-    public JsonResult addUserGroup(Usergroup usergroup) {
-        return userGroupService.insertUserGroup(usergroup);
+    public JsonResult addUserGroup(Usergroup usergroup, HttpServletRequest request) {
+        return userGroupService.insertUserGroup(usergroup, (String) request.getAttribute(AppContext.KEY_ID));
     }
 
 }

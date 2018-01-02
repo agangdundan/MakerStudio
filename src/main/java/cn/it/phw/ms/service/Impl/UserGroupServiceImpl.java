@@ -3,16 +3,20 @@ package cn.it.phw.ms.service.Impl;
 import cn.it.phw.ms.common.AppContext;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.dao.mapper.GroupmanagerMapper;
+import cn.it.phw.ms.dao.mapper.UserMapper;
 import cn.it.phw.ms.dao.mapper.UsergroupMapper;
 import cn.it.phw.ms.pojo.Groupmanager;
 import cn.it.phw.ms.pojo.GroupmanagerExample;
+import cn.it.phw.ms.pojo.User;
 import cn.it.phw.ms.pojo.Usergroup;
 import cn.it.phw.ms.service.UserGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -24,6 +28,12 @@ public class UserGroupServiceImpl extends BaseServiceImpl implements UserGroupSe
 
     @Autowired
     private UsergroupMapper usergroupMapper;
+
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public JsonResult selectTheMaxUserGroupByUserId(String uid) {
@@ -95,7 +105,15 @@ public class UserGroupServiceImpl extends BaseServiceImpl implements UserGroupSe
     }
 
     @Override
-    public JsonResult insertUserGroup(Usergroup usergroup) {
+    public JsonResult insertUserGroup(Usergroup usergroup, String adminId) {
+        User admin = (User) redisTemplate.opsForHash().get(AppContext.USER_CACHE, adminId);
+        if (admin == null) {
+            admin = userMapper.selectByPrimaryKey(Integer.valueOf(adminId));
+        }
+        usergroup.setCreaterId(admin.getId());
+        usergroup.setCreaterName(admin.getUsername());
+        usergroup.setCreateTime(new Date());
+
         usergroupMapper.insert(usergroup);
         jsonResult.setStatus(200);
         jsonResult.setMessage("操作完成");
