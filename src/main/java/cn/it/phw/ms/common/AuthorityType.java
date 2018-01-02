@@ -13,7 +13,7 @@ public enum AuthorityType {
     NoValidate,
 
     /**
-     * 只验证权限
+     * 只验证登录
      */
     NoAuthority
 

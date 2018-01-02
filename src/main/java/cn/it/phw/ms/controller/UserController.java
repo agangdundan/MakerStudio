@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-@Authority
 @Controller
-@RequestMapping(value = "/ms")
 public class UserController extends BaseController {
 
     @Autowired
@@ -21,6 +19,7 @@ public class UserController extends BaseController {
 
     @ResponseBody
     @PostMapping(value = "/user/login")
+    @Authority(AuthorityType.NoValidate)
     public JsonResult doLogin(@RequestParam String username,
                               @RequestParam String password) {
 
@@ -29,6 +28,7 @@ public class UserController extends BaseController {
 
     @ResponseBody
     @GetMapping(value = "/user/logout")
+    @Authority(AuthorityType.NoAuthority)
     public JsonResult doLogout(HttpServletRequest request) {
         return userService.doLogout((String) request.getAttribute(AppContext.KEY_ID));
     }

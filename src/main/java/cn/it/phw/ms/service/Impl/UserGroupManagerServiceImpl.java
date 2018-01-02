@@ -5,14 +5,20 @@ import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.dao.mapper.GroupmanagerMapper;
 import cn.it.phw.ms.dao.mapper.UserMapper;
 import cn.it.phw.ms.pojo.Groupmanager;
+import cn.it.phw.ms.pojo.GroupmanagerExample;
 import cn.it.phw.ms.pojo.User;
 import cn.it.phw.ms.service.UserGroupManagerService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
+@Service
+@Transactional
 public class UserGroupManagerServiceImpl extends BaseServiceImpl implements UserGroupManagerService {
 
     @Autowired
@@ -43,6 +49,25 @@ public class UserGroupManagerServiceImpl extends BaseServiceImpl implements User
 
         jsonResult.setStatus(200);
         jsonResult.setMessage("OK");
+
+        return jsonResult;
+    }
+
+    @Override
+    public JsonResult selectGroupManagerByUGId(Integer UGId) {
+
+        GroupmanagerExample.Criteria criteria = groupmanagerExample.or();
+        criteria.andUserGroupIdEqualTo(UGId);
+        List<Groupmanager> groupmanagers = groupmanagerMapper.selectByExample(groupmanagerExample);
+        if (groupmanagers.size() == 0) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("List Of GroupManagers is Empty");
+        } else {
+            jsonResult.setStatus(200);
+            jsonResult.setMessage("OK");
+            data.put(AppContext.KEY_DATA, groupmanagers);
+            jsonResult.setData(data);
+        }
 
         return jsonResult;
     }

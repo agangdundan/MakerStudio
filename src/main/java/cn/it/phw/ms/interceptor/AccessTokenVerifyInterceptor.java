@@ -1,8 +1,10 @@
 package cn.it.phw.ms.interceptor;
 
 import cn.it.phw.ms.common.AppContext;
+import cn.it.phw.ms.common.Authority;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.common.JwtUtils;
+import cn.it.phw.ms.service.ActionService;
 import com.google.gson.Gson;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -14,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -21,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Method;
 
 @Component
 public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
@@ -30,54 +34,73 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
     @Autowired
     private StringRedisTemplate redisTemplate;
 
+    @Autowired
+    private Gson gson;
+
+    @Autowired
+    private ActionService actionService;
+
+    private String uid;
+
     @Override
-    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
+    public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object handler) throws Exception {
 
-        String authorization = httpServletRequest.getHeader(AppContext.AUTHORIZATION);
-        if (StringUtils.isEmpty(authorization)) {
-            authorization = httpServletRequest.getParameter("token");
-        }
+        //Verify Actions
+        HandlerMethod handlerMethod = (HandlerMethod) handler;
+        Class<?> clazz = handlerMethod.getBeanType();
+        Class<?> superClazz = handlerMethod.getBeanType().getSuperclass();
+        Method method = handlerMethod.getMethod();
+        if (clazz != null && method != null) {
+            boolean isClazzAnnotation = clazz.isAnnotationPresent(Authority.class);
+            boolean isMethodAnnotation = method.isAnnotationPresent(Authority.class);
 
-        if (StringUtils.isEmpty(authorization)) {
-            exportMsg(httpServletResponse, httpServletRequest, "您还未登陆，请先登录。");
-            return false;
-        } else {
-            try {
-                Claims claims = JwtUtils.parseJWT(authorization);
+            Authority authority = null;
+            if (isMethodAnnotation) {
+                authority = method.getAnnotation(Authority.class);
+            } else if (isClazzAnnotation) {
+                authority = clazz.getAnnotation(Authority.class);
+            } else {
+                authority = superClazz.getAnnotation(Authority.class);
+            }
 
-                if (redisTemplate.opsForHash().hasKey(AppContext.USER_CACHE, claims.getId())) {
+            if (authority != null) {
 
-                    String uid = claims.getId();
+                switch (authority.value()) {
+                    case Validate: {
 
-                    //验证通过
-                    httpServletRequest.setAttribute(AppContext.KEY_ID, uid);
-                    logger.info(httpServletRequest.getMethod() + ":" + httpServletRequest.getRequestURL().toString());
-                    return true;
-                } else {
-                    exportMsg(httpServletResponse, httpServletRequest, "您还未登陆，请先登录。");
-                    return false;
+                        JsonResult jsonResultOfLogin = verifyLogin(httpServletRequest, httpServletResponse);
+                        if (jsonResultOfLogin.getStatus() == 500) {
+                            exportJsonResult(httpServletResponse, jsonResultOfLogin);
+                            return false;
+                        }
+                        JsonResult jsonResultOfAction = verifyAction(httpServletRequest.getRequestURL().toString(), uid);
+                        if (jsonResultOfAction.getStatus() == 500) {
+                            exportJsonResult(httpServletResponse, jsonResultOfAction);
+                            return false;
+                        }
+                        break;
+                    }
+
+                    case NoValidate: {
+                        break;
+                    }
+
+                    case NoAuthority: {
+                        JsonResult jsonResultOfLogin = verifyLogin(httpServletRequest, httpServletResponse);
+                        if (jsonResultOfLogin.getStatus() == 500) {
+                            exportJsonResult(httpServletResponse, jsonResultOfLogin);
+                            return false;
+                        }
+                        break;
+                    }
+
                 }
 
-            } catch (SignatureException | MalformedJwtException e) {
-                exportMsg(httpServletResponse, httpServletRequest, "身份信息错误，请重新登录：" + e.getMessage());
-                return false;
-            } catch (ExpiredJwtException e) {
-                exportMsg(httpServletResponse, httpServletRequest, "身份已过期，请重新登录。");
-                return false;
             }
+
         }
-    }
 
-    private void exportMsg(HttpServletResponse httpServletResponse, HttpServletRequest httpServletRequest, String message) throws IOException {
-
-        httpServletResponse.setContentType("application/json;charset=utf-8");
-        PrintWriter out = httpServletResponse.getWriter();
-        JsonResult jsonResult = new JsonResult();
-        jsonResult.setStatus(500);
-        jsonResult.setMessage(message);
-        out.println(new Gson().toJson(jsonResult));
-        out.flush();
-        out.close();
+        return true;
     }
 
     @Override
@@ -88,5 +111,77 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) {
 
+    }
+
+    /**
+     * Export Json Result
+     * @param httpServletResponse
+     * @param jsonResult
+     * @throws IOException
+     */
+    private void exportJsonResult(HttpServletResponse httpServletResponse, JsonResult jsonResult) throws IOException {
+        httpServletResponse.setContentType("application/json;charset=utf-8");
+        PrintWriter out = httpServletResponse.getWriter();
+        out.println(gson.toJson(jsonResult));
+        out.flush();
+        out.close();
+    }
+
+    /**
+     *
+     * @param httpServletRequest
+     * @param httpServletResponse
+     * @return
+     * @throws IOException
+     */
+    private JsonResult verifyLogin(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws IOException {
+        JsonResult jsonResult = new JsonResult();
+
+        String authorization = httpServletRequest.getHeader(AppContext.AUTHORIZATION);
+        if (StringUtils.isEmpty(authorization)) {
+            authorization = httpServletRequest.getParameter("token");
+        }
+
+        if (StringUtils.isEmpty(authorization)) {
+            jsonResult.setStatus(500);
+            jsonResult.setMessage("Error: Login First Please");
+            exportJsonResult(httpServletResponse, jsonResult);
+        } else {
+            try {
+                Claims claims = JwtUtils.parseJWT(authorization);
+                uid = claims.getId();
+
+                if (redisTemplate.opsForHash().hasKey(AppContext.USER_CACHE, uid)) {
+                    httpServletRequest.setAttribute(AppContext.KEY_ID, uid);
+                    logger.info(httpServletRequest.getMethod() + ":" + httpServletRequest.getRequestURL().toString());
+                    jsonResult.setStatus(200);
+                    jsonResult.setMessage("OK");
+                } else {
+                    jsonResult.setStatus(500);
+                    jsonResult.setMessage("Error: Login First Please");
+                }
+            } catch (SignatureException | MalformedJwtException e) {
+                jsonResult.setStatus(500);
+                jsonResult.setMessage("Error: Login Error, Retry Please");
+                return jsonResult;
+            } catch (ExpiredJwtException e) {
+                jsonResult.setStatus(500);
+                jsonResult.setMessage("Error: Login Info Timed out");
+                return jsonResult;
+            }
+
+        }
+
+        return jsonResult;
+    }
+
+    /**
+     *
+     * @param url
+     * @param uid
+     * @return
+     */
+    private JsonResult verifyAction(String url, String uid) {
+        return actionService.verifyActions(Integer.valueOf(uid), url);
     }
 }

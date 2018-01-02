@@ -12,4 +12,5 @@ public interface UserGroupManagerService extends BaseService {
      */
     JsonResult insertUserGroupManager(Groupmanager groupmanager, Integer adminId);
 
+    JsonResult selectGroupManagerByUGId(Integer UGId);
 }

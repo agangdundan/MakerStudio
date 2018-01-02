@@ -18,6 +18,6 @@ public interface ActionManagerService extends BaseService {
      * @param uid
      * @return
      */
-    JsonResult selectActionGroupsByUid(Integer ugId);
+    JsonResult selectActionGroupsByUid(Integer uid);
 
 }

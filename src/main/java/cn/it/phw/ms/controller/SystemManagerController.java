@@ -1,6 +1,8 @@
 package cn.it.phw.ms.controller;
 
 import cn.it.phw.ms.common.AppContext;
+import cn.it.phw.ms.common.Authority;
+import cn.it.phw.ms.common.AuthorityType;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.pojo.Systemmessage;
 import cn.it.phw.ms.service.SystemMessageService;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/ms")
 public class SystemManagerController extends BaseController {
 
     @Autowired
@@ -20,6 +21,7 @@ public class SystemManagerController extends BaseController {
 
     @ResponseBody
     @GetMapping("/msg/newest")
+    @Authority(AuthorityType.NoValidate)
     public JsonResult getNewestMessage() {
         return systemMessageService.getNewestMsg();
     }

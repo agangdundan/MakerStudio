@@ -20,9 +20,6 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
-            <mvc:exclude-mapping path="/**/user/login"/>
-            <mvc:exclude-mapping path="/**/user/reg"/>
-            <mvc:exclude-mapping path="/**/msg/newest"/>
             <bean class="cn.it.phw.ms.interceptor.AccessTokenVerifyInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

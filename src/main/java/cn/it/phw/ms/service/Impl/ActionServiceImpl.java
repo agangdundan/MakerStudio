@@ -5,8 +5,7 @@ import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.dao.mapper.ActionMapper;
 import cn.it.phw.ms.dao.mapper.ActiongroupMapper;
 import cn.it.phw.ms.pojo.*;
-import cn.it.phw.ms.service.ActionService;
-import cn.it.phw.ms.service.UserGroupService;
+import cn.it.phw.ms.service.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +31,20 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
     @Autowired
     private UserGroupService userGroupService;
 
+    @Autowired
+    private UserGroupManagerService userGroupManagerService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private ActionManagerService actionManagerService;
+
     @Override
-    public JsonResult selectActionByUserGroupId(Integer ugid) {
+    public JsonResult selectActionByUserGroupId(Integer ugId) {
 
         ActiongroupExample.Criteria criteria = actiongroupExample.or();
-        criteria.andUserGroupIdEqualTo(ugid);
+        criteria.andUserGroupIdEqualTo(ugId);
         List<Actiongroup> actiongroups = actiongroupMapper.selectByExample(actiongroupExample);
         if (actiongroups.size() == 0) {
             jsonResult.setStatus(500);
@@ -59,33 +67,24 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
         return jsonResult;
     }
 
-
-
     @Override
-    public JsonResult verifyActions(Integer uid, List<String> reqActionsStr) {
-
-        JsonResult jsonResultOfUseGroup = userGroupService.selectTheMaxUserGroupByUserId(String.valueOf(uid));
-        Usergroup usergroup = (Usergroup) jsonResultOfUseGroup.getData().get(AppContext.KEY_DATA);
-        JsonResult jsonResultOfAction = selectActionByUserGroupId(usergroup.getId());
-
-        List<Action> userActions = (List<Action>) jsonResultOfAction.getData().get(AppContext.KEY_DATA);
-
-        StringBuilder userActionsStr = new StringBuilder();
-        for (Action action : userActions) {
-            userActionsStr.append(action.getAction())
-                        .append(",");
+    public JsonResult verifyActions(Integer userId, String url) {
+        jsonResult = actionManagerService.selectActionGroupsByUid(userId);
+        if (jsonResult.getStatus() == 500) {
+            return jsonResult;
         }
-        logger.info(userActionsStr.toString());
-        for (String action : reqActionsStr) {
-            if ((userActions.toString()).contains(action)) {
-                data.put(action, true);
-            } else {
-                data.put(action, false);
+        List<Actiongroup> actiongroups = (List<Actiongroup>) jsonResult.getData().get(AppContext.KEY_DATA);
+        for (Actiongroup actiongroup: actiongroups) {
+            Action action = actionMapper.selectByPrimaryKey(actiongroup.getActionId());
+            if (url.contains(action.getAction())) {
+                jsonResult.setStatus(200);
+                jsonResult.setMessage("OK");
+                break;
             }
         }
-        jsonResult.setStatus(200);
-        jsonResult.setMessage("OK");
-        jsonResult.setData(data);
+        if (jsonResult.getStatus() == 500) {
+            jsonResult.setMessage("Error: Permission Denied");
+        }
 
         return jsonResult;
     }

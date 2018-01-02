@@ -40,6 +40,14 @@ public interface UserService extends BaseService {
 
     JsonResultForLayui findAllUsersWithLayui();
 
+    /**
+     * 根据ID查找User记录
+     * 首先查找redis中是否有相应的记录
+     * 如果有则直接返回缓存中的数据
+     * 如果没有则从数据库中查找
+     * @param id 主键id
+     * @return
+     */
     JsonResult findUserByPK(Integer id);
 
     JsonResult doAddUser(User user, String adminId);

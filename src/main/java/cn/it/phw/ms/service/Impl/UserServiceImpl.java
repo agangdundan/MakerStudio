@@ -220,18 +220,26 @@ public class UserServiceImpl extends BaseServiceImpl implements UserService {
 
     @Override
     public JsonResult findUserByPK(Integer id) {
-        UserExample.Criteria criteria = userExample.or();
-        criteria.andIdEqualTo(id);
-        List<User> userList = userMapper.selectByExample(userExample);
-        if (userList.size() == 0) {
-            jsonResult.setStatus(500);
-            jsonResult.setMessage("没有查找到任何记录！");
-        } else {
-            jsonResult.setStatus(200);
-            jsonResult.setMessage("加载完成");
-            data.put(AppContext.KEY_DATA, userList.get(0));
-            jsonResult.setData(data);
+
+        String userJson = (String) redisTemplate.opsForHash().get(AppContext.USER_CACHE, id);
+        User user = gson.fromJson(userJson, User.class);
+        if (user == null) {
+            UserExample.Criteria criteria = userExample.or();
+            criteria.andIdEqualTo(id);
+            List<User> userList = userMapper.selectByExample(userExample);
+            if (userList.size() == 0) {
+                jsonResult.setStatus(500);
+                jsonResult.setMessage("没有查找到任何记录！");
+                return jsonResult;
+            } else {
+                user = userList.get(0);
+            }
         }
+        jsonResult.setStatus(200);
+        jsonResult.setMessage("加载完成");
+        data.put(AppContext.KEY_DATA, user);
+        jsonResult.setData(data);
+
         return jsonResult;
     }
 

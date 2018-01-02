@@ -9,13 +9,7 @@ public interface ActionService extends BaseService {
 
     public JsonResult selectActionByUserGroupId(Integer ugid);
 
-    /**
-     * 根据权算法验证权限
-     * @param actions 要验证的权限
-     * @param uid 当前用户
-     * @return jsonResult
-     */
-    public JsonResult verifyActions(Integer uid, List<String> actions);
+    public JsonResult verifyActions(Integer userId, String url);
 
     public JsonResult selectActionByActionStr(String action);
 

@@ -7,7 +7,9 @@ import cn.it.phw.ms.dao.mapper.UserMapper;
 import cn.it.phw.ms.pojo.Actiongroup;
 import cn.it.phw.ms.pojo.ActiongroupExample;
 import cn.it.phw.ms.pojo.User;
+import cn.it.phw.ms.pojo.Usergroup;
 import cn.it.phw.ms.service.ActionManagerService;
+import cn.it.phw.ms.service.UserGroupService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -26,6 +28,9 @@ public class ActionManagerServiceImpl extends BaseServiceImpl implements ActionM
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private UserGroupService userGroupService;
 
     @Autowired
     private StringRedisTemplate redisTemplate;
@@ -61,10 +66,12 @@ public class ActionManagerServiceImpl extends BaseServiceImpl implements ActionM
     }
 
     @Override
-    public JsonResult selectActionGroupsByUid(Integer ugId) {
+    public JsonResult selectActionGroupsByUid(Integer uid) {
 
         ActiongroupExample.Criteria criteria = actiongroupExample.or();
-        criteria.andUserGroupIdEqualTo(ugId);
+        jsonResult = userGroupService.selectTheMaxUserGroupByUserId(uid + "");
+        Usergroup usergroup = (Usergroup) jsonResult.getData().get(AppContext.KEY_DATA);
+        criteria.andUserGroupIdEqualTo(usergroup.getId());
         List<Actiongroup> actiongroups = actiongroupMapper.selectByExample(actiongroupExample);
         if (actiongroups.size() == 0) {
             jsonResult.setStatus(500);

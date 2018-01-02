@@ -13,7 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 
 @Controller
-@RequestMapping("/ms")
 public class UploadController extends BaseController {
 
     @Autowired
