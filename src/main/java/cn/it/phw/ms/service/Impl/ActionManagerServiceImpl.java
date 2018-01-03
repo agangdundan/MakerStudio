@@ -72,6 +72,7 @@ public class ActionManagerServiceImpl extends BaseServiceImpl implements ActionM
         jsonResult = userGroupService.selectTheMaxUserGroupByUserId(uid + "");
         Usergroup usergroup = (Usergroup) jsonResult.getData().get(AppContext.KEY_DATA);
         criteria.andUserGroupIdEqualTo(usergroup.getId());
+        criteria.andUserIdEqualTo(uid);
         List<Actiongroup> actiongroups = actiongroupMapper.selectByExample(actiongroupExample);
         if (actiongroups.size() == 0) {
             jsonResult.setStatus(500);

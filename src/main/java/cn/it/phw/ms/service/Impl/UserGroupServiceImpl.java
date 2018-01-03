@@ -59,9 +59,8 @@ public class UserGroupServiceImpl extends BaseServiceImpl implements UserGroupSe
                     Usergroup temp1 = usergroups.get(m);
                     Usergroup temp2 = usergroups.get(m + 1);
                     if (temp1.getSort() < temp2.getSort()) {
-                        temp = temp2;
-                        temp2 = temp1;
-                        temp1 = temp;
+                        usergroups.set(m, temp2);
+                        usergroups.set(m+1, temp1);
                     }
                 }
 

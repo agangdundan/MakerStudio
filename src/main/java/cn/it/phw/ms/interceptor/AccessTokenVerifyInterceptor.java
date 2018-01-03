@@ -76,7 +76,7 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
                             exportJsonResult(httpServletResponse, jsonResultOfLogin);
                             return false;
                         }
-                        JsonResult jsonResultOfAction = verifyAction(httpServletRequest.getRequestURL().toString(), uid, httpServletRequest.getMethod());
+                        JsonResult jsonResultOfAction = verifyAction(httpServletRequest);
                         if (jsonResultOfAction.getStatus() == 500) {
                             exportJsonResult(httpServletResponse, jsonResultOfAction);
                             return false;
@@ -156,7 +156,7 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
 
                 if (redisTemplate.opsForHash().hasKey(AppContext.USER_CACHE, uid)) {
                     httpServletRequest.setAttribute(AppContext.KEY_ID, uid);
-                    logger.info(httpServletRequest.getMethod() + ":" + httpServletRequest.getRequestURL().toString());
+                    //logger.info(httpServletRequest.getMethod() + ":" + httpServletRequest.getRequestURL().toString());
                     jsonResult.setStatus(200);
                     jsonResult.setMessage("OK");
                 } else {
@@ -180,11 +180,10 @@ public class AccessTokenVerifyInterceptor implements HandlerInterceptor {
 
     /**
      *
-     * @param url
-     * @param uid
+     * @param httpServletRequest
      * @return
      */
-    private JsonResult verifyAction(String url, String uid, String type) {
-        return actionService.verifyActions(Integer.valueOf(uid), url, type);
+    private JsonResult verifyAction(HttpServletRequest httpServletRequest) {
+        return actionService.verifyActions(httpServletRequest);
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,8 +69,13 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
     }
 
     @Override
-    public JsonResult verifyActions(Integer userId, String url, String type) {
-        jsonResult = actionManagerService.selectActionGroupsByUid(userId);
+    public JsonResult verifyActions(HttpServletRequest httpServletRequest) {
+
+        String userId = (String) httpServletRequest.getAttribute(AppContext.KEY_ID);
+        String type = httpServletRequest.getMethod();
+        String uri = httpServletRequest.getRequestURI();
+
+        jsonResult = actionManagerService.selectActionGroupsByUid(Integer.valueOf(userId));
         if (jsonResult.getStatus() == 500) {
             return jsonResult;
         }
@@ -78,16 +84,23 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
         List<Actiongroup> actiongroups = (List<Actiongroup>) jsonResult.getData().get(AppContext.KEY_DATA);
         for (Actiongroup actiongroup: actiongroups) {
             Action action = actionMapper.selectByPrimaryKey(actiongroup.getActionId());
-            String actionStr = action.getAction();
+            String actionStr = "/ms" +  action.getAction();
             String actionType = action.getType();
-            if (url.contains(actionStr) && actionType.equals(actionType)) {
+
+            if (uri.equals(actionStr) && type.equalsIgnoreCase(actionType)) {
                 jsonResultOfResult.setStatus(200);
                 jsonResultOfResult.setMessage("OK");
+
+                logger.info(httpServletRequest.getMethod() + ":" + httpServletRequest.getRequestURL().toString() + ": Verified...");
+
                 break;
             }
         }
         if (jsonResultOfResult.getStatus() == 500) {
-            jsonResultOfResult.setMessage("Error: Permission Denied");
+            jsonResultOfResult.setMessage("您还没有足够的权限");
+
+            logger.info(httpServletRequest.getMethod() + ":" + httpServletRequest.getRequestURL().toString() + ": Failed...");
+
         }
 
         return jsonResultOfResult;
@@ -167,11 +180,11 @@ public class ActionServiceImpl extends BaseServiceImpl implements ActionService 
     public JsonResult deleteActonByPK(Integer id) {
         if (id == null) {
             jsonResult.setStatus(500);
-            jsonResult.setMessage("Params Error");
+            jsonResult.setMessage("参数错误");
         } else {
             actionMapper.deleteByPrimaryKey(id);
             jsonResult.setStatus(200);
-            jsonResult.setMessage("OK");
+            jsonResult.setMessage("操作完成");
         }
         return jsonResult;
     }

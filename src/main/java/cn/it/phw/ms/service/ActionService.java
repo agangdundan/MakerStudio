@@ -3,13 +3,14 @@ package cn.it.phw.ms.service;
 import cn.it.phw.ms.common.JsonResult;
 import cn.it.phw.ms.pojo.Action;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface ActionService extends BaseService {
 
     public JsonResult selectActionByUserGroupId(Integer ugid);
 
-    public JsonResult verifyActions(Integer userId, String url, String type);
+    public JsonResult verifyActions(HttpServletRequest httpServletRequest);
 
     public JsonResult selectActionByActionStr(String action);
 
